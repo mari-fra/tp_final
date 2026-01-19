@@ -1,0 +1,235 @@
+\documentclass[12pt,a4paper]{article}
+
+% Paquetes esenciales
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}  % Cambia a 'english' si prefieres en inglés
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% Configuración de hipervínculos
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    citecolor=green,
+    pdftitle={Proyecto Final - Clasificación ML - Meli Challenge 2019},
+}
+
+% Información del documento
+\title{Proyecto Final\\Trabajo Práctico de Clasificación con Machine Learning\\Comparación de Modelos ML contra la Solución Ganadora del\\Meli Challenge 2019}
+\author{Maribel Fraire\\Maestría en Data Science}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Este trabajo presenta un análisis comparativo de diferentes modelos de Machine Learning aplicados al problema de clasificación propuesto por Mercado Libre en la competencia de Kaggle (Meli Challenge 2019). El objetivo principal es evaluar y comparar el rendimiento de diversos modelos contra la solución ganadora, considerando las limitaciones técnicas actuales para replicar la implementación original debido a dependencias obsoletas (TensorFlow 1.14, CUDA 10.0, Python 3.6/3.7) y problemas de compatibilidad con hardware y software modernos.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Introducción}
+
+\subsection{Contexto del Problema}
+
+% Describe el problema de clasificación de Mercado Libre
+El Meli Challenge 2019 fue una competencia de Kaggle organizada por Mercado Libre con el objetivo de clasificar productos en diferentes categorías basándose en sus títulos y descripciones. La solución ganadora, desarrollada por Eduardo García, alcanzó un score de 0.91733 en el Public Leaderboard, ocupando el primer lugar.
+
+\subsection{Objetivos del Trabajo}
+
+\begin{itemize}
+    \item Comparar diferentes modelos de ML con la solución ganadora del 2019
+    \item Evaluar métricas de rendimiento entre los modelos implementados
+    \item Documentar las limitaciones técnicas encontradas al replicar la solución original
+    \item Analizar alternativas modernas a las tecnologías obsoletas utilizadas en la solución ganadora
+\end{itemize}
+
+\section{Marco Teórico}
+
+\subsection{Machine Learning para Clasificación de Texto}
+
+% Agrega aquí la teoría relevante sobre clasificación de texto
+La clasificación de texto es una tarea fundamental en el procesamiento de lenguaje natural (NLP) que consiste en asignar etiquetas o categorías a documentos de texto. En el contexto del Meli Challenge 2019, el objetivo es clasificar productos de e-commerce en categorías específicas basándose en sus descripciones.
+
+\subsection{Arquitecturas de Redes Neuronales}
+
+% Habla sobre LSTM, GRU, transformers, etc.
+Las arquitecturas de redes neuronales profundas han demostrado ser efectivas para tareas de clasificación de texto. Entre las más utilizadas se encuentran:
+
+\begin{itemize}
+    \item \textbf{LSTM (Long Short-Term Memory):} Redes neuronales recurrentes capaces de capturar dependencias de largo plazo en secuencias de texto
+    \item \textbf{GRU (Gated Recurrent Unit):} Variante más eficiente computacionalmente que LSTM
+    \item \textbf{Transformers:} Arquitecturas basadas en mecanismos de atención que han revolucionado el NLP moderno
+    \item \textbf{Embeddings:} Representaciones vectoriales densas de palabras o tokens que capturan relaciones semánticas
+\end{itemize}
+
+\section{Metodología}
+
+\subsection{Dataset}
+
+% Describe tu dataset
+El dataset utilizado corresponde al proporcionado por Mercado Libre para la competencia Meli Challenge 2019. Este contiene información de productos de e-commerce con sus respectivas categorías como variable objetivo.
+
+\subsection{Preprocesamiento}
+
+% Describe el preprocesamiento realizado
+El preprocesamiento de texto es crucial para el rendimiento de los modelos. La solución ganadora implementó técnicas específicas de normalización, incluyendo la normalización de valores numéricos a representaciones consistentes sin eliminarlos completamente, lo cual demostró ser una estrategia exitosa.
+
+\subsection{Modelos Evaluados}
+
+% Lista los modelos que probaste:
+Se evaluaron los siguientes modelos como alternativas y comparación con la solución ganadora:
+
+\begin{itemize}
+    \item \textbf{Modelo 1:} Basado en embeddings de OpenAI GPT (notebook: 01\_tp\_final\_openai\_gpt\_oss.ipynb)
+    \item \textbf{Modelo 2:} Basado en BETO (BERT pre-entrenado para español, notebook: 02\_tp\_final\_beto.ipynb)
+    \item \textbf{Modelo 3:} Basado en embeddings personalizados (notebook: 03\_tp\_final\_embedding.ipynb)
+    \item \textbf{Modelo 4:} Basado en FastText con redes neuronales (notebook: 04\_tp\_final\_ft\_nn.ipynb)
+    \item \textbf{Solución Original:} Modelo ganador del 2019 (Eduardo García, GitHub: eduagarcia/meli-challenge-2019)
+\end{itemize}
+
+\section{Problemas Técnicos Encontrados}
+
+\subsection{Limitaciones de la Solución Original}
+
+La solución ganadora del 2019 presenta problemas de reproducibilidad debido a:
+
+\begin{enumerate}
+    \item \textbf{Dependencias obsoletas:}
+    \begin{itemize}
+        \item Python 3.6 / 3.7 (EOL - End of Life)
+        \item TensorFlow 1.14
+        \item CUDA 10.0 + cuDNN 7.6
+    \end{itemize}
+    
+    \item \textbf{Incompatibilidades técnicas:}
+    \begin{itemize}
+        \item TensorFlow 1.14 no es compatible con GPUs modernas (RTX 30xx)
+        \item CuDNNLSTM y CuDNNGRU requieren versiones específicas de CUDA/cuDNN que ya no están disponibles para drivers modernos
+        \item Error: ``No OpKernel was registered to support Op 'CudnnRNN''
+        \item Estas capas no tienen fallback a CPU, por lo que el entrenamiento falla inmediatamente sin GPU funcional
+    \end{itemize}
+    
+    \item \textbf{Problemas con bibliotecas:}
+    \begin{itemize}
+        \item Incompatibilidad gensim + smart\_open
+        \item SyntaxError con Python 3.6 por uso de \texttt{from \_\_future\_\_ import annotations}
+        \item El paquete smart\_open utiliza anotaciones de tipo de Python 3.10+, no soportadas en Python 3.6
+    \end{itemize}
+    
+    \item \textbf{Recursos computacionales:}
+    \begin{itemize}
+        \item Embeddings de gran tamaño (\textasciitilde6 GB)
+        \item FastText requiere mucha RAM durante el entrenamiento
+        \item Entrenamiento extremadamente lento en CPU
+        \item Costo computacional elevado incluso con las tecnologías modernas
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Workarounds Implementados}
+
+Para poder evaluar los modelos, se implementaron las siguientes soluciones alternativas:
+
+\begin{itemize}
+    \item Reemplazo de CuDNNLSTM/CuDNNGRU por LSTM/GRU estándar (permitiendo ejecución en CPU pero perdiendo la aceleración GPU específica de la solución original)
+    \item Migración a TensorFlow 2.x o alternativas modernas
+    \item Adaptación del código para ejecución en CPU
+    \item Uso de versiones modernas de Python (3.8+) y bibliotecas compatibles
+\end{itemize}
+
+\textbf{Nota importante:} Estos workarounds permiten la ejecución funcional pero alteran la arquitectura original, haciendo imposible una replicación exacta de la solución ganadora del 2019 en entornos modernos.
+
+\section{Resultados}
+
+\subsection{Métricas de Evaluación}
+
+% Inserta tus tablas de resultados aquí
+% Ejemplo - reemplaza con tus datos reales:
+\begin{table}[H]
+\centering
+\caption{Comparación de Métricas por Modelo}
+\begin{tabular}{lcccc}
+\toprule
+Modelo & Accuracy & Precision & Recall & F1-Score \\
+\midrule
+Solución Original (2019) & 0.91733 & - & - & - \\
+Modelo 1 (GPT OSS) & - & - & - & - \\
+Modelo 2 (BETO) & - & - & - & - \\
+Modelo 3 (Embeddings) & - & - & - & - \\
+Modelo 4 (FastText NN) & - & - & - & - \\
+\bottomrule
+\end{tabular}
+\label{tab:metricas}
+\end{table}
+
+\textbf{Nota:} Reemplaza los valores ``-'' con los resultados reales obtenidos de tus notebooks.
+
+\subsection{Análisis Comparativo}
+
+% Analiza los resultados obtenidos
+% Compara el rendimiento de cada modelo con la solución ganadora
+% Discute las diferencias y similitudes
+
+\section{Discusión}
+
+% Discute los hallazgos, limitaciones, implicaciones de los resultados
+% Analiza por qué algunos modelos funcionan mejor que otros
+% Relaciona los resultados con la metodología y el preprocesamiento utilizado
+
+\section{Conclusiones}
+
+% Conclusiones del trabajo
+% Resumen de los hallazgos principales
+% Reflexiones sobre la reproducibilidad de soluciones antiguas
+% Lecciones aprendidas sobre mantenimiento de código y dependencias
+
+\section{Trabajo Futuro}
+
+% Propuestas de trabajo futuro
+% Mejoras posibles a los modelos implementados
+% Investigación adicional recomendada
+
+\section{Referencias}
+
+% Agrega tus referencias aquí
+% Si usas bibliografía con BibTeX, crea un archivo .bib y usa:
+% \bibliography{referencias}
+% \bibliographystyle{plain}
+
+% Ejemplo manual (reemplaza con tus referencias reales):
+\begin{thebibliography}{9}
+
+\bibitem{meli2019}
+Mercado Libre. (2019). \textit{Meli Challenge 2019}. Kaggle Competition.
+\url{https://www.kaggle.com/c/mercadolibre-data-challenge-2019}
+
+\bibitem{winner2019}
+García, E. (2019). \textit{MeLi Data Challenge 2019 - Winner Solution}. 
+GitHub Repository. \url{https://github.com/eduagarcia/meli-challenge-2019}
+
+\bibitem{tensorflow}
+TensorFlow Team. \textit{TensorFlow Documentation}. 
+\url{https://www.tensorflow.org/}
+
+\end{thebibliography}
+
+\appendix
+
+\section{Código y Repositorio}
+
+El código completo, notebooks y scripts están disponibles en:
+% \url{https://github.com/tu-usuario/tu-repositorio}
+
+\textbf{Nota:} Actualiza esta URL con el enlace a tu repositorio si lo tienes disponible.
+
+\end{document}
