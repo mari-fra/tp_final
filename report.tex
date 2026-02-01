@@ -1,5 +1,15 @@
 \documentclass[12pt,a4paper]{article}
 
+% Normas APA 7.ª ed.: A4, márgenes 2.54 cm, interlineado 1.5
+\usepackage[
+    top=2.54cm,
+    bottom=2.54cm,
+    left=2.54cm,
+    right=2.54cm
+]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
 % Paquetes esenciales
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}  % Cambia a 'english' si prefieres en inglés
@@ -92,11 +102,77 @@ Se evaluaron los siguientes modelos como alternativas y comparación con la solu
 
 \begin{itemize}
     \item \textbf{Modelo 1:} Basado en embeddings de OpenAI GPT (notebook: 01\_tp\_final\_openai\_gpt\_oss.ipynb)
-    \item \textbf{Modelo 2:} Basado en BETO (BERT pre-entrenado para español, notebook: 02\_tp\_final\_beto.ipynb)
+    \item \textbf{Modelo 2:} Basado en BETO (BERT pre-entrenado para español, notebook: 02\_tp\_final\_beto.ipynb, 02\_tp\_final\_beto\_all.ipynb)
     \item \textbf{Modelo 3:} Basado en embeddings personalizados (notebook: 03\_tp\_final\_embedding.ipynb)
     \item \textbf{Modelo 4:} Basado en FastText con redes neuronales (notebook: 04\_tp\_final\_ft\_nn.ipynb)
     \item \textbf{Solución Original:} Modelo ganador del 2019 (Eduardo García, GitHub: eduagarcia/meli-challenge-2019)
 \end{itemize}
+
+\subsection{BETO Aplicado al Dataset Completo en Español}
+
+Para evaluar el rendimiento del modelo BETO en condiciones más representativas, se implementó una versión que utiliza el dataset completo en español (\textasciitilde10 millones de registros) en lugar de las muestras reducidas utilizadas en experimentos preliminares.
+
+\subsubsection{Configuración del Entrenamiento}
+
+El entrenamiento se realizó en un equipo con GPU NVIDIA RTX 3060 (12GB VRAM), lo cual requirió configuraciones específicas para optimizar el uso de memoria y acelerar el proceso:
+
+\begin{itemize}
+    \item \textbf{Mixed Precision (FP16):} Reducción del uso de VRAM en aproximadamente 40\% y aceleración del entrenamiento en \textasciitilde20\%
+    \item \textbf{Batch size:} 16 por dispositivo con gradient accumulation de 2 pasos (batch efectivo de 32)
+    \item \textbf{Warmup ratio:} 10\% de los steps totales para estabilizar el entrenamiento inicial
+    \item \textbf{Early stopping:} Paciencia de 2 epochs para evitar overfitting
+\end{itemize}
+
+\subsubsection{Dependencia de Accelerate}
+
+Un aspecto técnico relevante es la dependencia de la librería \texttt{accelerate} de Hugging Face. El \texttt{Trainer} de Hugging Face Transformers delega todas las operaciones de bajo nivel a esta librería, incluyendo:
+
+\begin{itemize}
+    \item Movimiento de tensores entre CPU y GPU
+    \item Implementación de mixed precision (FP16/BF16)
+    \item Manejo de gradient accumulation
+    \item Soporte para entrenamiento distribuido multi-GPU
+\end{itemize}
+
+Esta separación arquitectónica se realizó para mantener la librería \texttt{transformers} más liviana, permitir configuraciones avanzadas sin modificar el código base, y reutilizar la lógica de aceleración en otras librerías del ecosistema Hugging Face (como \texttt{diffusers}).
+
+\subsubsection{Preparación del Dataset}
+
+Para el split estratificado del dataset se requirió un filtro mínimo de 20 ejemplos por categoría. Esto se debe a que el proceso de división (90\% train, 5\% validación, 5\% test) con estratificación necesita suficientes ejemplos en cada categoría para garantizar representación en todos los conjuntos. Categorías con menos de 20 ejemplos pueden resultar en splits donde alguna categoría quede con solo 1 ejemplo, causando errores en la estratificación.
+
+\subsubsection{Requisitos de Software}
+
+La ejecución en GPU moderna (RTX 30xx/40xx) con CUDA 12.x requiere:
+\begin{itemize}
+    \item PyTorch $\geq$ 2.6 (debido a vulnerabilidad de seguridad CVE-2025-32434 en versiones anteriores)
+    \item \texttt{accelerate} $\geq$ 0.26.0
+    \item Drivers NVIDIA actualizados compatibles con CUDA 12.x
+\end{itemize}
+
+\subsubsection{Validación de Extrapolabilidad de Resultados}
+
+Con el propósito de validar si los resultados obtenidos con una muestra reducida de 70,000 registros (notebook \texttt{02\_tp\_final\_beto.ipynb}) eran extrapolables al dataset completo en español, se entrenó el mismo modelo BETO con el dataset completo de aproximadamente 10 millones de registros (notebook \texttt{02\_tp\_final\_beto\_all.ipynb}) utilizando la misma arquitectura y configuración de hiperparámetros.
+
+Los resultados obtenidos muestran una diferencia en el rendimiento entre ambas configuraciones:
+
+\begin{itemize}
+    \item \textbf{Muestra de 70,000 registros:} Accuracy de 0.46 en el conjunto de test
+    \item \textbf{Dataset completo (\textasciitilde10M registros):} Accuracy de 0.88 en el conjunto de test
+\end{itemize}
+
+La diferencia observada de 42 puntos porcentuales indica que los resultados no son extrapolables de la muestra pequeña al dataset completo. Las posibles razones de esta discrepancia incluyen:
+
+\begin{enumerate}
+    \item \textbf{Representatividad de la muestra:} Una muestra de 70,000 registros puede no capturar adecuadamente la distribución completa de categorías y patrones presentes en el dataset completo, considerando que el dataset original contiene más de 1,500 categorías diferentes.
+    
+    \item \textbf{Balance de clases:} Con una muestra pequeña, algunas categorías pueden estar subrepresentadas o ausentes, afectando la capacidad del modelo para aprender patrones generalizables.
+    
+    \item \textbf{Overfitting en muestra pequeña:} Con menos datos, el modelo puede memorizar patrones específicos de la muestra en lugar de aprender representaciones generalizables, resultando en un rendimiento reducido cuando se evalúa en el conjunto completo.
+    
+    \item \textbf{Capacidad del modelo:} BETO es un modelo de 110 millones de parámetros que requiere grandes cantidades de datos para alcanzar su potencial. Con 70,000 ejemplos, el modelo no tiene suficientes datos para aprender efectivamente las relaciones complejas entre texto y categorías.
+\end{enumerate}
+
+Esta validación demuestra la importancia de evaluar modelos en datasets de tamaño similar al de producción, especialmente cuando se trabaja con modelos transformer de gran capacidad como BETO. Los resultados preliminares con muestras pequeñas pueden no reflejar el rendimiento del modelo en condiciones de producción.
 
 \section{Problemas Técnicos Encontrados}
 
@@ -158,21 +234,25 @@ Para poder evaluar los modelos, se implementaron las siguientes soluciones alter
 \begin{table}[H]
 \centering
 \caption{Comparación de Métricas por Modelo}
-\begin{tabular}{lcccc}
+\small
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lp{3.8cm}cccc}
 \toprule
-Modelo & Accuracy & Precision & Recall & F1-Score \\
+Modelo & Descripción & Accuracy & Precision & Recall & F1-Score \\
 \midrule
-Solución Original (2019) & 0.91733 & - & - & - \\
-Modelo 1 (GPT OSS) & - & - & - & - \\
-Modelo 2 (BETO) & - & - & - & - \\
-Modelo 3 (Embeddings) & - & - & - & - \\
-Modelo 4 (FastText NN) & - & - & - & - \\
+Solución Original (2019) & Dataset completo, modelo ganador del Meli Challenge 2019 & 0.917 & - & - & - \\
+Modelo 1 (GPT OSS) & Muestra de 1,000 registros, embeddings de OpenAI GPT & 0.91 & - & - & 0.89 \\
+Modelo 2 (BETO) & Muestra de 70,000 registros en español, BETO (BERT pre-entrenado) & 0.47 & - & - & - \\
+Modelo 2 (BETO completo) & Dataset completo en español (\textasciitilde10M registros), BETO & 0.88 & - & - & 0.84 \\
+Modelo 3 (Embeddings) & Muestra de 1,000 registros, embeddings personalizados (KNN escalado) & 0.53 & - & - & - \\
+Modelo 4 (FastText NN) & Dataset completo en español (\textasciitilde10M registros), FastText con redes neuronales & 0.81 & - & - & - \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \label{tab:metricas}
 \end{table}
 
-\textbf{Nota:} Reemplaza los valores ``-'' con los resultados reales obtenidos de tus notebooks.
+\textbf{Nota:} Los valores ``-'' indican métricas no reportadas en el notebook correspondiente (precision/recall no calculados en todos los experimentos).
 
 \subsection{Análisis Comparativo}
 
