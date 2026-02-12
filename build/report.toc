@@ -5,24 +5,37 @@
 \contentsline {section}{\numberline {2}Marco Teórico}{3}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Machine Learning para Clasificación de Texto}{3}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Arquitecturas de Redes Neuronales}{3}{subsection.2.2}%
-\contentsline {section}{\numberline {3}Metodología}{4}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Dataset}{4}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Preprocesamiento}{4}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Modelos Evaluados}{4}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}BETO Aplicado al Dataset Completo en Español}{4}{subsection.3.4}%
-\contentsline {subsubsection}{\numberline {3.4.1}Configuración del Entrenamiento}{4}{subsubsection.3.4.1}%
-\contentsline {subsubsection}{\numberline {3.4.2}Dependencia de Accelerate}{5}{subsubsection.3.4.2}%
-\contentsline {subsubsection}{\numberline {3.4.3}Preparación del Dataset}{5}{subsubsection.3.4.3}%
-\contentsline {subsubsection}{\numberline {3.4.4}Requisitos de Software}{5}{subsubsection.3.4.4}%
-\contentsline {subsubsection}{\numberline {3.4.5}Validación de Extrapolabilidad de Resultados}{6}{subsubsection.3.4.5}%
-\contentsline {section}{\numberline {4}Problemas Técnicos Encontrados}{7}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Limitaciones de la Solución Original}{7}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Workarounds Implementados}{7}{subsection.4.2}%
-\contentsline {section}{\numberline {5}Resultados}{8}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Métricas de Evaluación}{8}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Análisis Comparativo}{9}{subsection.5.2}%
-\contentsline {section}{\numberline {6}Discusión}{9}{section.6}%
-\contentsline {section}{\numberline {7}Conclusiones}{9}{section.7}%
-\contentsline {section}{\numberline {8}Trabajo Futuro}{9}{section.8}%
-\contentsline {section}{\numberline {9}Referencias}{9}{section.9}%
-\contentsline {section}{\numberline {A}Código y Repositorio}{9}{appendix.Alph1}%
+\contentsline {subsection}{\numberline {2.3}Embeddings y modelos tipo Transformer}{4}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Tokenización}{4}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.3.2}Embedding lookup (búsqueda de embeddings)}{4}{subsubsection.2.3.2}%
+\contentsline {subsubsection}{\numberline {2.3.3}Codificación posicional (positional encoding)}{4}{subsubsection.2.3.3}%
+\contentsline {subsubsection}{\numberline {2.3.4}Mecanismo de autoatención (self-attention)}{5}{subsubsection.2.3.4}%
+\contentsline {subsubsection}{\numberline {2.3.5}Agregación y pooling}{5}{subsubsection.2.3.5}%
+\contentsline {subsubsection}{\numberline {2.3.6}Red neuronal feed-forward}{5}{subsubsection.2.3.6}%
+\contentsline {section}{\numberline {3}Metodología}{6}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Dataset}{6}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Preprocesamiento}{6}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Modelos Evaluados}{6}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}OpenAI Embeddings (Modelo 3)}{6}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {3.4.1}Metodología del embedding (text-embedding-3-small)}{7}{subsubsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.2}Descripción de la solución}{7}{subsubsection.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.3}Ensayo 1 (03\_tp\_final\_embedding.ipynb)}{7}{subsubsection.3.4.3}%
+\contentsline {subsubsection}{\numberline {3.4.4}Ensayo 2 (03\_tp\_final\_embedding\_2.ipynb)}{7}{subsubsection.3.4.4}%
+\contentsline {subsubsection}{\numberline {3.4.5}Batch API}{8}{subsubsection.3.4.5}%
+\contentsline {subsection}{\numberline {3.5}BETO Aplicado al Dataset Completo en Español}{8}{subsection.3.5}%
+\contentsline {subsubsection}{\numberline {3.5.1}Configuración del Entrenamiento}{9}{subsubsection.3.5.1}%
+\contentsline {subsubsection}{\numberline {3.5.2}Dependencia de Accelerate}{9}{subsubsection.3.5.2}%
+\contentsline {subsubsection}{\numberline {3.5.3}Preparación del Dataset}{9}{subsubsection.3.5.3}%
+\contentsline {subsubsection}{\numberline {3.5.4}Requisitos de Software}{10}{subsubsection.3.5.4}%
+\contentsline {subsubsection}{\numberline {3.5.5}Validación de Extrapolabilidad de Resultados}{10}{subsubsection.3.5.5}%
+\contentsline {section}{\numberline {4}Problemas Técnicos Encontrados}{11}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Limitaciones de la Solución Original}{11}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Workarounds Implementados}{12}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Resultados}{13}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Métricas de Evaluación}{13}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Análisis Comparativo}{14}{subsection.5.2}%
+\contentsline {section}{\numberline {6}Discusión}{14}{section.6}%
+\contentsline {section}{\numberline {7}Conclusiones}{14}{section.7}%
+\contentsline {section}{\numberline {8}Trabajo Futuro}{14}{section.8}%
+\contentsline {section}{\numberline {9}Referencias}{14}{section.9}%
+\contentsline {section}{\numberline {A}Código y Repositorio}{14}{appendix.Alph1}%

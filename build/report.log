@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.1.25)  1 FEB 2026 20:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.1.25)  12 FEB 2026 17:58
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -595,99 +595,141 @@ LaTeX Info: Redefining \% on input line 1.
 \openout4 = `report.toc'.
 
  [2]
-[3]
-Overfull \hbox (65.42107pt too wide) in paragraph at lines 104--105
+Underfull \hbox (badness 10000) in paragraph at lines 88--88
+[][][]\OT1/cmr/m/n/10 Gutsch, D. (2023). \OT1/cmr/m/it/10 The Art of Em-bed-din
+gs: Trans-for-ming Text for Vec-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 88--88
+\OT1/cmr/m/it/10 tor Da-ta-ba-ses (Part 2)\OT1/cmr/m/n/10 . Me-dium. [][]$\OT1/
+cmtt/m/n/10 https : / / medium . com / @david . gutsch0 /
+ []
+
+[3] [4] [5]
+Overfull \hbox (65.42107pt too wide) in paragraph at lines 136--137
 []\OT1/cmr/bx/n/12 Modelo 1: \OT1/cmr/m/n/12 Ba-sa-do en em-bed-dings de Ope-nA
 I GPT (no-te-book: 01[]tp[]final[]openai[]gpt[]oss.ipynb) 
  []
 
 
-Overfull \hbox (77.96645pt too wide) in paragraph at lines 105--106
+Overfull \hbox (77.96645pt too wide) in paragraph at lines 137--138
 []\OT1/cmr/bx/n/12 Modelo 2: \OT1/cmr/m/n/12 Ba-sa-do en BE-TO (BERT pre-entren
 ado pa-ra es-pa~nol, no-te-book: 02[]tp[]final[]beto.ipynb,
  []
 
 
-Overfull \hbox (37.47366pt too wide) in paragraph at lines 106--107
-[]\OT1/cmr/bx/n/12 Modelo 3: \OT1/cmr/m/n/12 Ba-sa-do en em-bed-dings per-so-na
--li-za-dos (no-te-book: 03[]tp[]final[]embedding.ipynb) 
- []
-
-
-Overfull \hbox (21.62883pt too wide) in paragraph at lines 107--108
+Overfull \hbox (21.62883pt too wide) in paragraph at lines 139--140
 []\OT1/cmr/bx/n/12 Modelo 4: \OT1/cmr/m/n/12 Ba-sa-do en Fast-Text con re-des n
 eu-ro-na-les (no-te-book: 04[]tp[]final[]ft[]nn.ipynb) 
  []
 
 
-Overfull \hbox (32.8647pt too wide) in paragraph at lines 108--109
+Overfull \hbox (32.8647pt too wide) in paragraph at lines 140--141
 []\OT1/cmr/bx/n/12 Soluci^^Son Ori-gi-nal: \OT1/cmr/m/n/12 Mo-de-lo ga-na-dor d
 el 2019 (Eduar-do Garc^^S^^Pa, GitHub: eduagarcia/meli-
  []
 
-[4] [5] [6]
-Overfull \hbox (5.95357pt too wide) in paragraph at lines 194--195
+[6]
+Overfull \hbox (18.21027pt too wide) in paragraph at lines 151--152
+\OT1/cmr/m/n/12 to) y de-vuel-ve un ^^Suni-co vec-tor den-so de di-men-si^^Son 
+fi-ja (1536 pa-ra \OT1/cmtt/m/n/12 text-embedding-3-small\OT1/cmr/m/n/12 ).
+ []
+
+[7] [8] [9] [10]
+Overfull \hbox (5.95357pt too wide) in paragraph at lines 264--265
 []\OT1/cmr/m/n/12 CuDNNLSTM y CuDNN-GRU re-quie-ren ver-sio-nes es-pec^^S^^Pfi-
 cas de CU-DA/cuDNN
  []
 
 
-Overfull \hbox (3.14095pt too wide) in paragraph at lines 202--203
+Overfull \hbox (3.14095pt too wide) in paragraph at lines 272--273
 []\OT1/cmr/m/n/12 SyntaxError con Python 3.6 por uso de \OT1/cmtt/m/n/12 from [
 ][]future[][] import annotations 
  []
 
-[7]
-Underfull \hbox (badness 10000) in paragraph at lines 251--251
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 322--322
 []\OT1/cmr/m/n/10.95 Muestra de 70,000
  []
 
 
-Underfull \hbox (badness 2846) in paragraph at lines 251--251
+Underfull \hbox (badness 2846) in paragraph at lines 322--322
 \OT1/cmr/m/n/10.95 re-gis-tros en es-pa~nol,
  []
 
 
-Underfull \hbox (badness 8075) in paragraph at lines 251--251
+Underfull \hbox (badness 8075) in paragraph at lines 322--322
 \OT1/cmr/m/n/10.95 BE-TO (BERT pre-
  []
 
 
-Underfull \hbox (badness 1852) in paragraph at lines 251--251
+Underfull \hbox (badness 1852) in paragraph at lines 322--322
 []\OT1/cmr/m/n/10.95 Dataset com-ple-to en
  []
 
 
-Underfull \hbox (badness 1552) in paragraph at lines 251--251
+Underfull \hbox (badness 1552) in paragraph at lines 322--322
 \OT1/cmr/m/n/10.95 es-pa~nol (~10M re-gis-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 251--251
-[]\OT1/cmr/m/n/10.95 Muestra de 1,000
+Underfull \hbox (badness 2368) in paragraph at lines 322--322
+\OT1/cmr/m/n/10.95 small, API s^^S^^Pncro-na,
  []
 
 
-Underfull \hbox (badness 2134) in paragraph at lines 251--251
-\OT1/cmr/m/n/10.95 re-gis-tros, em-bed-dings
+Underfull \hbox (badness 4353) in paragraph at lines 322--322
+\OT1/cmr/m/n/10.95 3-small, Batch API,
  []
 
 
-Underfull \hbox (badness 3679) in paragraph at lines 251--251
-\OT1/cmr/m/n/10.95 per-so-na-li-za-dos (KNN
- []
-
-
-Underfull \hbox (badness 1852) in paragraph at lines 251--251
+Underfull \hbox (badness 1852) in paragraph at lines 322--322
 []\OT1/cmr/m/n/10.95 Dataset com-ple-to en
  []
 
 
-Underfull \hbox (badness 1552) in paragraph at lines 251--251
+Underfull \hbox (badness 1552) in paragraph at lines 322--322
 \OT1/cmr/m/n/10.95 es-pa~nol (~10M re-gis-
  []
 
-[8] [9] (C:\Users\maribel.fraire\ML classifier\tp_final\build\report.aux
+[12] [13]
+Underfull \hbox (badness 10000) in paragraph at lines 380--382
+[]\OT1/cmr/m/n/12 OpenAI. \OT1/cmr/m/it/12 text-embedding-3-small\OT1/cmr/m/n/1
+2 . API Do-cu-men-ta-tion, Mo-dels. [][]$\OT1/cmtt/m/n/12 https :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 384--386
+[]\OT1/cmr/m/n/12 Mike H. (s.f.). \OT1/cmr/m/it/12 Tu-to-rial: Batch em-bed-din
+g with Ope-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 384--386
+\OT1/cmr/m/it/12 nAI API\OT1/cmr/m/n/12 . Me-dium. [][]$\OT1/cmtt/m/n/12 https 
+: / / medium . com / @mikehpg /
+ []
+
+
+Underfull \hbox (badness 4954) in paragraph at lines 388--390
+[]\OT1/cmr/m/n/12 Gutsch, D. (2023). \OT1/cmr/m/it/12 The Art of Em-bed-dings: 
+Trans-for-ming Text for Vec-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 388--390
+\OT1/cmr/m/it/12 tor Da-ta-ba-ses (Part 2)\OT1/cmr/m/n/12 . Me-dium. [][]$\OT1/
+cmtt/m/n/12 https : / / medium . com / @david . gutsch0 /
+ []
+
+
+Overfull \hbox (20.58455pt too wide) in paragraph at lines 388--390
+\OT1/cmtt/m/n/12 the-[]art-[]of-[]embeddings-[]transforming-[]text-[]for-[]vect
+or-[]databases-[]926738443e70$[][] 
+ []
+
+[14] (C:\Users\maribel.fraire\ML classifier\tp_final\build\report.aux
 LaTeX Info: Redefining \. on input line 11.
 LaTeX Info: Redefining \% on input line 11.
 )
@@ -696,16 +738,16 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 137648D6303CF14F932DF28F6253B68B;4617.
+(rerunfilecheck)             Checksum: 473006AEB831B37A6F861EC76920C109;7729.
  ) 
 Here is how much of TeX's memory you used:
- 13447 strings out of 467871
- 217101 string characters out of 5414020
- 642010 words of memory out of 5000000
- 42110 multiletter control sequences out of 15000+600000
- 638856 words of font info for 83 fonts, out of 8000000 for 9000
+ 13509 strings out of 467871
+ 218051 string characters out of 5414020
+ 645193 words of memory out of 5000000
+ 42141 multiletter control sequences out of 15000+600000
+ 640015 words of font info for 88 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,79p,582b,795s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,79p,1194b,797s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/maribel.fraire/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
 fonts/cm/cmbx10.pfb><C:/Users/maribel.fraire/AppData/Local/Programs/MiKTeX/font
 s/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/maribel.fraire/AppData/Local/Pr
@@ -713,13 +755,18 @@ ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/maribel.fraire
 /AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Use
 rs/maribel.fraire/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
 cmr17.pfb><C:/Users/maribel.fraire/AppData/Local/Programs/MiKTeX/fonts/type1/pu
-blic/amsfonts/cm/cmsy10.pfb><C:/Users/maribel.fraire/AppData/Local/Programs/MiK
-TeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/maribel.fraire/AppData/
-Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+blic/amsfonts/cm/cmr7.pfb><C:/Users/maribel.fraire/AppData/Local/Programs/MiKTe
+X/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/maribel.fraire/AppData/Loca
+l/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/maribel.f
+raire/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><
+C:/Users/maribel.fraire/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
+ts/cm/cmti12.pfb><C:/Users/maribel.fraire/AppData/Local/Programs/MiKTeX/fonts/t
+ype1/public/amsfonts/cm/cmtt10.pfb><C:/Users/maribel.fraire/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
 Output written on "C:\Users\maribel.fraire\ML classifier\tp_final\build\report.
-pdf" (9 pages, 164708 bytes).
+pdf" (14 pages, 251519 bytes).
 PDF statistics:
- 250 PDF objects out of 1000 (max. 8388607)
- 51 named destinations out of 1000 (max. 500000)
- 217 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 388 PDF objects out of 1000 (max. 8388607)
+ 78 named destinations out of 1000 (max. 500000)
+ 321 words of extra memory for PDF output out of 10000 (max. 10000000)
 

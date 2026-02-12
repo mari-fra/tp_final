@@ -83,6 +83,38 @@ Las arquitecturas de redes neuronales profundas han demostrado ser efectivas par
     \item \textbf{Embeddings:} Representaciones vectoriales densas de palabras o tokens que capturan relaciones semánticas
 \end{itemize}
 
+\subsection{Embeddings y modelos tipo Transformer}
+
+Los embeddings de texto utilizados en clasificación, búsqueda y bases vectoriales suelen producirse con \emph{encoders} basados en la arquitectura Transformer. Esta subsección resume los conceptos y etapas típicas de ese pipeline, siguiendo la exposición de Gutsch\footnote{Gutsch, D. (2023). \textit{The Art of Embeddings: Transforming Text for Vector Databases (Part 2)}. Medium. \url{https://medium.com/@david.gutsch0/the-art-of-embeddings-transforming-text-for-vector-databases-926738443e70}}. Estos conceptos sustentan, en mayor o menor medida, modelos como BERT y los embeddings de APIs como la de OpenAI utilizados en la etapa de laboratorio (Modelo 3).
+
+\subsubsection{Tokenización}
+
+La tokenización es el proceso de dividir el texto en unidades más pequeñas o \emph{tokens}. Los tokens pueden ser palabras, subpalabras o caracteres. En modelos clásicos como Word2Vec se usaba vocabulario a nivel de palabra, lo que limita el manejo de palabras fuera de vocabulario (OOV) y hace crecer el modelo con el tamaño del vocabulario.
+
+Entre las técnicas de \emph{subpalabras} utilizadas en este proyecto cabe destacar dos familias. Por un lado, \textbf{FastText} (Modelo 4, FastText) define las subpalabras como \emph{n-gramas de caracteres} de cada palabra (p. ej. ``celular'' $\to$ ``cel'', ``elu'', ``lul'', ``ula'', ``lar''). El vector de la palabra se obtiene como la suma de los vectores de sus n-gramas; así se pueden representar palabras OOV que comparten n-gramas con el corpus de entrenamiento. Por otro lado, los modelos tipo Transformer (BERT, APIs como OpenAI) usan \emph{tokenización por subpalabras} con esquemas como Byte Pair Encoding (BPE) o WordPiece: las palabras frecuentes se mantienen enteras y las raras se descomponen en subunidades, con vocabularios del orden de 30k--50k tokens (p. ej. en BERT o GPT-2). En ambos casos se controla el tamaño del vocabulario y se mejora el manejo de OOV. La elección del esquema de tokenización afecta el tamaño del modelo, el manejo de OOV y la calidad final de los embeddings.
+
+\subsubsection{Embedding lookup (búsqueda de embeddings)}
+
+Una vez tokenizado el texto, cada token se mapea a un vector denso inicial mediante una tabla de embeddings (embedding lookup). Estos vectores no son aleatorios: se aprenden en la fase de pre-entrenamiento del modelo y constituyen el punto de partida para que las capas posteriores capturen el significado de cada token en contexto.
+
+\subsubsection{Codificación posicional (positional encoding)}
+
+La arquitectura Transformer no tiene noción intrínseca del orden de los tokens. Para incorporar la posición en la secuencia, se suman \emph{codificaciones posicionales} a los embeddings iniciales. Así el modelo puede distinguir, por ejemplo, ``casa blanca'' de ``blanca casa''. Esta etapa permite procesar la secuencia de forma no secuencial (a diferencia de RNN/LSTM), lo que facilita el paralelismo y el entrenamiento a escala.
+
+\subsubsection{Mecanismo de autoatención (self-attention)}
+
+El mecanismo de autoatención permite que cada token ``consulte'' al resto de los tokens de la secuencia y pondere su influencia según la relevancia. Así se obtienen representaciones que dependen del contexto completo (p. ej. la misma palabra tiene distinto vector según la oración). En la práctica, para cada posición se calcula una combinación ponderada de las representaciones de todas las posiciones; los pesos se obtienen a partir de productos escalares entre vectores de consulta y clave (attention scores), normalizados típicamente con softmax.
+
+\subsubsection{Agregación y pooling}
+
+Dentro de una capa Transformer, la salida del mecanismo de atención se agrega (p. ej. se suma con residual y se normaliza) y se obtiene un vector por token que ya incorpora contexto. Para tareas que requieren \emph{un único vector por documento o por título} (como clasificación o búsqueda por similitud), se aplica una etapa adicional de \emph{pooling} sobre los vectores de los tokens: por ejemplo, promediar los vectores de todos los tokens (mean pooling), o usar el vector asociado a un token especial como \texttt{[CLS]} en BERT. Ese vector único es el embedding que se indexa o se usa como entrada a un clasificador.
+
+\subsubsection{Red neuronal feed-forward}
+
+Tras las operaciones de atención (y opcionalmente más capas apiladas), los vectores por token se pasan por una red neuronal feed-forward (capas lineales con no linealidad), compartida para todas las posiciones. Esta red refina las representaciones y contribuye a la capacidad del modelo de capturar patrones más abstractos. La salida final de la última capa (antes o después del pooling, según el diseño) es el embedding que se utiliza para comparación o clasificación.
+
+En resumen, el flujo típico es: \emph{tokenización} $\to$ \emph{embedding lookup} $\to$ \emph{+ codificación posicional} $\to$ (repetido) \emph{autoatención} + \emph{agregación/residual} + \emph{feed-forward} $\to$ \emph{pooling} (si se requiere un vector por texto). Los modelos de embedding como \texttt{text-embedding-3-small} de OpenAI no divulgan su arquitectura interna, pero se apoyan en principios análogos para producir vectores densos a partir de texto.
+
 \section{Metodología}
 
 \subsection{Dataset}
@@ -103,10 +135,48 @@ Se evaluaron los siguientes modelos como alternativas y comparación con la solu
 \begin{itemize}
     \item \textbf{Modelo 1:} Basado en embeddings de OpenAI GPT (notebook: 01\_tp\_final\_openai\_gpt\_oss.ipynb)
     \item \textbf{Modelo 2:} Basado en BETO (BERT pre-entrenado para español, notebook: 02\_tp\_final\_beto.ipynb, 02\_tp\_final\_beto\_all.ipynb)
-    \item \textbf{Modelo 3:} Basado en embeddings personalizados (notebook: 03\_tp\_final\_embedding.ipynb)
+    \item \textbf{Modelo 3:} Basado en embeddings de OpenAI (text-embedding-3-small). Dos ensayos: 03\_tp\_final\_embedding.ipynb (Ensayo 1) y 03\_tp\_final\_embedding\_2.ipynb (Ensayo 2, Batch API).
     \item \textbf{Modelo 4:} Basado en FastText con redes neuronales (notebook: 04\_tp\_final\_ft\_nn.ipynb)
     \item \textbf{Solución Original:} Modelo ganador del 2019 (Eduardo García, GitHub: eduagarcia/meli-challenge-2019)
 \end{itemize}
+
+\subsection{OpenAI Embeddings (Modelo 3)}
+
+Se utilizó el modelo \texttt{text-embedding-3-small} de OpenAI para el problema de clasificación de categorías de productos. Esta sección describe la metodología del embedding, la solución implementada, los dos ensayos realizados y el uso de la Batch API.
+
+\subsubsection{Metodología del embedding (text-embedding-3-small)}
+
+Según la documentación de OpenAI\footnote{\url{https://developers.openai.com/api/docs/models/text-embedding-3-small}}, los embeddings son representaciones numéricas de texto que permiten medir la afinidad semántica entre dos fragmentos. El modelo \texttt{text-embedding-3-small} es una versión mejorada y más eficiente del modelo anterior \texttt{ada}; está pensado para búsqueda, clustering, recomendaciones, detección de anomalías y tareas de clasificación.
+
+La API de embeddings recibe como entrada el texto (en este caso, el título del producto) y devuelve un único vector denso de dimensión fija (1536 para \texttt{text-embedding-3-small}). Ese vector resume el contenido semántico del texto en una representación de tamaño fijo apta para entrenar clasificadores estándar. Se utiliza la API para obtener el vector de embedding para cada ejemplo mediante llamadas síncronas. La documentación pública no detalla el pipeline interno (p. ej. tokenización, representación por subpalabras o agregación en un único vector).
+
+\subsubsection{Descripción de la solución}
+
+La solución consiste en: (1) obtener un vector de embedding por título mediante la API de OpenAI; (2) usar esos vectores como features para entrenar clasificadores supervisados. Se probaron Random Forest y K-Nearest Neighbors (KNN), con variantes de KNN: sin escalado, con StandardScaler y con reducción de dimensionalidad (PCA a 50 componentes). La evaluación se realiza sobre un conjunto de test estratificado; las métricas reportadas son accuracy (y, donde aplica, classification report).
+
+\subsubsection{Ensayo 1 (03\_tp\_final\_embedding.ipynb)}
+
+\begin{itemize}
+    \item \textbf{Muestra:} 1.000 registros tomados al azar del dataset; filtro de al menos 3 ejemplos por categoría, resultando en 247 filas útiles.
+    \item \textbf{API:} Llamadas síncronas a la API de embeddings (no Batch).
+    \item \textbf{Train/valid:} 70\% entrenamiento, 30\% validación (172 y 75 muestras respectivamente).
+    \item \textbf{Mejor resultado:} KNN con escalado (StandardScaler), accuracy 0,53 en validación.
+\end{itemize}
+
+\subsubsection{Ensayo 2 (03\_tp\_final\_embedding\_2.ipynb)}
+
+\begin{itemize}
+    \item \textbf{Muestra:} 10.000 registros con muestreo estratificado por categoría; filtro técnico de al menos 20 ejemplos por categoría (alineado con 02\_tp\_final\_beto\_all) y luego filtro de al menos 2 ejemplos por clase para permitir split estratificado (70\% train / 30\% test).
+    \item \textbf{API:} Batch API de OpenAI: mismo modelo y misma lógica de embedding, con procesamiento asíncrono y descuento del 50\% en coste\footnote{\url{https://developers.openai.com/api/docs/guides/batch}}.
+    \item \textbf{Train/test:} 70\% entrenamiento, 30\% test (\textasciitilde6.880 y \textasciitilde2.949 muestras).
+    \item \textbf{Mejor resultado:} KNN sin escalado, accuracy 0,48 en test; Random Forest 0,19; KNN con PCA 0,38.
+\end{itemize}
+
+La accuracy no mejoró en el Ensayo 2 a pesar de usar una muestra mayor (10k frente a \textasciitilde247) porque el problema es más difícil: en el Ensayo 2 se conservan muchas más categorías (con mínimo 20 ejemplos en el dataset completo y luego 2 en la muestra), de modo que el número de clases es mucho mayor. A mayor número de clases, la tarea de clasificación es más difícil y la accuracy típicamente baja para el mismo modelo y la misma métrica; además, el Ensayo 1 evaluaba en un conjunto de validación pequeño y con pocas categorías, por lo que la comparación directa no es equitativa. La metodología del Ensayo 2 (Batch API, split train/test, filtros por categoría) es más rigurosa para reportar resultados.
+
+\subsubsection{Batch API}
+
+La Batch API de OpenAI\footnote{\url{https://developers.openai.com/api/docs/guides/batch}} permite enviar conjuntos de peticiones de forma asíncrona. Para el endpoint \texttt{/v1/embeddings}, los parámetros de cada petición (modelo, texto de entrada) son los mismos que en la API síncrona; la diferencia está en el modo de envío y el coste. Ventajas relevantes para este proyecto: (1) descuento del 50\% respecto a la API estándar; (2) límites de tasa separados y más altos; (3) tiempo de completitud dentro de 24 horas (suele ser menor). Cada lote se prepara en un archivo JSONL (una línea por petición, con \texttt{custom\_id}, \texttt{method}, \texttt{url} y \texttt{body}); el archivo se sube con \texttt{purpose="batch"} y se crea el batch indicando \texttt{endpoint="/v1/embeddings"}. Los resultados se descargan por \texttt{output\_file\_id}; el orden de las líneas puede no coincidir con el de entrada, por lo que se usa \texttt{custom\_id} para asociar cada respuesta al título correspondiente. Para embeddings, el límite es de 50.000 entradas por lote; en el Ensayo 2 se usaron 10.000 títulos en un solo lote.
 
 \subsection{BETO Aplicado al Dataset Completo en Español}
 
@@ -244,7 +314,8 @@ Solución Original (2019) & Dataset completo, modelo ganador del Meli Challenge 
 Modelo 1 (GPT OSS) & Muestra de 1,000 registros, embeddings de OpenAI GPT & 0.91 & - & - & 0.89 \\
 Modelo 2 (BETO) & Muestra de 70,000 registros en español, BETO (BERT pre-entrenado) & 0.47 & - & - & - \\
 Modelo 2 (BETO completo) & Dataset completo en español (\textasciitilde10M registros), BETO & 0.88 & - & - & 0.84 \\
-Modelo 3 (Embeddings) & Muestra de 1,000 registros, embeddings personalizados (KNN escalado) & 0.53 & - & - & - \\
+Modelo 3 (Embeddings v1) & Muestra 1k $\to$ 247 filas, text-embedding-3-small, API síncrona, KNN escalado & 0.53 & - & - & - \\
+Modelo 3 (Embeddings v2) & Muestra 10k estratificada, text-embedding-3-small, Batch API, KNN (mejor) & 0.48 & - & - & - \\
 Modelo 4 (FastText NN) & Dataset completo en español (\textasciitilde10M registros), FastText con redes neuronales & 0.81 & - & - & - \\
 \bottomrule
 \end{tabular}%
@@ -300,6 +371,26 @@ GitHub Repository. \url{https://github.com/eduagarcia/meli-challenge-2019}
 \bibitem{tensorflow}
 TensorFlow Team. \textit{TensorFlow Documentation}. 
 \url{https://www.tensorflow.org/}
+
+\bibitem{openai-batch}
+OpenAI. \textit{Batch API}. API Documentation.
+\url{https://developers.openai.com/api/docs/guides/batch}
+
+\bibitem{openai-embedding}
+OpenAI. \textit{text-embedding-3-small}. API Documentation, Models.
+\url{https://developers.openai.com/api/docs/models/text-embedding-3-small}
+
+\bibitem{medium-batch}
+Mike H. (s.f.). \textit{Tutorial: Batch embedding with OpenAI API}. Medium.
+\url{https://medium.com/@mikehpg/tutorial-batch-embedding-with-openai-api-95da95c9778a}
+
+\bibitem{gutsch2023}
+Gutsch, D. (2023). \textit{The Art of Embeddings: Transforming Text for Vector Databases (Part 2)}. Medium.
+\url{https://medium.com/@david.gutsch0/the-art-of-embeddings-transforming-text-for-vector-databases-926738443e70}
+
+\bibitem{bojanowski2017}
+Bojanowski, P., Grave, E., Joulin, A., \& Mikolov, T. (2017). Enriching Word Vectors with Subword Information. \textit{Transactions of the Association for Computational Linguistics}, 5, 135--146.
+\url{https://aclanthology.org/Q17-1010/}
 
 \end{thebibliography}
 
