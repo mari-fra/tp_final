@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.1.25)  12 FEB 2026 17:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.1.25)  20 FEB 2026 18:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -595,136 +595,137 @@ LaTeX Info: Redefining \% on input line 1.
 \openout4 = `report.toc'.
 
  [2]
-Underfull \hbox (badness 10000) in paragraph at lines 88--88
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 92--92
 [][][]\OT1/cmr/m/n/10 Gutsch, D. (2023). \OT1/cmr/m/it/10 The Art of Em-bed-din
 gs: Trans-for-ming Text for Vec-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 88--88
+Underfull \hbox (badness 10000) in paragraph at lines 92--92
 \OT1/cmr/m/it/10 tor Da-ta-ba-ses (Part 2)\OT1/cmr/m/n/10 . Me-dium. [][]$\OT1/
 cmtt/m/n/10 https : / / medium . com / @david . gutsch0 /
  []
 
-[3] [4] [5]
-Overfull \hbox (65.42107pt too wide) in paragraph at lines 136--137
+[4] [5]
+Overfull \hbox (65.42107pt too wide) in paragraph at lines 140--141
 []\OT1/cmr/bx/n/12 Modelo 1: \OT1/cmr/m/n/12 Ba-sa-do en em-bed-dings de Ope-nA
 I GPT (no-te-book: 01[]tp[]final[]openai[]gpt[]oss.ipynb) 
  []
 
 
-Overfull \hbox (77.96645pt too wide) in paragraph at lines 137--138
+Overfull \hbox (77.96645pt too wide) in paragraph at lines 141--142
 []\OT1/cmr/bx/n/12 Modelo 2: \OT1/cmr/m/n/12 Ba-sa-do en BE-TO (BERT pre-entren
 ado pa-ra es-pa~nol, no-te-book: 02[]tp[]final[]beto.ipynb,
  []
 
-
-Overfull \hbox (21.62883pt too wide) in paragraph at lines 139--140
+[6]
+Overfull \hbox (21.62883pt too wide) in paragraph at lines 143--144
 []\OT1/cmr/bx/n/12 Modelo 4: \OT1/cmr/m/n/12 Ba-sa-do en Fast-Text con re-des n
 eu-ro-na-les (no-te-book: 04[]tp[]final[]ft[]nn.ipynb) 
  []
 
 
-Overfull \hbox (32.8647pt too wide) in paragraph at lines 140--141
+Overfull \hbox (32.8647pt too wide) in paragraph at lines 144--145
 []\OT1/cmr/bx/n/12 Soluci^^Son Ori-gi-nal: \OT1/cmr/m/n/12 Mo-de-lo ga-na-dor d
 el 2019 (Eduar-do Garc^^S^^Pa, GitHub: eduagarcia/meli-
  []
 
-[6]
-Overfull \hbox (18.21027pt too wide) in paragraph at lines 151--152
+
+Overfull \hbox (18.21027pt too wide) in paragraph at lines 155--156
 \OT1/cmr/m/n/12 to) y de-vuel-ve un ^^Suni-co vec-tor den-so de di-men-si^^Son 
 fi-ja (1536 pa-ra \OT1/cmtt/m/n/12 text-embedding-3-small\OT1/cmr/m/n/12 ).
  []
 
 [7] [8] [9] [10]
-Overfull \hbox (5.95357pt too wide) in paragraph at lines 264--265
+Overfull \hbox (5.95357pt too wide) in paragraph at lines 268--269
 []\OT1/cmr/m/n/12 CuDNNLSTM y CuDNN-GRU re-quie-ren ver-sio-nes es-pec^^S^^Pfi-
 cas de CU-DA/cuDNN
  []
 
-
-Overfull \hbox (3.14095pt too wide) in paragraph at lines 272--273
+[11]
+Overfull \hbox (3.14095pt too wide) in paragraph at lines 276--277
 []\OT1/cmr/m/n/12 SyntaxError con Python 3.6 por uso de \OT1/cmtt/m/n/12 from [
 ][]future[][] import annotations 
  []
 
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 322--322
+
+Underfull \hbox (badness 10000) in paragraph at lines 326--326
 []\OT1/cmr/m/n/10.95 Muestra de 70,000
  []
 
 
-Underfull \hbox (badness 2846) in paragraph at lines 322--322
+Underfull \hbox (badness 2846) in paragraph at lines 326--326
 \OT1/cmr/m/n/10.95 re-gis-tros en es-pa~nol,
  []
 
 
-Underfull \hbox (badness 8075) in paragraph at lines 322--322
+Underfull \hbox (badness 8075) in paragraph at lines 326--326
 \OT1/cmr/m/n/10.95 BE-TO (BERT pre-
  []
 
 
-Underfull \hbox (badness 1852) in paragraph at lines 322--322
+Underfull \hbox (badness 1852) in paragraph at lines 326--326
 []\OT1/cmr/m/n/10.95 Dataset com-ple-to en
  []
 
 
-Underfull \hbox (badness 1552) in paragraph at lines 322--322
+Underfull \hbox (badness 1552) in paragraph at lines 326--326
 \OT1/cmr/m/n/10.95 es-pa~nol (~10M re-gis-
  []
 
 
-Underfull \hbox (badness 2368) in paragraph at lines 322--322
+Underfull \hbox (badness 2368) in paragraph at lines 326--326
 \OT1/cmr/m/n/10.95 small, API s^^S^^Pncro-na,
  []
 
 
-Underfull \hbox (badness 4353) in paragraph at lines 322--322
+Underfull \hbox (badness 4353) in paragraph at lines 326--326
 \OT1/cmr/m/n/10.95 3-small, Batch API,
  []
 
 
-Underfull \hbox (badness 1852) in paragraph at lines 322--322
+Underfull \hbox (badness 1852) in paragraph at lines 326--326
 []\OT1/cmr/m/n/10.95 Dataset com-ple-to en
  []
 
 
-Underfull \hbox (badness 1552) in paragraph at lines 322--322
+Underfull \hbox (badness 1552) in paragraph at lines 326--326
 \OT1/cmr/m/n/10.95 es-pa~nol (~10M re-gis-
  []
 
 [12] [13]
-Underfull \hbox (badness 10000) in paragraph at lines 380--382
+Underfull \hbox (badness 10000) in paragraph at lines 384--386
 []\OT1/cmr/m/n/12 OpenAI. \OT1/cmr/m/it/12 text-embedding-3-small\OT1/cmr/m/n/1
 2 . API Do-cu-men-ta-tion, Mo-dels. [][]$\OT1/cmtt/m/n/12 https :
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 384--386
+Underfull \hbox (badness 10000) in paragraph at lines 388--390
 []\OT1/cmr/m/n/12 Mike H. (s.f.). \OT1/cmr/m/it/12 Tu-to-rial: Batch em-bed-din
 g with Ope-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 384--386
+Underfull \hbox (badness 10000) in paragraph at lines 388--390
 \OT1/cmr/m/it/12 nAI API\OT1/cmr/m/n/12 . Me-dium. [][]$\OT1/cmtt/m/n/12 https 
 : / / medium . com / @mikehpg /
  []
 
 
-Underfull \hbox (badness 4954) in paragraph at lines 388--390
+Underfull \hbox (badness 4954) in paragraph at lines 392--394
 []\OT1/cmr/m/n/12 Gutsch, D. (2023). \OT1/cmr/m/it/12 The Art of Em-bed-dings: 
 Trans-for-ming Text for Vec-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 388--390
+Underfull \hbox (badness 10000) in paragraph at lines 392--394
 \OT1/cmr/m/it/12 tor Da-ta-ba-ses (Part 2)\OT1/cmr/m/n/12 . Me-dium. [][]$\OT1/
 cmtt/m/n/12 https : / / medium . com / @david . gutsch0 /
  []
 
 
-Overfull \hbox (20.58455pt too wide) in paragraph at lines 388--390
+Overfull \hbox (20.58455pt too wide) in paragraph at lines 392--394
 \OT1/cmtt/m/n/12 the-[]art-[]of-[]embeddings-[]transforming-[]text-[]for-[]vect
 or-[]databases-[]926738443e70$[][] 
  []
@@ -738,13 +739,13 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 473006AEB831B37A6F861EC76920C109;7729.
+(rerunfilecheck)             Checksum: 40559089A9FBBCF590293FB6AD0A4033;7870.
  ) 
 Here is how much of TeX's memory you used:
- 13509 strings out of 467871
- 218051 string characters out of 5414020
+ 13514 strings out of 467871
+ 218101 string characters out of 5414020
  645193 words of memory out of 5000000
- 42141 multiletter control sequences out of 15000+600000
+ 42142 multiletter control sequences out of 15000+600000
  640015 words of font info for 88 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,12n,79p,1194b,797s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -764,9 +765,9 @@ ts/cm/cmti12.pfb><C:/Users/maribel.fraire/AppData/Local/Programs/MiKTeX/fonts/t
 ype1/public/amsfonts/cm/cmtt10.pfb><C:/Users/maribel.fraire/AppData/Local/Progr
 ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
 Output written on "C:\Users\maribel.fraire\ML classifier\tp_final\build\report.
-pdf" (14 pages, 251519 bytes).
+pdf" (14 pages, 253006 bytes).
 PDF statistics:
- 388 PDF objects out of 1000 (max. 8388607)
- 78 named destinations out of 1000 (max. 500000)
- 321 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 397 PDF objects out of 1000 (max. 8388607)
+ 82 named destinations out of 1000 (max. 500000)
+ 329 words of extra memory for PDF output out of 10000 (max. 10000000)
 

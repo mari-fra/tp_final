@@ -42,7 +42,7 @@
 \maketitle
 
 \begin{abstract}
-Este trabajo presenta un análisis comparativo de diferentes modelos de Machine Learning aplicados al problema de clasificación propuesto por Mercado Libre en la competencia de Kaggle (Meli Challenge 2019). El objetivo principal es evaluar y comparar el rendimiento de diversos modelos contra la solución ganadora, considerando las limitaciones técnicas actuales para replicar la implementación original debido a dependencias obsoletas (TensorFlow 1.14, CUDA 10.0, Python 3.6/3.7) y problemas de compatibilidad con hardware y software modernos.
+Este trabajo presenta un análisis comparativo de diferentes modelos de Machine Learning aplicados al problema de clasificación propuesto por Mercado Libre en la competencia de Kaggle (Meli Challenge 2019). El objetivo principal es evaluar y comparar el rendimiento de diversos modelos contra la solución ganadora.
 \end{abstract}
 
 \tableofcontents
@@ -53,23 +53,27 @@ Este trabajo presenta un análisis comparativo de diferentes modelos de Machine 
 \subsection{Contexto del Problema}
 
 % Describe el problema de clasificación de Mercado Libre
-El Meli Challenge 2019 fue una competencia de Kaggle organizada por Mercado Libre con el objetivo de clasificar productos en diferentes categorías basándose en sus títulos y descripciones. La solución ganadora, desarrollada por Eduardo García, alcanzó un score de 0.91733 en el Public Leaderboard, ocupando el primer lugar.
+El Meli Challenge 2019 fue una competencia de Kaggle organizada por Mercado Libre con el objetivo de clasificar productos en diferentes categorías basándose en sus títulos y descripciones. La solución ganadora que alcanzó un score de 0.91733 en el Public Leaderboard, ocupando el primer lugar.
 
-\subsection{Objetivos del Trabajo}
+\subsection{Objetivo General}
 
-\begin{itemize}
-    \item Comparar diferentes modelos de ML con la solución ganadora del 2019
-    \item Evaluar métricas de rendimiento entre los modelos implementados
-    \item Documentar las limitaciones técnicas encontradas al replicar la solución original
-    \item Analizar alternativas modernas a las tecnologías obsoletas utilizadas en la solución ganadora
-\end{itemize}
+Evaluar el rendimiento de enfoques de clasificación de texto que incluye embeddings clásicos, aprendizaje profundo y modelos basados en transformers, en el marco del Meli Challenge 2019.
+
+\subsection{Objetivos Específicos}
+
+\begin{enumerate}
+    \item Analizar las caracteristicas y el alcance de los modelos de clasificación de texto utilizados en la práctica: embeddings clásicos, aprendizaje profundo y modelos basados en la arquitectura Transformer o LLM.
+    \item Implementar pipelines completos de clasificación de texto que incluyan tokenización, obtención de embeddings, clasificación con diferentes soluciones aplicadas en la práctica tales como embeddings OpenAI (\texttt{text-embedding-3-small}), modelos pre-entrenados BETO/BERT y GPT, embeddings FastText con red neuronal y solución ganadora con LSTM/GRU.
+    \item Comparar las métricas de rendimiento de los modelos implementados y de la solución ganadora, para identificar factores que explican sus diferencias en el problema de categorización del Meli Challenge 2019.
+\end{enumerate}
 
 \section{Marco Teórico}
 
 \subsection{Machine Learning para Clasificación de Texto}
 
-% Agrega aquí la teoría relevante sobre clasificación de texto
 La clasificación de texto es una tarea fundamental en el procesamiento de lenguaje natural (NLP) que consiste en asignar etiquetas o categorías a documentos de texto. En el contexto del Meli Challenge 2019, el objetivo es clasificar productos de e-commerce en categorías específicas basándose en sus descripciones.
+
+En la literatura es habitual organizar los enfoques de clasificación de texto en tres grandes grupos. Los \emph{enfoques tradicionales} incluyen representaciones como TF-IDF o FastText con clasificadores clásicos (por ejemplo, regresión logística, SVM o árboles). El \emph{aprendizaje profundo} abarca redes recurrentes (LSTM, GRU) y convolucionales aplicadas al texto. Los \emph{transformers} corresponden a arquitecturas basadas en mecanismos de atención (BERT, BETO, GPT). Esta taxonomía es la que se adopta en el presente trabajo para comparar modelos.
 
 \subsection{Arquitecturas de Redes Neuronales}
 
