@@ -69,7 +69,73 @@ Evaluar el rendimiento de enfoques de clasificación de texto que incluye embedd
 
 \section{Marco Teórico}
 
-\subsection{Machine Learning para Clasificación de Texto}
+\subsection{Conceptos Básicos de Machine Learning para Clasificación}
+
+Esta sección describe algunos conceptos básicos del Machine Learning que son utilizados en este trabajo.
+
+\subsubsection{Aprendizaje Automático}
+
+Siguiendo el marco conceptual establecido por Mitchell (1997), se define el Machine Learning como: ``A computer program is said to learn from experience E with respect to some class of tasks T and performance measure P, if its performance at tasks in T, as measured by P, improves with experience E''\footnote{Mitchell, T. M. (1997). \textit{Machine Learning}. McGraw Hill.}. Esta definición establece tres componentes fundamentales: la experiencia (E), que corresponde a los datos de entrenamiento; la tarea (T), que define qué tipo de problema se busca resolver; y la medida de rendimiento (P), que cuantifica qué tan bien el programa realiza la tarea.
+
+\subsubsection{Tarea de Clasificación}
+
+La clasificación es un tipo de tarea de aprendizaje supervisado en la cual el objetivo es asignar una etiqueta o categoría a una instancia de entrada basándose en sus características. En este tipo de tarea, el algoritmo aprende a partir de ejemplos etiquetados (experiencia E) para construir un modelo que pueda predecir la categoría correcta para nuevas instancias no vistas durante el entrenamiento. En el contexto del Meli Challenge 2019, la tarea consiste en clasificar productos de e-commerce en categorías específicas basándose en sus títulos y descripciones, donde cada producto representa una instancia y cada categoría representa una clase posible.
+
+\subsubsection{Medida de Rendimiento}
+
+La medida de rendimiento permite cuantificar el éxito del algoritmo en la tarea de clasificación. En este trabajo se utiliza principalmente la \emph{accuracy} (precisión o exactitud), definida como la proporción de predicciones correctas sobre el total de predicciones realizadas. Matemáticamente, la accuracy se calcula como:
+
+\begin{equation}
+\text{Accuracy} = \frac{\text{Número de predicciones correctas}}{\text{Número total de predicciones}} = \frac{TP + TN}{TP + TN + FP + FN}
+\end{equation}
+
+donde TP (True Positives) son los casos correctamente clasificados como positivos, TN (True Negatives) son los casos correctamente clasificados como negativos, FP (False Positives) son los casos incorrectamente clasificados como positivos, y FN (False Negatives) son los casos incorrectamente clasificados como negativos. La accuracy proporciona una medida general del rendimiento del modelo, aunque puede ser engañosa en problemas con clases desbalanceadas, donde algunas categorías tienen muchos más ejemplos que otras.
+
+\subsubsection{Generalización}
+
+El desafío principal de un algoritmo de Machine Learning es performar bien en datos nuevos, es decir, no vistos durante el entrenamiento. Esta cualidad es conocida como \emph{generalización}.
+
+Los factores que determinan qué tan bien funcionará un algoritmo de Machine Learning pueden dividirse en dos categorías principales\footnote{Goodfellow, I., Bengio, Y., \& Courville, A. (2016). \textit{Deep Learning}. MIT Press.}: 1) hacer que el training error sea pequeño, y 2) hacer que la brecha entre training error y test error sea pequeña. Estos dos factores corresponden a los dos desafíos centrales en Machine Learning: \emph{underfitting} y \emph{overfitting}.
+
+El \emph{underfitting} ocurre cuando el modelo no es capaz de obtener un training error suficientemente bajo. Esto sucede cuando la capacidad del modelo es insuficiente para capturar la complejidad subyacente de los datos. En el contexto de clasificación de productos del Meli Challenge 2019, un modelo con underfitting podría no aprender los patrones necesarios para distinguir entre categorías similares, como por ejemplo, diferenciar entre ``celulares'' y ``tablets''.
+
+El \emph{overfitting} ocurre cuando la brecha entre training error y test error es demasiado grande, es decir, cuando el modelo tiene un training error muy bajo pero un test error significativamente mayor. Esto sucede cuando el modelo tiene demasiada capacidad y memoriza los detalles específicos del conjunto de entrenamiento en lugar de aprender patrones generalizables. En el problema de clasificación de categorías de productos, un modelo con overfitting podría memorizar títulos específicos del conjunto de entrenamiento y fallar al clasificar productos similares pero no idénticos en el conjunto de test.
+
+La \emph{capacidad} de un modelo se refiere a su habilidad para ajustarse a una amplia variedad de funciones. Un modelo con poca capacidad puede tener dificultades para ajustarse al conjunto de entrenamiento (underfitting), mientras que un modelo con demasiada capacidad puede memorizar el conjunto de entrenamiento sin generalizar bien (overfitting). La capacidad debe estar alineada con la complejidad del problema: para el Meli Challenge 2019, que involucra más de 1,500 categorías diferentes con patrones semánticos complejos en títulos y descripciones de productos, se requieren modelos con suficiente capacidad para capturar estas relaciones, pero sin excederla de manera que se produzca overfitting.
+
+La relación entre la capacidad del modelo y los errores de entrenamiento y generalización se ilustra en la Figura~\ref{fig:capacidad-error}, donde se observa cómo el error de entrenamiento disminuye con el aumento de la capacidad, mientras que el error de generalización alcanza un mínimo en un punto óptimo y luego aumenta debido al overfitting.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{capacidad_error.png}
+\caption{Relación entre la capacidad del modelo y los errores de entrenamiento y generalización. La zona de underfitting se caracteriza por altos errores en ambos conjuntos, mientras que la zona de overfitting muestra un bajo error de entrenamiento pero un alto error de generalización, con una brecha creciente entre ambos.}
+\label{fig:capacidad-error}
+\end{figure}
+
+\subsubsection{Descenso por Gradiente Estocástico y Función de Pérdida}
+
+El descenso de gradiente (GD) es un algoritmo de optimización que minimiza iterativamente una función objetivo. En el contexto del Machine Learning, esta técnica se utiliza durante la fase de entrenamiento de un modelo supervisado para minimizar la función de pérdida o costo, que mide qué tan lejos están las predicciones del modelo de los valores reales de los datos\footnote{IBM. \textit{Stochastic Gradient Descent}. \url{https://www.ibm.com/mx-es/think/topics/stochastic-gradient-descent}}. Un ejemplo común de función de costo es el error cuadrático medio.
+
+El algoritmo calcula el gradiente, o la pendiente, de la pérdida con respecto a los parámetros del modelo. Con este gradiente, da un paso en la dirección opuesta para reducir la pérdida. La tasa de aprendizaje $\alpha$ es el tamaño de los pasos y permanece fija para todos los parámetros del modelo. Este proceso se repite iterativamente hasta que el modelo logra una convergencia cercana a un mínimo. El mínimo global es el valor absoluto más bajo de la función de pérdida en todo su dominio, lo que representa la mejor solución posible para el problema. Si la tasa de aprendizaje no es lo suficientemente pequeña, el algoritmo a menudo convergerá en un mínimo local en lugar del mínimo global. Una tasa de aprendizaje bien elegida es esencial para minimizar la función de pérdida y lograr la convergencia en un mínimo global.
+
+El uso de \emph{Stochastic Gradient Descent} (SGD) en redes neuronales se debe al alto costo computacional de ejecutar la backpropagation sobre el conjunto de entrenamiento completo\footnote{Stanford University. \textit{Optimization: Stochastic Gradient Descent}. UFLDL Tutorial. \url{http://deeplearning.stanford.edu/tutorial/supervised/OptimizationStochasticGradientDescent/}}. SGD puede superar este costo y, aun así, conducir a una convergencia rápida. A diferencia del descenso de gradiente estándar, que actualiza los parámetros $\theta$ de la función objetivo $J(\theta)$ usando todo el conjunto de entrenamiento. SGD calcula el gradiente de los parámetros utilizando solo una muestra o unas pocas muestras de entrenamiento (minibatch). La actualización de parámetros en SGD está dada por:
+
+\begin{equation}
+\theta = \theta - \alpha \nabla_\theta J(\theta; x^{(i)}, y^{(i)})
+\end{equation}
+
+donde $(x^{(i)}, y^{(i)})$ es un par del conjunto de entrenamiento. Generalmente, cada actualización de parámetros en SGD se calcula con respecto a unas pocas muestras de entrenamiento o un minibatch, en lugar de una sola muestra. Esto reduce la varianza en la actualización de parámetros y puede conducir a una convergencia más estable.
+
+El proceso de optimización mediante SGD se ilustra en la Figura~\ref{fig:sgd-optimizacion}, donde se observa cómo el algoritmo itera desde un punto inicial, ajustando los parámetros del modelo (pesos) para reducir progresivamente la pérdida hasta alcanzar un mínimo.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{sgd_optimizacion.png}
+\caption{Proceso de optimización mediante descenso por gradiente estocástico.}
+\label{fig:sgd-optimizacion}
+\end{figure}
+
+\subsection{Modelos de Machine Learning para Clasificación de Texto}
 
 La clasificación de texto es una tarea fundamental en el procesamiento de lenguaje natural (NLP) que consiste en asignar etiquetas o categorías a documentos de texto. En el contexto del Meli Challenge 2019, el objetivo es clasificar productos de e-commerce en categorías específicas basándose en sus descripciones.
 
@@ -362,7 +428,21 @@ Modelo 4 (FastText NN) & Dataset completo en español (\textasciitilde10M regist
 % \bibliographystyle{plain}
 
 % Ejemplo manual (reemplaza con tus referencias reales):
-\begin{thebibliography}{9}
+\begin{thebibliography}{12}
+
+\bibitem{mitchell1997}
+Mitchell, T. M. (1997). \textit{Machine Learning}. McGraw Hill.
+
+\bibitem{goodfellow2016}
+Goodfellow, I., Bengio, Y., \& Courville, A. (2016). \textit{Deep Learning}. MIT Press.
+
+\bibitem{ibm-sgd}
+IBM. \textit{Stochastic Gradient Descent}. IBM Think Topics.
+\url{https://www.ibm.com/mx-es/think/topics/stochastic-gradient-descent}
+
+\bibitem{stanford-sgd}
+Stanford University. \textit{Optimization: Stochastic Gradient Descent}. UFLDL Tutorial.
+\url{http://deeplearning.stanford.edu/tutorial/supervised/OptimizationStochasticGradientDescent/}
 
 \bibitem{meli2019}
 Mercado Libre. (2019). \textit{Meli Challenge 2019}. Kaggle Competition.
