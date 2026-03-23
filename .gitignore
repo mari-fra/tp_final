@@ -1,3 +1,4 @@
 .env
 train.csv
 openai_embeddings/batch_embeddings_10k_results.jsonl
+guia_de_lec

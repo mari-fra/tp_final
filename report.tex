@@ -12,7 +12,7 @@
 
 % Paquetes esenciales
 \usepackage[utf8]{inputenc}
-\usepackage[spanish]{babel}  % Cambia a 'english' si prefieres en inglés
+\usepackage[spanish]{babel}
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{graphicx}
 \usepackage{hyperref}
@@ -42,18 +42,19 @@
 \maketitle
 
 \begin{abstract}
-Este trabajo presenta un análisis comparativo de diferentes modelos de Machine Learning aplicados al problema de clasificación propuesto por Mercado Libre en la competencia de Kaggle (Meli Challenge 2019). El objetivo principal es evaluar y comparar el rendimiento de diversos modelos contra la solución ganadora.
+Este trabajo presenta un análisis comparativo de diferentes modelos de Machine Learning aplicados al problema de clasificación propuesto por Mercado Libre en la competencia de Kaggle (Meli Challenge 2019). El objetivo principal es evaluar y comparar el rendimiento de diversos modelos contra la solución ganadora, explorando enfoques que van desde embeddings clásicos hasta modelos basados en arquitecturas Transformer y grandes modelos de lenguaje.
 \end{abstract}
 
 \tableofcontents
 \newpage
 
+% ============================================================
 \section{Introducción}
+% ============================================================
 
 \subsection{Contexto del Problema}
 
-% Describe el problema de clasificación de Mercado Libre
-El Meli Challenge 2019 fue una competencia de Kaggle organizada por Mercado Libre con el objetivo de clasificar productos en diferentes categorías basándose en sus títulos y descripciones. La solución ganadora que alcanzó un score de 0.91733 en el Public Leaderboard, ocupando el primer lugar.
+El Meli Challenge 2019 fue una competencia de Kaggle organizada por Mercado Libre con el objetivo de clasificar productos en diferentes categorías basándose en sus títulos y descripciones. La solución ganadora alcanzó un score de 0.91733 en el Public Leaderboard, ocupando el primer lugar.
 
 \subsection{Objetivo General}
 
@@ -62,12 +63,14 @@ Evaluar el rendimiento de enfoques de clasificación de texto que incluye embedd
 \subsection{Objetivos Específicos}
 
 \begin{enumerate}
-    \item Analizar las caracteristicas y el alcance de los modelos de clasificación de texto utilizados en la práctica: embeddings clásicos, aprendizaje profundo y modelos basados en la arquitectura Transformer o LLM.
+    \item Analizar las características y el alcance de los modelos de clasificación de texto utilizados en la práctica: embeddings clásicos, aprendizaje profundo y modelos basados en la arquitectura Transformer o LLM.
     \item Implementar pipelines completos de clasificación de texto que incluyan tokenización, obtención de embeddings, clasificación con diferentes soluciones aplicadas en la práctica tales como embeddings OpenAI (\texttt{text-embedding-3-small}), modelos pre-entrenados BETO/BERT y GPT, embeddings FastText con red neuronal y solución ganadora con LSTM/GRU.
     \item Comparar las métricas de rendimiento de los modelos implementados y de la solución ganadora, para identificar factores que explican sus diferencias en el problema de categorización del Meli Challenge 2019.
 \end{enumerate}
 
+% ============================================================
 \section{Marco Teórico}
+% ============================================================
 
 \subsection{Conceptos Básicos de Machine Learning para Clasificación}
 
@@ -95,7 +98,7 @@ donde TP (True Positives) son los casos correctamente clasificados como positivo
 
 El desafío principal de un algoritmo de Machine Learning es performar bien en datos nuevos, es decir, no vistos durante el entrenamiento. Esta cualidad es conocida como \emph{generalización}.
 
-Los factores que determinan qué tan bien funcionará un algoritmo de Machine Learning pueden dividirse en dos categorías principales\footnote{Goodfellow, I., Bengio, Y., \& Courville, A. (2016). \textit{Deep Learning}. MIT Press.}: 1) hacer que el training error sea pequeño, y 2) hacer que la brecha entre training error y test error sea pequeña. Estos dos factores corresponden a los dos desafíos centrales en Machine Learning: \emph{underfitting} y \emph{overfitting}.
+Los factores que determinan qué tan bien funcionará un algoritmo de Machine Learning pueden dividirse en dos categorías principales \cite{goodfellow2016}: 1) hacer que el training error sea pequeño, y 2) hacer que la brecha entre training error y test error sea pequeña. Estos dos factores corresponden a los dos desafíos centrales en Machine Learning: \emph{underfitting} y \emph{overfitting}.
 
 El \emph{underfitting} ocurre cuando el modelo no es capaz de obtener un training error suficientemente bajo. Esto sucede cuando la capacidad del modelo es insuficiente para capturar la complejidad subyacente de los datos. En el contexto de clasificación de productos del Meli Challenge 2019, un modelo con underfitting podría no aprender los patrones necesarios para distinguir entre categorías similares, como por ejemplo, diferenciar entre ``celulares'' y ``tablets''.
 
@@ -114,11 +117,11 @@ La relación entre la capacidad del modelo y los errores de entrenamiento y gene
 
 \subsubsection{Descenso por Gradiente Estocástico y Función de Pérdida}
 
-El descenso de gradiente (GD) es un algoritmo de optimización que minimiza iterativamente una función objetivo. En el contexto del Machine Learning, esta técnica se utiliza durante la fase de entrenamiento de un modelo supervisado para minimizar la función de pérdida o costo, que mide qué tan lejos están las predicciones del modelo de los valores reales de los datos\footnote{IBM. \textit{Stochastic Gradient Descent}. \url{https://www.ibm.com/mx-es/think/topics/stochastic-gradient-descent}}. Un ejemplo común de función de costo es el error cuadrático medio.
+El descenso de gradiente (GD) es un algoritmo de optimización que minimiza iterativamente una función objetivo. En el contexto del Machine Learning, esta técnica se utiliza durante la fase de entrenamiento de un modelo supervisado para minimizar la función de pérdida o costo, que mide qué tan lejos están las predicciones del modelo de los valores reales de los datos \cite{goodfellow2016}. Un ejemplo común de función de costo es el error cuadrático medio.
 
 El algoritmo calcula el gradiente, o la pendiente, de la pérdida con respecto a los parámetros del modelo. Con este gradiente, da un paso en la dirección opuesta para reducir la pérdida. La tasa de aprendizaje $\alpha$ es el tamaño de los pasos y permanece fija para todos los parámetros del modelo. Este proceso se repite iterativamente hasta que el modelo logra una convergencia cercana a un mínimo. El mínimo global es el valor absoluto más bajo de la función de pérdida en todo su dominio, lo que representa la mejor solución posible para el problema. Si la tasa de aprendizaje no es lo suficientemente pequeña, el algoritmo a menudo convergerá en un mínimo local en lugar del mínimo global. Una tasa de aprendizaje bien elegida es esencial para minimizar la función de pérdida y lograr la convergencia en un mínimo global.
 
-El uso de \emph{Stochastic Gradient Descent} (SGD) en redes neuronales se debe al alto costo computacional de ejecutar la backpropagation sobre el conjunto de entrenamiento completo\footnote{Stanford University. \textit{Optimization: Stochastic Gradient Descent}. UFLDL Tutorial. \url{http://deeplearning.stanford.edu/tutorial/supervised/OptimizationStochasticGradientDescent/}}. SGD puede superar este costo y, aun así, conducir a una convergencia rápida. A diferencia del descenso de gradiente estándar, que actualiza los parámetros $\theta$ de la función objetivo $J(\theta)$ usando todo el conjunto de entrenamiento. SGD calcula el gradiente de los parámetros utilizando solo una muestra o unas pocas muestras de entrenamiento (minibatch). La actualización de parámetros en SGD está dada por:
+El uso de \emph{Stochastic Gradient Descent} (SGD) en redes neuronales se debe al alto costo computacional de ejecutar la backpropagation sobre el conjunto de entrenamiento completo \cite{goodfellow2016}. SGD puede superar este costo y, aun así, conducir a una convergencia rápida. A diferencia del descenso de gradiente estándar, que actualiza los parámetros $\theta$ de la función objetivo $J(\theta)$ usando todo el conjunto de entrenamiento, SGD calcula el gradiente de los parámetros utilizando solo una muestra o unas pocas muestras de entrenamiento (minibatch). La actualización de parámetros en SGD está dada por:
 
 \begin{equation}
 \theta = \theta - \alpha \nabla_\theta J(\theta; x^{(i)}, y^{(i)})
@@ -135,122 +138,245 @@ El proceso de optimización mediante SGD se ilustra en la Figura~\ref{fig:sgd-op
 \label{fig:sgd-optimizacion}
 \end{figure}
 
-\subsection{Modelos de Machine Learning para Clasificación de Texto}
+% ============================================================
+\subsection{Procesamiento de Lenguaje Natural (NLP)}
+% ============================================================
 
-La clasificación de texto es una tarea fundamental en el procesamiento de lenguaje natural (NLP) que consiste en asignar etiquetas o categorías a documentos de texto. En el contexto del Meli Challenge 2019, el objetivo es clasificar productos de e-commerce en categorías específicas basándose en sus descripciones.
+El Procesamiento de Lenguaje Natural (NLP, por sus siglas en inglés \textit{Natural Language Processing}) es una disciplina que se sitúa en la intersección de la lingüística computacional, la inteligencia artificial y el aprendizaje automático. Su objetivo es dotar a las computadoras de la capacidad de comprender, interpretar y generar lenguaje humano de manera útil \cite{jurafsky2024}. El problema de clasificación del Meli Challenge 2019 es, en esencia, un problema de NLP: dado el título de un producto en lenguaje natural, se busca asignarlo a una categoría del catálogo.
 
-En la literatura es habitual organizar los enfoques de clasificación de texto en tres grandes grupos. Los \emph{enfoques tradicionales} incluyen representaciones como TF-IDF o FastText con clasificadores clásicos (por ejemplo, regresión logística, SVM o árboles). El \emph{aprendizaje profundo} abarca redes recurrentes (LSTM, GRU) y convolucionales aplicadas al texto. Los \emph{transformers} corresponden a arquitecturas basadas en mecanismos de atención (BERT, BETO, GPT). Esta taxonomía es la que se adopta en el presente trabajo para comparar modelos.
+\subsubsection{Definición y Alcance}
 
-\subsection{Arquitecturas de Redes Neuronales}
+Jurafsky y Martin (2024) definen el NLP como el conjunto de técnicas computacionales para analizar y representar textos de lenguaje natural a uno o más niveles de análisis lingüístico, con el propósito de lograr un procesamiento similar al humano para una variedad de tareas \cite{jurafsky2024}. Esto abarca desde el nivel léxico (palabras) hasta el semántico (significado) y el pragmático (uso en contexto).
 
-% Habla sobre LSTM, GRU, transformers, etc.
-Las arquitecturas de redes neuronales profundas han demostrado ser efectivas para tareas de clasificación de texto. Entre las más utilizadas se encuentran:
+Las tareas de NLP pueden organizarse en un espectro de complejidad creciente: en el extremo más simple se encuentran la tokenización y el etiquetado morfológico (\textit{POS tagging}); en un nivel intermedio, tareas como la clasificación de texto, el análisis de sentimientos y la extracción de entidades nombradas; y en el nivel más complejo, la traducción automática, la generación de texto y la respuesta a preguntas. Este trabajo se focaliza en la \textbf{clasificación de texto}, tarea central del Meli Challenge 2019.
+
+\subsubsection{Desafíos del Lenguaje Natural}
+
+El lenguaje natural presenta desafíos que no aparecen en otros dominios del aprendizaje automático. Entre los más relevantes para este trabajo se destacan:
 
 \begin{itemize}
-    \item \textbf{LSTM (Long Short-Term Memory):} Redes neuronales recurrentes capaces de capturar dependencias de largo plazo en secuencias de texto
-    \item \textbf{GRU (Gated Recurrent Unit):} Variante más eficiente computacionalmente que LSTM
-    \item \textbf{Transformers:} Arquitecturas basadas en mecanismos de atención que han revolucionado el NLP moderno
-    \item \textbf{Embeddings:} Representaciones vectoriales densas de palabras o tokens que capturan relaciones semánticas
+    \item \textbf{Ambigüedad léxica:} Una misma palabra puede tener múltiples significados según el contexto (p. ej., ``banco'' puede referirse a una institución financiera o a un asiento). En el catálogo de Mercado Libre, términos como ``funda'' o ``tapa'' pueden corresponder a categorías muy distintas.
+    \item \textbf{Variabilidad léxica:} Un mismo concepto puede expresarse de múltiples formas (``celular'', ``smartphone'', ``teléfono móvil''). Los títulos de productos en e-commerce presentan alta variabilidad: abreviaturas, errores ortográficos, mezcla de idiomas y uso de códigos de modelo.
+    \item \textbf{Dependencia del contexto:} El significado de una palabra depende de las palabras que la rodean. Los modelos que no capturan contexto (como TF-IDF o Word2Vec estático) pierden esta información.
+    \item \textbf{Alta dimensionalidad del vocabulario:} Un corpus de e-commerce puede contener decenas de miles de términos únicos, incluyendo nombres de marcas, modelos y especificaciones técnicas.
 \end{itemize}
 
-\subsection{Embeddings y modelos tipo Transformer}
+Estos desafíos motivan la evolución desde representaciones esparsa (Sección~\ref{sec:embeddings}) hacia modelos contextuales profundos basados en la arquitectura Transformer (Sección~\ref{sec:transformer}).
 
-Los embeddings de texto utilizados en clasificación, búsqueda y bases vectoriales suelen producirse con \emph{encoders} basados en la arquitectura Transformer. Esta subsección resume los conceptos y etapas típicas de ese pipeline, siguiendo la exposición de Gutsch\footnote{Gutsch, D. (2023). \textit{The Art of Embeddings: Transforming Text for Vector Databases (Part 2)}. Medium. \url{https://medium.com/@david.gutsch0/the-art-of-embeddings-transforming-text-for-vector-databases-926738443e70}}. Estos conceptos sustentan, en mayor o menor medida, modelos como BERT y los embeddings de APIs como la de OpenAI utilizados en la etapa de laboratorio (Modelo 3).
+\subsubsection{Enfoques en la Clasificación de Texto}
+
+En la literatura es habitual organizar los enfoques de clasificación de texto en tres grandes grupos \cite{jurafsky2024}. Los \emph{enfoques tradicionales} incluyen representaciones como TF-IDF con clasificadores clásicos (regresión logística, SVM o árboles de decisión). El \emph{aprendizaje profundo} abarca redes recurrentes (LSTM, GRU) y convolucionales aplicadas al texto. Los \emph{transformers} corresponden a arquitecturas basadas en mecanismos de atención (BERT, BETO, GPT). Esta taxonomía es la que se adopta en el presente trabajo para comparar modelos.
+
+% ============================================================
+\subsection{Deep Learning y Redes Neuronales Profundas}
+% ============================================================
+
+\subsubsection{De las Redes Neuronales al Deep Learning}
+
+Las redes neuronales artificiales son modelos computacionales inspirados en la estructura del cerebro biológico. En su forma más básica, una red neuronal consiste en capas de unidades de cómputo (\emph{neuronas}) conectadas entre sí: una capa de entrada, una o más capas ocultas, y una capa de salida. Cada conexión tiene un peso asociado que se ajusta durante el entrenamiento mediante el algoritmo de \emph{backpropagation} (retropropagación del gradiente) en combinación con SGD (Sección~2.1.5).
+
+El término \emph{Deep Learning} hace referencia específicamente a redes neuronales con múltiples capas ocultas (redes ``profundas''), capaces de aprender representaciones jerárquicas de los datos \cite{goodfellow2016}. Cada capa aprende a detectar patrones de complejidad creciente: en el caso del lenguaje, las primeras capas pueden capturar patrones ortográficos o morfológicos, mientras que las capas superiores capturan relaciones semánticas abstractas.
+
+La capacidad de las redes profundas para aprender representaciones automáticamente a partir de datos crudos (sin \textit{feature engineering} manual) es lo que las hace especialmente adecuadas para problemas de NLP. En el contexto del Meli Challenge 2019, esto significa que el modelo puede aprender qué características de los títulos de productos son relevantes para la clasificación sin que el investigador deba definirlas a priori.
+
+\subsubsection{LSTM (Long Short-Term Memory)}
+
+Las redes neuronales recurrentes (RNN) fueron diseñadas para procesar secuencias, manteniendo un estado oculto que se actualiza en cada paso temporal. Sin embargo, las RNN estándar sufren el problema de \emph{vanishing gradient}: los gradientes se vuelven exponencialmente pequeños al propagarse hacia atrás en secuencias largas, impidiendo que el modelo aprenda dependencias de largo alcance.
+
+Hochreiter y Schmidhuber (1997) propusieron las redes \textbf{LSTM} (\textit{Long Short-Term Memory}) para resolver este problema \cite{hochreiter1997}. Una celda LSTM incorpora tres compuertas (\textit{gates}) que regulan el flujo de información:
+
+\begin{itemize}
+    \item \textbf{Compuerta de olvido (\textit{forget gate}):} Decide qué información del estado anterior debe descartarse.
+    \item \textbf{Compuerta de entrada (\textit{input gate}):} Determina qué nueva información se almacena en el estado de celda.
+    \item \textbf{Compuerta de salida (\textit{output gate}):} Controla qué parte del estado de celda se expone como salida.
+\end{itemize}
+
+Este mecanismo permite a las LSTM capturar dependencias a larga distancia en el texto. En la solución ganadora del Meli Challenge 2019, se utilizaron capas \texttt{CuDNNLSTM} (una implementación acelerada por GPU de LSTM) para clasificar los títulos de productos.
+
+\subsubsection{GRU (Gated Recurrent Unit)}
+
+Cho et al. (2014) propusieron las \textbf{GRU} (\textit{Gated Recurrent Unit}) como una variante simplificada de LSTM \cite{cho2014}. Las GRU combinan las compuertas de olvido y entrada en una única \emph{compuerta de actualización}, y eliminan el estado de celda separado, manteniendo solo el estado oculto. Esto reduce el número de parámetros y el costo computacional respecto a LSTM, con rendimiento comparable en muchas tareas.
+
+La solución ganadora del Meli Challenge 2019 empleó capas \texttt{CuDNNGRU} en combinación con \texttt{CuDNNLSTM}, aprovechando la complementariedad de ambas arquitecturas para capturar patrones secuenciales en los títulos de productos.
+
+% ============================================================
+\subsection{Representación del Texto: Embeddings}
+\label{sec:embeddings}
+% ============================================================
+
+Para que los modelos de Machine Learning puedan procesar texto, es necesario convertirlo en representaciones numéricas. La evolución de estas representaciones es central para entender las diferencias de rendimiento entre los modelos evaluados en este trabajo.
+
+\subsubsection{De la Representación Esparsa a los Embeddings Densos}
+
+Las representaciones tradicionales como \emph{bag of words} o TF-IDF producen vectores de alta dimensionalidad (del tamaño del vocabulario, potencialmente decenas de miles de dimensiones) y son \emph{esparsas}: la mayoría de sus componentes son cero. Además, no capturan relaciones semánticas entre palabras: ``celular'' y ``smartphone'' producen vectores ortogonales aunque sean sinónimos.
+
+Los \emph{embeddings} (o incrustaciones vectoriales) son representaciones densas y de baja dimensionalidad (tipicamente entre 50 y 1024 dimensiones) que se aprenden a partir de los datos. La idea clave es la hipótesis distribucional: palabras que aparecen en contextos similares tienden a tener significados similares \cite{jurafsky2024}. De esta forma, los embeddings capturan relaciones semánticas y sintácticas que las representaciones esparsas no pueden.
+
+\subsubsection{Word2Vec y FastText}
+
+\textbf{Word2Vec} \cite{mikolov2013} fue uno de los primeros modelos en aprender embeddings de palabras de forma eficiente a partir de grandes corpus. Propone dos arquitecturas: \textit{Continuous Bag of Words} (CBOW), que predice una palabra a partir de su contexto, y \textit{Skip-gram}, que predice el contexto a partir de una palabra. Los vectores resultantes capturan analogías semánticas notables (p. ej., el vector de ``rey'' $-$ ``hombre'' $+$ ``mujer'' es cercano al vector de ``reina'').
+
+Sin embargo, Word2Vec tiene una limitación importante: produce un único vector por palabra, independientemente del contexto, y no puede representar palabras fuera del vocabulario de entrenamiento (OOV, \textit{out-of-vocabulary}). En el dominio de e-commerce, esto es problemático: los títulos de productos contienen frecuentemente nombres de modelos, marcas y especificaciones técnicas poco frecuentes o nunca vistas durante el entrenamiento.
+
+\textbf{FastText} \cite{bojanowski2017} resuelve el problema de OOV representando cada palabra como la suma de vectores de sus \emph{n-gramas de caracteres}. Por ejemplo, la palabra ``celular'' se representa mediante los n-gramas ``cel'', ``elu'', ``lul'', ``ula'', ``lar'' (entre otros). Así, palabras no vistas durante el entrenamiento pueden representarse si comparten subunidades con el vocabulario conocido. Esta propiedad es especialmente valiosa para el español, que tiene rica morfología, y para el dominio de productos de e-commerce con alta variabilidad léxica. En el Modelo 4 (Sección~4.4), se utiliza FastText en combinación con una red neuronal para la clasificación.
+
+\subsubsection{Embeddings Contextuales}
+
+Una limitación fundamental de Word2Vec y FastText es que producen representaciones \emph{estáticas}: cada token tiene un único vector independientemente de su contexto oracional. La palabra ``banco'' tiene el mismo vector tanto en ``fui al banco a cobrar'' como en ``me senté en el banco del parque''.
+
+Los \emph{embeddings contextuales} resuelven este problema produciendo representaciones que dependen del contexto completo de la oración. Modelos como ELMo \cite{peters2018} y, posteriormente, los basados en la arquitectura Transformer (BERT, GPT), generan vectores distintos para un mismo token según las palabras que lo rodean. En el problema de clasificación del Meli Challenge 2019, esto permite distinguir, por ejemplo, usos distintos de términos polisémicos en títulos de productos. Los embeddings contextuales se describen en detalle en la siguiente sección, junto con la arquitectura Transformer que los hace posibles.
+
+% ============================================================
+\subsection{Arquitectura Transformer}
+\label{sec:transformer}
+% ============================================================
+
+Los embeddings de texto utilizados en clasificación, búsqueda y bases vectoriales suelen producirse con \emph{encoders} basados en la arquitectura Transformer. Esta subsección resume los conceptos y etapas típicas de ese pipeline siguiendo la arquitectura propuesta por Vaswani et al. (2017) \cite{vaswani2017}, que introdujo el mecanismo de autoatención como componente central. Estos conceptos sustentan, en mayor o menor medida, modelos como BERT y los embeddings de APIs como la de OpenAI utilizados en la etapa de laboratorio.
 
 \subsubsection{Tokenización}
 
 La tokenización es el proceso de dividir el texto en unidades más pequeñas o \emph{tokens}. Los tokens pueden ser palabras, subpalabras o caracteres. En modelos clásicos como Word2Vec se usaba vocabulario a nivel de palabra, lo que limita el manejo de palabras fuera de vocabulario (OOV) y hace crecer el modelo con el tamaño del vocabulario.
 
-Entre las técnicas de \emph{subpalabras} utilizadas en este proyecto cabe destacar dos familias. Por un lado, \textbf{FastText} (Modelo 4, FastText) define las subpalabras como \emph{n-gramas de caracteres} de cada palabra (p. ej. ``celular'' $\to$ ``cel'', ``elu'', ``lul'', ``ula'', ``lar''). El vector de la palabra se obtiene como la suma de los vectores de sus n-gramas; así se pueden representar palabras OOV que comparten n-gramas con el corpus de entrenamiento. Por otro lado, los modelos tipo Transformer (BERT, APIs como OpenAI) usan \emph{tokenización por subpalabras} con esquemas como Byte Pair Encoding (BPE) o WordPiece: las palabras frecuentes se mantienen enteras y las raras se descomponen en subunidades, con vocabularios del orden de 30k--50k tokens (p. ej. en BERT o GPT-2). En ambos casos se controla el tamaño del vocabulario y se mejora el manejo de OOV. La elección del esquema de tokenización afecta el tamaño del modelo, el manejo de OOV y la calidad final de los embeddings.
+Entre las técnicas de \emph{subpalabras} utilizadas en este proyecto cabe destacar dos familias. Por un lado, \textbf{FastText} (Modelo 4) define las subpalabras como \emph{n-gramas de caracteres} de cada palabra. El vector de la palabra se obtiene como la suma de los vectores de sus n-gramas; así se pueden representar palabras OOV que comparten n-gramas con el corpus de entrenamiento. Por otro lado, los modelos tipo Transformer (BERT, APIs como OpenAI) usan \emph{tokenización por subpalabras} con esquemas como Byte Pair Encoding (BPE) o WordPiece: las palabras frecuentes se mantienen enteras y las raras se descomponen en subunidades, con vocabularios del orden de 30k--50k tokens (p. ej. en BERT o GPT-2). En ambos casos se controla el tamaño del vocabulario y se mejora el manejo de OOV. La elección del esquema de tokenización afecta el tamaño del modelo, el manejo de OOV y la calidad final de los embeddings.
 
-\subsubsection{Embedding lookup (búsqueda de embeddings)}
+\subsubsection{Embedding Lookup (Búsqueda de Embeddings)}
 
-Una vez tokenizado el texto, cada token se mapea a un vector denso inicial mediante una tabla de embeddings (embedding lookup). Estos vectores no son aleatorios: se aprenden en la fase de pre-entrenamiento del modelo y constituyen el punto de partida para que las capas posteriores capturen el significado de cada token en contexto.
+Una vez tokenizado el texto, cada token se mapea a un vector denso inicial mediante una tabla de embeddings (\textit{embedding lookup}). Estos vectores no son aleatorios: se aprenden en la fase de pre-entrenamiento del modelo y constituyen el punto de partida para que las capas posteriores capturen el significado de cada token en contexto.
 
-\subsubsection{Codificación posicional (positional encoding)}
+\subsubsection{Codificación Posicional (\textit{Positional Encoding})}
 
-La arquitectura Transformer no tiene noción intrínseca del orden de los tokens. Para incorporar la posición en la secuencia, se suman \emph{codificaciones posicionales} a los embeddings iniciales. Así el modelo puede distinguir, por ejemplo, ``casa blanca'' de ``blanca casa''. Esta etapa permite procesar la secuencia de forma no secuencial (a diferencia de RNN/LSTM), lo que facilita el paralelismo y el entrenamiento a escala.
+La arquitectura Transformer no tiene noción intrínseca del orden de los tokens. Para incorporar la posición en la secuencia, se suman \emph{codificaciones posicionales} a los embeddings iniciales \cite{vaswani2017}. Así el modelo puede distinguir, por ejemplo, ``casa blanca'' de ``blanca casa''. Esta etapa permite procesar la secuencia de forma no secuencial (a diferencia de RNN/LSTM), lo que facilita el paralelismo y el entrenamiento a escala.
 
-\subsubsection{Mecanismo de autoatención (self-attention)}
+\subsubsection{Mecanismo de Autoatención (\textit{Self-Attention})}
 
-El mecanismo de autoatención permite que cada token ``consulte'' al resto de los tokens de la secuencia y pondere su influencia según la relevancia. Así se obtienen representaciones que dependen del contexto completo (p. ej. la misma palabra tiene distinto vector según la oración). En la práctica, para cada posición se calcula una combinación ponderada de las representaciones de todas las posiciones; los pesos se obtienen a partir de productos escalares entre vectores de consulta y clave (attention scores), normalizados típicamente con softmax.
+El mecanismo de autoatención es la contribución central de Vaswani et al. (2017) \cite{vaswani2017}. Permite que cada token ``consulte'' al resto de los tokens de la secuencia y pondere su influencia según la relevancia. Así se obtienen representaciones que dependen del contexto completo (p. ej., la misma palabra tiene distinto vector según la oración).
 
-\subsubsection{Agregación y pooling}
+En la práctica, para cada posición se calcula una combinación ponderada de las representaciones de todas las posiciones; los pesos se obtienen a partir de productos escalares entre vectores de consulta (\textit{query}) y clave (\textit{key}), normalizados con softmax. La atención puede representarse formalmente como:
 
-Dentro de una capa Transformer, la salida del mecanismo de atención se agrega (p. ej. se suma con residual y se normaliza) y se obtiene un vector por token que ya incorpora contexto. Para tareas que requieren \emph{un único vector por documento o por título} (como clasificación o búsqueda por similitud), se aplica una etapa adicional de \emph{pooling} sobre los vectores de los tokens: por ejemplo, promediar los vectores de todos los tokens (mean pooling), o usar el vector asociado a un token especial como \texttt{[CLS]} en BERT. Ese vector único es el embedding que se indexa o se usa como entrada a un clasificador.
+\begin{equation}
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}\right) V
+\end{equation}
 
-\subsubsection{Red neuronal feed-forward}
+donde $Q$, $K$, $V$ son las matrices de consultas, claves y valores, y $d_k$ es la dimensión de las claves. En la práctica, el Transformer utiliza \emph{multi-head attention}: múltiples cabezales de atención en paralelo, cada uno enfocado en diferentes aspectos de las relaciones entre tokens.
+
+\subsubsection{Agregación y Pooling}
+
+Dentro de una capa Transformer, la salida del mecanismo de atención se agrega (p. ej. se suma con conexión residual y se normaliza) y se obtiene un vector por token que ya incorpora contexto. Para tareas que requieren \emph{un único vector por documento o por título} (como clasificación o búsqueda por similitud), se aplica una etapa adicional de \emph{pooling} sobre los vectores de los tokens: por ejemplo, promediar los vectores de todos los tokens (\textit{mean pooling}), o usar el vector asociado a un token especial como \texttt{[CLS]} en BERT. Ese vector único es el embedding que se indexa o se usa como entrada a un clasificador.
+
+\subsubsection{Red Neuronal Feed-Forward}
 
 Tras las operaciones de atención (y opcionalmente más capas apiladas), los vectores por token se pasan por una red neuronal feed-forward (capas lineales con no linealidad), compartida para todas las posiciones. Esta red refina las representaciones y contribuye a la capacidad del modelo de capturar patrones más abstractos. La salida final de la última capa (antes o después del pooling, según el diseño) es el embedding que se utiliza para comparación o clasificación.
 
-En resumen, el flujo típico es: \emph{tokenización} $\to$ \emph{embedding lookup} $\to$ \emph{+ codificación posicional} $\to$ (repetido) \emph{autoatención} + \emph{agregación/residual} + \emph{feed-forward} $\to$ \emph{pooling} (si se requiere un vector por texto). Los modelos de embedding como \texttt{text-embedding-3-small} de OpenAI no divulgan su arquitectura interna, pero se apoyan en principios análogos para producir vectores densos a partir de texto.
+En resumen, el flujo típico es: \emph{tokenización} $\to$ \emph{embedding lookup} $\to$ \emph{+ codificación posicional} $\to$ (repetido) \emph{autoatención} $+$ \emph{agregación/residual} $+$ \emph{feed-forward} $\to$ \emph{pooling} (si se requiere un vector por texto). Los modelos de embedding como \texttt{text-embedding-3-small} de OpenAI no divulgan su arquitectura interna, pero se apoyan en principios análogos para producir vectores densos a partir de texto.
 
+% ============================================================
+\subsection{Modelos Pre-entrenados para NLP}
+% ============================================================
+
+Un avance clave en NLP fue el paradigma de \emph{pre-entrenamiento y fine-tuning}: entrenar un modelo de gran capacidad sobre vastos corpus de texto no etiquetado (pre-entrenamiento), y luego adaptar ese modelo a una tarea específica con datos etiquetados (fine-tuning). Este paradigma permite que modelos entrenados con grandes recursos computacionales sean reutilizados para tareas con pocos datos etiquetados.
+
+\subsubsection{BERT}
+
+\textbf{BERT} (\textit{Bidirectional Encoder Representations from Transformers}) fue propuesto por Devlin et al. (2019) \cite{devlin2019} y representa un hito en NLP. A diferencia de los modelos de lenguaje unidireccionales anteriores, BERT es un \emph{encoder} bidireccional: procesa cada token teniendo en cuenta tanto el contexto izquierdo como el derecho simultáneamente. Esto se logra mediante el pre-entrenamiento con dos tareas: \textit{Masked Language Model} (MLM), donde se enmascaran tokens aleatorios y el modelo debe predecirlos; y \textit{Next Sentence Prediction} (NSP), donde el modelo debe determinar si dos oraciones son consecutivas en el texto original.
+
+BERT produce embeddings contextuales de alta calidad. Para tareas de clasificación, el vector del token especial \texttt{[CLS]} (añadido al inicio de cada secuencia) se usa como representación del texto completo y se pasa a una capa clasificadora adicional. BERT-base tiene 110 millones de parámetros y requiere grandes cantidades de datos y cómputo para alcanzar su potencial, como se evidencia en el experimento del Modelo 2 (Sección~4.2).
+
+\subsubsection{BETO: BERT para el Español}
+
+\textbf{BETO} es una versión de BERT pre-entrenada exclusivamente sobre un corpus en español, propuesta por Cañete et al. (2020) \cite{canete2020}. Se entrenó con un corpus de aproximadamente 3GB de texto en español proveniente de Wikipedia, OpenSubtitles y otros recursos, utilizando la misma arquitectura que BERT-base. Al estar pre-entrenado en español, BETO captura las particularidades morfológicas, sintácticas y semánticas del idioma de forma nativa, lo que lo hace especialmente adecuado para el Meli Challenge 2019, cuyos títulos de productos están mayoritariamente en español.
+
+En el Modelo 2 (Sección~4.2), BETO se utiliza con fine-tuning sobre el dataset del Meli Challenge. Los experimentos muestran que el rendimiento de BETO es fuertemente dependiente del tamaño del conjunto de entrenamiento: con 70,000 registros la accuracy es de 0.47, mientras que con el dataset completo (~10M registros) asciende a 0.88.
+
+\subsubsection{GPT y Embeddings de OpenAI}
+
+\textbf{GPT} (\textit{Generative Pre-trained Transformer}) es la familia de modelos de OpenAI basados en la arquitectura Transformer \emph{decoder}. A diferencia de BERT (encoder bidireccional), GPT procesa texto de izquierda a derecha y está optimizado para generación de texto. Los modelos de la familia GPT se pre-entrenan mediante modelado de lenguaje causal: predecir el siguiente token dado el contexto previo.
+
+Para tareas de clasificación, OpenAI ofrece modelos de embedding dedicados (como \texttt{text-embedding-3-small}) que, aunque no divulgan su arquitectura interna, producen representaciones vectoriales de texto de alta calidad utilizables como features para clasificadores externos. En el Modelo 1 (Sección~4.1) y el Modelo 3 (Sección~4.3) se utilizan embeddings de OpenAI como representación de los títulos de productos.
+
+% ============================================================
+\subsection{Grandes Modelos de Lenguaje (LLM)}
+% ============================================================
+
+\subsubsection{Definición y Escala}
+
+Los \emph{Grandes Modelos de Lenguaje} (\textit{Large Language Models}, LLM) son modelos de lenguaje basados en la arquitectura Transformer entrenados con volúmenes masivos de datos y parámetros en el orden de los miles de millones \cite{zhao2023}. La escala es un factor diferencial: Zhao et al. (2023) documentan que a partir de cierto umbral de parámetros emergen capacidades que no están presentes en modelos más pequeños (fenómeno conocido como \emph{emergent abilities}), incluyendo razonamiento en pocos ejemplos (\textit{few-shot learning}) y seguimiento de instrucciones.
+
+Modelos representativos incluyen GPT-3 (175B parámetros), GPT-4, LLaMA, y PaLM, entre muchos otros. En términos de uso de memoria y cómputo, entrenar un LLM desde cero requiere recursos fuera del alcance de la mayoría de las instituciones académicas; sin embargo, su uso vía API o mediante fine-tuning de modelos pre-entrenados es cada vez más accesible.
+
+\subsubsection{Pre-entrenamiento y Fine-tuning}
+
+El ciclo de vida de un LLM contempla dos etapas principales. En el \emph{pre-entrenamiento}, el modelo se entrena sobre un corpus masivo de texto (libros, páginas web, código, artículos científicos) mediante objetivos de modelado de lenguaje. En esta etapa se adquiere el conocimiento lingüístico y factual general. En el \emph{fine-tuning}, el modelo pre-entrenado se ajusta sobre un conjunto de datos de la tarea específica (en este caso, clasificación de categorías de productos), lo que permite adaptar los pesos del modelo al dominio de aplicación \cite{devlin2019}. Una variante moderna del fine-tuning es el \textit{Instruction Tuning} y el aprendizaje por refuerzo con retroalimentación humana (RLHF), que alinean el comportamiento del modelo con las instrucciones del usuario.
+
+\subsubsection{Encoder vs. Decoder: Relevancia para Clasificación}
+
+Una distinción arquitectónica fundamental entre los LLM es si actúan como \emph{encoders} o \emph{decoders}. Los modelos encoder (como BERT/BETO) procesan la secuencia completa de forma bidireccional y son especialmente adecuados para tareas de comprensión, como clasificación y extracción de información. Los modelos decoder (como GPT) generan texto de forma autoregresiva y son adecuados para tareas de generación.
+
+En el contexto de este trabajo, esta distinción es relevante: BETO (encoder) se usa directamente para clasificación mediante fine-tuning, mientras que los embeddings de OpenAI (basados en GPT, decoder) se usan como representaciones de features para clasificadores externos (KNN, Random Forest). Ambos enfoques han demostrado rendimiento comparable en el Meli Challenge 2019, con sus respectivas ventajas y limitaciones en términos de costo computacional, volumen de datos requerido y flexibilidad de uso.
+
+% ============================================================
+\subsection{Métricas de Evaluación}
+% ============================================================
+
+Las métricas de evaluación permiten cuantificar y comparar el rendimiento de los modelos. En este trabajo se utilizan las siguientes métricas estándar para clasificación multiclase \cite{goodfellow2016}:
+
+La \textbf{accuracy} ya fue definida en la Sección~2.1.3. En el contexto multiclase del Meli Challenge 2019 (más de 1,500 categorías), la accuracy global indica la proporción de productos correctamente clasificados, pero puede enmascarar diferencias de rendimiento entre categorías frecuentes y raras.
+
+La \textbf{Precision} para una clase $c$ indica qué proporción de los productos predichos como pertenecientes a $c$ efectivamente pertenecen a esa categoría. El \textbf{Recall} para una clase $c$ indica qué proporción de los productos que realmente pertenecen a $c$ fueron correctamente identificados. El \textbf{F1-Score} es la media armónica de Precision y Recall, y ofrece una medida balanceada especialmente útil cuando las clases están desbalanceadas:
+
+\begin{equation}
+F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}
+\end{equation}
+
+En problemas multiclase, estas métricas se calculan por clase y se promedian (macro-average, micro-average o weighted-average) para obtener una métrica global.
+
+% ============================================================
 \section{Metodología}
+% ============================================================
 
 \subsection{Dataset}
 
-% Describe tu dataset
-El dataset utilizado corresponde al proporcionado por Mercado Libre para la competencia Meli Challenge 2019. Este contiene información de productos de e-commerce con sus respectivas categorías como variable objetivo.
+El dataset utilizado corresponde al proporcionado por Mercado Libre para la competencia Meli Challenge 2019 \cite{meli2019}. Este contiene información de productos de e-commerce con sus respectivas categorías como variable objetivo. El dataset en español comprende aproximadamente 10 millones de registros distribuidos en más de 1,500 categorías.
 
 \subsection{Preprocesamiento}
 
-% Describe el preprocesamiento realizado
 El preprocesamiento de texto es crucial para el rendimiento de los modelos. La solución ganadora implementó técnicas específicas de normalización, incluyendo la normalización de valores numéricos a representaciones consistentes sin eliminarlos completamente, lo cual demostró ser una estrategia exitosa.
 
-\subsection{Modelos Evaluados}
+\subsection{Descripción de los Modelos Evaluados}
 
-% Lista los modelos que probaste:
-Se evaluaron los siguientes modelos como alternativas y comparación con la solución ganadora:
+\subsubsection{Criterios de Selección}
 
-\begin{itemize}
-    \item \textbf{Modelo 1:} Basado en embeddings de OpenAI GPT (notebook: 01\_tp\_final\_openai\_gpt\_oss.ipynb)
-    \item \textbf{Modelo 2:} Basado en BETO (BERT pre-entrenado para español, notebook: 02\_tp\_final\_beto.ipynb, 02\_tp\_final\_beto\_all.ipynb)
-    \item \textbf{Modelo 3:} Basado en embeddings de OpenAI (text-embedding-3-small). Dos ensayos: 03\_tp\_final\_embedding.ipynb (Ensayo 1) y 03\_tp\_final\_embedding\_2.ipynb (Ensayo 2, Batch API).
-    \item \textbf{Modelo 4:} Basado en FastText con redes neuronales (notebook: 04\_tp\_final\_ft\_nn.ipynb)
-    \item \textbf{Solución Original:} Modelo ganador del 2019 (Eduardo García, GitHub: eduagarcia/meli-challenge-2019)
-\end{itemize}
+Los modelos evaluados fueron seleccionados para representar los tres enfoques descritos en el Marco Teórico: enfoques basados en embeddings pre-entrenados (Modelos 1 y 3), modelos Transformer con fine-tuning (Modelo 2), y aprendizaje profundo con embeddings de subpalabras (Modelo 4), en comparación con la solución ganadora basada en LSTM/GRU (2019).
 
-\subsection{OpenAI Embeddings (Modelo 3)}
+\subsubsection{Resumen Comparativo de Enfoques}
 
-Se utilizó el modelo \texttt{text-embedding-3-small} de OpenAI para el problema de clasificación de categorías de productos. Esta sección describe la metodología del embedding, la solución implementada, los dos ensayos realizados y el uso de la Batch API.
+\begin{table}[H]
+\centering
+\caption{Resumen comparativo de los modelos evaluados}
+\small
+\begin{tabular}{llll}
+\toprule
+Modelo & Representación & Clasificador & Notebook \\
+\midrule
+Modelo 1 & Embeddings OpenAI GPT OSS & Clasificador externo & 01 \\
+Modelo 2 & BETO (fine-tuning) & Capa softmax & 02, 02\_all \\
+Modelo 3 & text-embedding-3-small & KNN, Random Forest & 03, 03b \\
+Modelo 4 & FastText + Red Neuronal & Red neuronal densa & 04 \\
+Solución 2019 & FastText + LSTM/GRU & Softmax & (ganador) \\
+\bottomrule
+\end{tabular}
+\label{tab:modelos}
+\end{table}
 
-\subsubsection{Metodología del embedding (text-embedding-3-small)}
+% ============================================================
+\section{Implementación y Análisis Experimental}
+% ============================================================
 
-Según la documentación de OpenAI\footnote{\url{https://developers.openai.com/api/docs/models/text-embedding-3-small}}, los embeddings son representaciones numéricas de texto que permiten medir la afinidad semántica entre dos fragmentos. El modelo \texttt{text-embedding-3-small} es una versión mejorada y más eficiente del modelo anterior \texttt{ada}; está pensado para búsqueda, clustering, recomendaciones, detección de anomalías y tareas de clasificación.
+\subsection{Modelo 1 --- Embeddings OpenAI GPT}
 
-La API de embeddings recibe como entrada el texto (en este caso, el título del producto) y devuelve un único vector denso de dimensión fija (1536 para \texttt{text-embedding-3-small}). Ese vector resume el contenido semántico del texto en una representación de tamaño fijo apta para entrenar clasificadores estándar. Se utiliza la API para obtener el vector de embedding para cada ejemplo mediante llamadas síncronas. La documentación pública no detalla el pipeline interno (p. ej. tokenización, representación por subpalabras o agregación en un único vector).
+% Descripción del notebook 01_tp_final_openai_gpt_oss.ipynb
+% [Completar con el contenido del notebook 01]
 
-\subsubsection{Descripción de la solución}
-
-La solución consiste en: (1) obtener un vector de embedding por título mediante la API de OpenAI; (2) usar esos vectores como features para entrenar clasificadores supervisados. Se probaron Random Forest y K-Nearest Neighbors (KNN), con variantes de KNN: sin escalado, con StandardScaler y con reducción de dimensionalidad (PCA a 50 componentes). La evaluación se realiza sobre un conjunto de test estratificado; las métricas reportadas son accuracy (y, donde aplica, classification report).
-
-\subsubsection{Ensayo 1 (03\_tp\_final\_embedding.ipynb)}
-
-\begin{itemize}
-    \item \textbf{Muestra:} 1.000 registros tomados al azar del dataset; filtro de al menos 3 ejemplos por categoría, resultando en 247 filas útiles.
-    \item \textbf{API:} Llamadas síncronas a la API de embeddings (no Batch).
-    \item \textbf{Train/valid:} 70\% entrenamiento, 30\% validación (172 y 75 muestras respectivamente).
-    \item \textbf{Mejor resultado:} KNN con escalado (StandardScaler), accuracy 0,53 en validación.
-\end{itemize}
-
-\subsubsection{Ensayo 2 (03\_tp\_final\_embedding\_2.ipynb)}
-
-\begin{itemize}
-    \item \textbf{Muestra:} 10.000 registros con muestreo estratificado por categoría; filtro técnico de al menos 20 ejemplos por categoría (alineado con 02\_tp\_final\_beto\_all) y luego filtro de al menos 2 ejemplos por clase para permitir split estratificado (70\% train / 30\% test).
-    \item \textbf{API:} Batch API de OpenAI: mismo modelo y misma lógica de embedding, con procesamiento asíncrono y descuento del 50\% en coste\footnote{\url{https://developers.openai.com/api/docs/guides/batch}}.
-    \item \textbf{Train/test:} 70\% entrenamiento, 30\% test (\textasciitilde6.880 y \textasciitilde2.949 muestras).
-    \item \textbf{Mejor resultado:} KNN sin escalado, accuracy 0,48 en test; Random Forest 0,19; KNN con PCA 0,38.
-\end{itemize}
-
-La accuracy no mejoró en el Ensayo 2 a pesar de usar una muestra mayor (10k frente a \textasciitilde247) porque el problema es más difícil: en el Ensayo 2 se conservan muchas más categorías (con mínimo 20 ejemplos en el dataset completo y luego 2 en la muestra), de modo que el número de clases es mucho mayor. A mayor número de clases, la tarea de clasificación es más difícil y la accuracy típicamente baja para el mismo modelo y la misma métrica; además, el Ensayo 1 evaluaba en un conjunto de validación pequeño y con pocas categorías, por lo que la comparación directa no es equitativa. La metodología del Ensayo 2 (Batch API, split train/test, filtros por categoría) es más rigurosa para reportar resultados.
-
-\subsubsection{Batch API}
-
-La Batch API de OpenAI\footnote{\url{https://developers.openai.com/api/docs/guides/batch}} permite enviar conjuntos de peticiones de forma asíncrona. Para el endpoint \texttt{/v1/embeddings}, los parámetros de cada petición (modelo, texto de entrada) son los mismos que en la API síncrona; la diferencia está en el modo de envío y el coste. Ventajas relevantes para este proyecto: (1) descuento del 50\% respecto a la API estándar; (2) límites de tasa separados y más altos; (3) tiempo de completitud dentro de 24 horas (suele ser menor). Cada lote se prepara en un archivo JSONL (una línea por petición, con \texttt{custom\_id}, \texttt{method}, \texttt{url} y \texttt{body}); el archivo se sube con \texttt{purpose="batch"} y se crea el batch indicando \texttt{endpoint="/v1/embeddings"}. Los resultados se descargan por \texttt{output\_file\_id}; el orden de las líneas puede no coincidir con el de entrada, por lo que se usa \texttt{custom\_id} para asociar cada respuesta al título correspondiente. Para embeddings, el límite es de 50.000 entradas por lote; en el Ensayo 2 se usaron 10.000 títulos en un solo lote.
-
-\subsection{BETO Aplicado al Dataset Completo en Español}
-
-Para evaluar el rendimiento del modelo BETO en condiciones más representativas, se implementó una versión que utiliza el dataset completo en español (\textasciitilde10 millones de registros) en lugar de las muestras reducidas utilizadas en experimentos preliminares.
+\subsection{Modelo 2 --- BETO}
 
 \subsubsection{Configuración del Entrenamiento}
 
@@ -304,21 +430,64 @@ La diferencia observada de 42 puntos porcentuales indica que los resultados no s
 
 \begin{enumerate}
     \item \textbf{Representatividad de la muestra:} Una muestra de 70,000 registros puede no capturar adecuadamente la distribución completa de categorías y patrones presentes en el dataset completo, considerando que el dataset original contiene más de 1,500 categorías diferentes.
-    
     \item \textbf{Balance de clases:} Con una muestra pequeña, algunas categorías pueden estar subrepresentadas o ausentes, afectando la capacidad del modelo para aprender patrones generalizables.
-    
     \item \textbf{Overfitting en muestra pequeña:} Con menos datos, el modelo puede memorizar patrones específicos de la muestra en lugar de aprender representaciones generalizables, resultando en un rendimiento reducido cuando se evalúa en el conjunto completo.
-    
     \item \textbf{Capacidad del modelo:} BETO es un modelo de 110 millones de parámetros que requiere grandes cantidades de datos para alcanzar su potencial. Con 70,000 ejemplos, el modelo no tiene suficientes datos para aprender efectivamente las relaciones complejas entre texto y categorías.
 \end{enumerate}
 
-Esta validación demuestra la importancia de evaluar modelos en datasets de tamaño similar al de producción, especialmente cuando se trabaja con modelos transformer de gran capacidad como BETO. Los resultados preliminares con muestras pequeñas pueden no reflejar el rendimiento del modelo en condiciones de producción.
+Esta validación demuestra la importancia de evaluar modelos en datasets de tamaño similar al de producción, especialmente cuando se trabaja con modelos transformer de gran capacidad como BETO.
 
-\section{Problemas Técnicos Encontrados}
+% ============================================================
+\subsection{Modelo 3 --- OpenAI Embeddings (text-embedding-3-small)}
+% ============================================================
 
-\subsection{Limitaciones de la Solución Original}
+Se utilizó el modelo \texttt{text-embedding-3-small} de OpenAI para el problema de clasificación de categorías de productos. Esta sección describe la metodología del embedding, la solución implementada, los dos ensayos realizados y el uso de la Batch API.
 
-La solución ganadora del 2019 presenta problemas de reproducibilidad debido a:
+\subsubsection{Metodología del Embedding}
+
+Según la documentación de OpenAI \cite{openai-embedding}, los embeddings son representaciones numéricas de texto que permiten medir la afinidad semántica entre dos fragmentos. El modelo \texttt{text-embedding-3-small} está pensado para búsqueda, clustering, recomendaciones, detección de anomalías y tareas de clasificación. La API recibe el texto (el título del producto) y devuelve un único vector denso de dimensión fija (1536 para \texttt{text-embedding-3-small}).
+
+\subsubsection{Descripción de la Solución}
+
+La solución consiste en: (1) obtener un vector de embedding por título mediante la API de OpenAI; (2) usar esos vectores como features para entrenar clasificadores supervisados. Se probaron Random Forest y K-Nearest Neighbors (KNN), con variantes de KNN: sin escalado, con StandardScaler y con reducción de dimensionalidad (PCA a 50 componentes). La evaluación se realiza sobre un conjunto de test estratificado; las métricas reportadas son accuracy (y, donde aplica, classification report).
+
+\subsubsection{Ensayo 1 (03\_tp\_final\_embedding.ipynb)}
+
+\begin{itemize}
+    \item \textbf{Muestra:} 1.000 registros tomados al azar del dataset; filtro de al menos 3 ejemplos por categoría, resultando en 247 filas útiles.
+    \item \textbf{API:} Llamadas síncronas a la API de embeddings (no Batch).
+    \item \textbf{Train/valid:} 70\% entrenamiento, 30\% validación (172 y 75 muestras respectivamente).
+    \item \textbf{Mejor resultado:} KNN con escalado (StandardScaler), accuracy 0.53 en validación.
+\end{itemize}
+
+\subsubsection{Ensayo 2 (03\_tp\_final\_embedding\_2.ipynb)}
+
+\begin{itemize}
+    \item \textbf{Muestra:} 10.000 registros con muestreo estratificado por categoría; filtro técnico de al menos 20 ejemplos por categoría y luego filtro de al menos 2 ejemplos por clase para permitir split estratificado (70\% train / 30\% test).
+    \item \textbf{API:} Batch API de OpenAI \cite{openai-batch}: mismo modelo y misma lógica de embedding, con procesamiento asíncrono y descuento del 50\% en coste.
+    \item \textbf{Train/test:} 70\% entrenamiento, 30\% test (\textasciitilde6.880 y \textasciitilde2.949 muestras).
+    \item \textbf{Mejor resultado:} KNN sin escalado, accuracy 0.48 en test; Random Forest 0.19; KNN con PCA 0.38.
+\end{itemize}
+
+La accuracy no mejoró en el Ensayo 2 a pesar de usar una muestra mayor (10k frente a \textasciitilde247) porque el problema es más difícil: en el Ensayo 2 se conservan muchas más categorías, de modo que el número de clases es mucho mayor. A mayor número de clases, la tarea de clasificación es más difícil y la accuracy típicamente baja para el mismo modelo y la misma métrica.
+
+\subsubsection{Batch API}
+
+La Batch API de OpenAI \cite{openai-batch} permite enviar conjuntos de peticiones de forma asíncrona. Para el endpoint \texttt{/v1/embeddings}, los parámetros de cada petición (modelo, texto de entrada) son los mismos que en la API síncrona; la diferencia está en el modo de envío y el coste. Ventajas relevantes para este proyecto: (1) descuento del 50\% respecto a la API estándar; (2) límites de tasa separados y más altos; (3) tiempo de completitud dentro de 24 horas. Para embeddings, el límite es de 50,000 entradas por lote; en el Ensayo 2 se usaron 10,000 títulos en un solo lote.
+
+% ============================================================
+\subsection{Modelo 4 --- FastText con Red Neuronal}
+% ============================================================
+
+% [Completar con el contenido del notebook 04_tp_final_ft_nn.ipynb]
+
+% ============================================================
+\subsection{Solución Original del Meli Challenge 2019}
+% ============================================================
+
+\subsubsection{Limitaciones de Reproducibilidad}
+
+La solución ganadora del 2019 \cite{winner2019} presenta problemas de reproducibilidad debido a:
 
 \begin{enumerate}
     \item \textbf{Dependencias obsoletas:}
@@ -327,7 +496,6 @@ La solución ganadora del 2019 presenta problemas de reproducibilidad debido a:
         \item TensorFlow 1.14
         \item CUDA 10.0 + cuDNN 7.6
     \end{itemize}
-    
     \item \textbf{Incompatibilidades técnicas:}
     \begin{itemize}
         \item TensorFlow 1.14 no es compatible con GPUs modernas (RTX 30xx)
@@ -335,14 +503,12 @@ La solución ganadora del 2019 presenta problemas de reproducibilidad debido a:
         \item Error: ``No OpKernel was registered to support Op 'CudnnRNN''
         \item Estas capas no tienen fallback a CPU, por lo que el entrenamiento falla inmediatamente sin GPU funcional
     \end{itemize}
-    
     \item \textbf{Problemas con bibliotecas:}
     \begin{itemize}
         \item Incompatibilidad gensim + smart\_open
         \item SyntaxError con Python 3.6 por uso de \texttt{from \_\_future\_\_ import annotations}
         \item El paquete smart\_open utiliza anotaciones de tipo de Python 3.10+, no soportadas en Python 3.6
     \end{itemize}
-    
     \item \textbf{Recursos computacionales:}
     \begin{itemize}
         \item Embeddings de gran tamaño (\textasciitilde6 GB)
@@ -352,7 +518,7 @@ La solución ganadora del 2019 presenta problemas de reproducibilidad debido a:
     \end{itemize}
 \end{enumerate}
 
-\subsection{Workarounds Implementados}
+\subsubsection{Workarounds Implementados}
 
 Para poder evaluar los modelos, se implementaron las siguientes soluciones alternativas:
 
@@ -365,12 +531,12 @@ Para poder evaluar los modelos, se implementaron las siguientes soluciones alter
 
 \textbf{Nota importante:} Estos workarounds permiten la ejecución funcional pero alteran la arquitectura original, haciendo imposible una replicación exacta de la solución ganadora del 2019 en entornos modernos.
 
+% ============================================================
 \section{Resultados}
+% ============================================================
 
 \subsection{Métricas de Evaluación}
 
-% Inserta tus tablas de resultados aquí
-% Ejemplo - reemplaza con tus datos reales:
 \begin{table}[H]
 \centering
 \caption{Comparación de Métricas por Modelo}
@@ -380,20 +546,20 @@ Para poder evaluar los modelos, se implementaron las siguientes soluciones alter
 \toprule
 Modelo & Descripción & Accuracy & Precision & Recall & F1-Score \\
 \midrule
-Solución Original (2019) & Dataset completo, modelo ganador del Meli Challenge 2019 & 0.917 & - & - & - \\
-Modelo 1 (GPT OSS) & Muestra de 1,000 registros, embeddings de OpenAI GPT & 0.91 & - & - & 0.89 \\
-Modelo 2 (BETO) & Muestra de 70,000 registros en español, BETO (BERT pre-entrenado) & 0.47 & - & - & - \\
-Modelo 2 (BETO completo) & Dataset completo en español (\textasciitilde10M registros), BETO & 0.88 & - & - & 0.84 \\
-Modelo 3 (Embeddings v1) & Muestra 1k $\to$ 247 filas, text-embedding-3-small, API síncrona, KNN escalado & 0.53 & - & - & - \\
-Modelo 3 (Embeddings v2) & Muestra 10k estratificada, text-embedding-3-small, Batch API, KNN (mejor) & 0.48 & - & - & - \\
-Modelo 4 (FastText NN) & Dataset completo en español (\textasciitilde10M registros), FastText con redes neuronales & 0.81 & - & - & - \\
+Solución Original (2019) & Dataset completo, modelo ganador del Meli Challenge 2019 & 0.917 & --- & --- & --- \\
+Modelo 1 (GPT OSS) & Muestra de 1,000 registros, embeddings de OpenAI GPT & 0.91 & --- & --- & 0.89 \\
+Modelo 2 (BETO) & Muestra de 70,000 registros en español, BETO (BERT pre-entrenado) & 0.47 & --- & --- & --- \\
+Modelo 2 (BETO completo) & Dataset completo en español (\textasciitilde10M registros), BETO & 0.88 & --- & --- & 0.84 \\
+Modelo 3 (Embeddings v1) & Muestra 1k $\to$ 247 filas, text-embedding-3-small, API síncrona, KNN escalado & 0.53 & --- & --- & --- \\
+Modelo 3 (Embeddings v2) & Muestra 10k estratificada, text-embedding-3-small, Batch API, KNN (mejor) & 0.48 & --- & --- & --- \\
+Modelo 4 (FastText NN) & Dataset completo en español (\textasciitilde10M registros), FastText con redes neuronales & 0.81 & --- & --- & --- \\
 \bottomrule
 \end{tabular}%
 }
 \label{tab:metricas}
 \end{table}
 
-\textbf{Nota:} Los valores ``-'' indican métricas no reportadas en el notebook correspondiente (precision/recall no calculados en todos los experimentos).
+\textbf{Nota:} Los valores ``---'' indican métricas no reportadas en el notebook correspondiente (precision/recall no calculados en todos los experimentos).
 
 \subsection{Análisis Comparativo}
 
@@ -401,90 +567,93 @@ Modelo 4 (FastText NN) & Dataset completo en español (\textasciitilde10M regist
 % Compara el rendimiento de cada modelo con la solución ganadora
 % Discute las diferencias y similitudes
 
+% ============================================================
 \section{Discusión}
+% ============================================================
 
 % Discute los hallazgos, limitaciones, implicaciones de los resultados
 % Analiza por qué algunos modelos funcionan mejor que otros
 % Relaciona los resultados con la metodología y el preprocesamiento utilizado
 
+% ============================================================
 \section{Conclusiones}
+% ============================================================
 
 % Conclusiones del trabajo
 % Resumen de los hallazgos principales
 % Reflexiones sobre la reproducibilidad de soluciones antiguas
 % Lecciones aprendidas sobre mantenimiento de código y dependencias
 
+% ============================================================
 \section{Trabajo Futuro}
+% ============================================================
 
 % Propuestas de trabajo futuro
 % Mejoras posibles a los modelos implementados
 % Investigación adicional recomendada
 
+% ============================================================
 \section{Referencias}
+% ============================================================
 
-% Agrega tus referencias aquí
-% Si usas bibliografía con BibTeX, crea un archivo .bib y usa:
-% \bibliography{referencias}
-% \bibliographystyle{plain}
-
-% Ejemplo manual (reemplaza con tus referencias reales):
-\begin{thebibliography}{12}
+\begin{thebibliography}{20}
 
 \bibitem{mitchell1997}
-Mitchell, T. M. (1997). \textit{Machine Learning}. McGraw Hill.
+Mitchell, T. M. (1997). \textit{Machine Learning}. McGraw-Hill.
 
 \bibitem{goodfellow2016}
-Goodfellow, I., Bengio, Y., \& Courville, A. (2016). \textit{Deep Learning}. MIT Press.
+Goodfellow, I., Bengio, Y., \& Courville, A. (2016). \textit{Deep Learning}. MIT Press. \url{https://www.deeplearningbook.org}
 
-\bibitem{ibm-sgd}
-IBM. \textit{Stochastic Gradient Descent}. IBM Think Topics.
-\url{https://www.ibm.com/mx-es/think/topics/stochastic-gradient-descent}
+\bibitem{jurafsky2024}
+Jurafsky, D., \& Martin, J. H. (2024). \textit{Speech and language processing} (3rd ed., online draft). \url{https://web.stanford.edu/~jurafsky/slp3/}
 
-\bibitem{stanford-sgd}
-Stanford University. \textit{Optimization: Stochastic Gradient Descent}. UFLDL Tutorial.
-\url{http://deeplearning.stanford.edu/tutorial/supervised/OptimizationStochasticGradientDescent/}
+\bibitem{vaswani2017}
+Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł., \& Polosukhin, I. (2017). Attention is all you need. \textit{Advances in Neural Information Processing Systems}, \textit{30}, 5998--6008. \url{https://arxiv.org/abs/1706.03762}
 
-\bibitem{meli2019}
-Mercado Libre. (2019). \textit{Meli Challenge 2019}. Kaggle Competition.
-\url{https://www.kaggle.com/c/mercadolibre-data-challenge-2019}
+\bibitem{devlin2019}
+Devlin, J., Chang, M.-W., Lee, K., \& Toutanova, K. (2019). BERT: Pre-training of deep bidirectional transformers for language understanding. \textit{Proceedings of NAACL-HLT 2019}, 4171--4186. \url{https://arxiv.org/abs/1810.04805}
 
-\bibitem{winner2019}
-García, E. (2019). \textit{MeLi Data Challenge 2019 - Winner Solution}. 
-GitHub Repository. \url{https://github.com/eduagarcia/meli-challenge-2019}
+\bibitem{canete2020}
+Cañete, J., Chaperon, G., Fuentes, R., Ho, J.-H., Kang, H., \& Pérez, J. (2020). Spanish pre-trained BERT model and evaluation data. \textit{Practical ML for Developing Countries Workshop, ICLR 2020}. \url{https://arxiv.org/abs/2308.02976}
 
-\bibitem{tensorflow}
-TensorFlow Team. \textit{TensorFlow Documentation}. 
-\url{https://www.tensorflow.org/}
+\bibitem{hochreiter1997}
+Hochreiter, S., \& Schmidhuber, J. (1997). Long short-term memory. \textit{Neural Computation}, \textit{9}(8), 1735--1780. \url{https://doi.org/10.1162/neco.1997.9.8.1735}
 
-\bibitem{openai-batch}
-OpenAI. \textit{Batch API}. API Documentation.
-\url{https://developers.openai.com/api/docs/guides/batch}
-
-\bibitem{openai-embedding}
-OpenAI. \textit{text-embedding-3-small}. API Documentation, Models.
-\url{https://developers.openai.com/api/docs/models/text-embedding-3-small}
-
-\bibitem{medium-batch}
-Mike H. (s.f.). \textit{Tutorial: Batch embedding with OpenAI API}. Medium.
-\url{https://medium.com/@mikehpg/tutorial-batch-embedding-with-openai-api-95da95c9778a}
-
-\bibitem{gutsch2023}
-Gutsch, D. (2023). \textit{The Art of Embeddings: Transforming Text for Vector Databases (Part 2)}. Medium.
-\url{https://medium.com/@david.gutsch0/the-art-of-embeddings-transforming-text-for-vector-databases-926738443e70}
+\bibitem{cho2014}
+Cho, K., van Merrienboer, B., Gulcehre, C., Bahdanau, D., Bougares, F., Schwenk, H., \& Bengio, Y. (2014). Learning phrase representations using RNN encoder-decoder for statistical machine translation. \textit{Proceedings of EMNLP 2014}, 1724--1734. \url{https://arxiv.org/abs/1406.1078}
 
 \bibitem{bojanowski2017}
-Bojanowski, P., Grave, E., Joulin, A., \& Mikolov, T. (2017). Enriching Word Vectors with Subword Information. \textit{Transactions of the Association for Computational Linguistics}, 5, 135--146.
-\url{https://aclanthology.org/Q17-1010/}
+Bojanowski, P., Grave, E., Joulin, A., \& Mikolov, T. (2017). Enriching word vectors with subword information. \textit{Transactions of the Association for Computational Linguistics}, \textit{5}, 135--146. \url{https://aclanthology.org/Q17-1010/}
+
+\bibitem{mikolov2013}
+Mikolov, T., Chen, K., Corrado, G., \& Dean, J. (2013). Efficient estimation of word representations in vector space. \textit{arXiv preprint arXiv:1301.3781}. \url{https://arxiv.org/abs/1301.3781}
+
+\bibitem{peters2018}
+Peters, M. E., Neumann, M., Iyyer, M., Gardner, M., Clark, C., Lee, K., \& Zettlemoyer, L. (2018). Deep contextualized word representations. \textit{Proceedings of NAACL-HLT 2018}, 2227--2237. \url{https://arxiv.org/abs/1802.05365}
+
+\bibitem{zhao2023}
+Zhao, W. X., Zhou, K., Li, J., Tang, T., Wang, X., Hou, Y., Min, Y., Zhang, B., Zhang, J., Dong, Z., Du, Y., Yang, C., Chen, Y., Chen, Z., Jiang, J., Ren, R., Li, Y., Tang, X., Liu, Z., \ldots Wen, J.-R. (2023). A survey of large language models. \textit{arXiv preprint arXiv:2303.18223}. \url{https://arxiv.org/abs/2303.18223}
+
+\bibitem{meli2019}
+Mercado Libre. (2019). \textit{MeLi data challenge 2019} [Kaggle competition]. \url{https://www.kaggle.com/c/mercadolibre-data-challenge-2019}
+
+\bibitem{winner2019}
+García, E. (2019). \textit{MeLi data challenge 2019 --- winner solution} [repositorio GitHub]. \url{https://github.com/eduagarcia/meli-challenge-2019}
+
+\bibitem{openai-embedding}
+OpenAI. (2024). \textit{Text embeddings} [documentación de API]. \url{https://platform.openai.com/docs/guides/embeddings}
+
+\bibitem{openai-batch}
+OpenAI. (2024). \textit{Batch API} [documentación de API]. \url{https://platform.openai.com/docs/guides/batch}
 
 \end{thebibliography}
 
+% ============================================================
 \appendix
-
 \section{Código y Repositorio}
+% ============================================================
 
 El código completo, notebooks y scripts están disponibles en:
-% \url{https://github.com/tu-usuario/tu-repositorio}
-
-\textbf{Nota:} Actualiza esta URL con el enlace a tu repositorio si lo tienes disponible.
+\url{https://github.com/mari-fra/tp_final}
 
 \end{document}
