@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.1.25)  23 MAR 2026 20:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.1.25)  11 MAY 2026 19:08
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -471,24 +471,24 @@ Package babel Info: 'spanish' activates 'spanish' shorthands.
 )
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -524,8 +524,8 @@ LaTeX Font Info:    ... okay on input line 40.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \. on input line 40.
-LaTeX Info: Redefining \% on input line 40.
+LaTeX Info: Redefining \. on input line 44.
+LaTeX Info: Redefining \% on input line 44.
 
 (C:\Users\maribel.fraire\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\su
 pp-pdf.mkii
@@ -564,7 +564,7 @@ Package color Info: Driver file: pdftex.def on input line 149.
 
 (C:\Users\maribel.fraire\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathc
 olor.ltx))
-Package hyperref Info: Link coloring ON on input line 40.
+Package hyperref Info: Link coloring ON on input line 44.
  (C:\Users\maribel.fraire\ML classifier\tp_final\build\report.out)
 (C:\Users\maribel.fraire\ML classifier\tp_final\build\report.out)
 \@outlinefile=\write3
@@ -572,153 +572,177 @@ Package hyperref Info: Link coloring ON on input line 40.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 43.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 47.
 
 
 (C:\Users\maribel.fraire\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.
 fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 43.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 47.
 
 
 (C:\Users\maribel.fraire\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.
 fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) (C:\Users\maribel.fraire\ML classifier\tp_final\build\report.toc
+)
+Overfull \hbox (4.6643pt too wide) in paragraph at lines 53--54
+\OT1/cmr/m/n/10.95 da-ta-set com-ple-to), em-bed-dings con-tex-tua-les de Ope-n
+AI (\OT1/cmtt/m/n/10.95 text-embedding-3-small\OT1/cmr/m/n/10.95 )
+ []
+
+[1
+
+{C:/Users/maribel.fraire/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
+(C:\Users\maribel.fraire\ML classifier\tp_final\build\report.toc
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
- [1
-
-{C:/Users/maribel.fraire/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2]
-)
+ [2] [3])
 \tf@toc=\write4
 \openout4 = `report.toc'.
 
 
-[3] [4] [5]
+[4] [5] [6] [7]
 
-LaTeX Warning: File `capacidad_error.png' not found on input line 113.
+LaTeX Warning: File `capacidad_error.png' not found on input line 130.
 
 
-report.tex:113: Package pdftex.def Error: File `capacidad_error.png' not found:
+report.tex:130: Package pdftex.def Error: File `capacidad_error.png' not found:
  using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.113 ...width=0.8\textwidth]{capacidad_error.png}
+l.130 ...width=0.8\textwidth]{capacidad_error.png}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[6] [7]
+[8] [9]
 
-LaTeX Warning: File `sgd_optimizacion.png' not found on input line 136.
+LaTeX Warning: File `sgd_optimizacion.png' not found on input line 153.
 
 
-report.tex:136: Package pdftex.def Error: File `sgd_optimizacion.png' not found
+report.tex:153: Package pdftex.def Error: File `sgd_optimizacion.png' not found
 : using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.136 ...idth=0.8\textwidth]{sgd_optimizacion.png}
+l.153 ...idth=0.8\textwidth]{sgd_optimizacion.png}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[8] [9]
-Overfull \hbox (1.46661pt too wide) in paragraph at lines 159--160
+[10] [11]
+Overfull \hbox (1.46661pt too wide) in paragraph at lines 176--177
 \OT1/cmr/m/n/12 (``ce-lu-lar'', ``smartpho-ne'', ``tel^^Sefono m^^Sovil''). Los
  t^^S^^Ptu-los de pro-duc-tos en e-commerce
  []
 
-[10]
-Overfull \hbox (5.47412pt too wide) in paragraph at lines 178--179
+[12]
+Overfull \hbox (5.47412pt too wide) in paragraph at lines 195--196
 \OT1/cmr/m/n/12 m^^Sulti-ples ca-pas ocul-tas (re-des ``pro-fun-das''), ca-pa-c
 es de apren-der re-pre-sen-ta-cio-nes jer^^Sarqui-
  []
 
-[11] [12] [13] [14] [15] [16]
-Overfull \hbox (4.52701pt too wide) in paragraph at lines 304--305
+[13] [14] [15] [16] [17] [18]
+Overfull \hbox (4.52701pt too wide) in paragraph at lines 321--322
 []\OT1/cmr/m/n/12 Modelos re-pre-sen-ta-ti-vos in-clu-yen GPT-3 (175B par^^Same
 -tros), GPT-4, LLa-MA, y PaLM,
  []
 
-[17] [18] [19] [20]
-Overfull \hbox (5.51773pt too wide) in paragraph at lines 441--441
+[19] [20] [21] [22] [23] [24] [25]
+Overfull \hbox (47.12085pt too wide) in paragraph at lines 467--468
+[]\OT1/cmtt/m/n/12 `Butaca 6 Cuotas Sin Interes!! Para Auto Bebesit Hasta 25kg'
+ $\OMS/cmsy/m/n/12 !$ \OT1/cmtt/m/n/12 BABY[]CAR[]SEATS 
+ []
+
+
+Overfull \hbox (46.757pt too wide) in paragraph at lines 488--489
+\OT1/cmr/m/n/12 tros pu-bli-ca-do por Ope-nAI, eje-cu-ta-do so-bre Groq ba-jo e
+l iden-ti-fi-ca-dor \OT1/cmtt/m/n/12 openai/gpt-oss-120b
+ []
+
+[26] [27] [28] [29]
+Overfull \hbox (5.51773pt too wide) in paragraph at lines 600--600
 []\OT1/cmr/bx/n/14.4 Modelo 3 --- Ope-nAI Em-bed-dings (text-embedding-3-small)
  
  []
 
 
-Overfull \hbox (18.21027pt too wide) in paragraph at lines 448--449
+Overfull \hbox (18.21027pt too wide) in paragraph at lines 607--608
 \OT1/cmr/m/n/12 to) y de-vuel-ve un ^^Suni-co vec-tor den-so de di-men-si^^Son 
 fi-ja (1536 pa-ra \OT1/cmtt/m/n/12 text-embedding-3-small\OT1/cmr/m/n/12 ). 
  []
 
-[21] [22]
-Overfull \hbox (5.95357pt too wide) in paragraph at lines 502--503
+[30] [31]
+Overfull \hbox (5.95357pt too wide) in paragraph at lines 661--662
 []\OT1/cmr/m/n/12 CuDNNLSTM y CuDNN-GRU re-quie-ren ver-sio-nes es-pec^^S^^Pfi-
 cas de CU-DA/cuDNN
  []
 
 
-Overfull \hbox (3.14095pt too wide) in paragraph at lines 509--510
+Overfull \hbox (3.14095pt too wide) in paragraph at lines 668--669
 []\OT1/cmr/m/n/12 SyntaxError con Python 3.6 por uso de \OT1/cmtt/m/n/12 from [
 ][]future[][] import annotations 
  []
 
-[23]
-Underfull \hbox (badness 10000) in paragraph at lines 558--558
+[32]
+Underfull \hbox (badness 10000) in paragraph at lines 729--729
 []\OT1/cmr/m/n/10.95 Muestra de 70,000
  []
 
 
-Underfull \hbox (badness 2846) in paragraph at lines 558--558
+Underfull \hbox (badness 2846) in paragraph at lines 729--729
 \OT1/cmr/m/n/10.95 re-gis-tros en es-pa~nol,
  []
 
 
-Underfull \hbox (badness 8075) in paragraph at lines 558--558
+Underfull \hbox (badness 8075) in paragraph at lines 729--729
 \OT1/cmr/m/n/10.95 BE-TO (BERT pre-
  []
 
 
-Underfull \hbox (badness 1852) in paragraph at lines 558--558
+Underfull \hbox (badness 1852) in paragraph at lines 729--729
 []\OT1/cmr/m/n/10.95 Dataset com-ple-to en
  []
 
 
-Underfull \hbox (badness 1552) in paragraph at lines 558--558
+Underfull \hbox (badness 1552) in paragraph at lines 729--729
 \OT1/cmr/m/n/10.95 es-pa~nol (~10M re-gis-
  []
 
 
-Underfull \hbox (badness 2368) in paragraph at lines 558--558
+Underfull \hbox (badness 2368) in paragraph at lines 729--729
 \OT1/cmr/m/n/10.95 small, API s^^S^^Pncro-na,
  []
 
 
-Underfull \hbox (badness 4353) in paragraph at lines 558--558
+Underfull \hbox (badness 4353) in paragraph at lines 729--729
 \OT1/cmr/m/n/10.95 3-small, Batch API,
  []
 
 
-Underfull \hbox (badness 1852) in paragraph at lines 558--558
+Underfull \hbox (badness 1852) in paragraph at lines 729--729
 []\OT1/cmr/m/n/10.95 Dataset com-ple-to en
  []
 
 
-Underfull \hbox (badness 1552) in paragraph at lines 558--558
+Underfull \hbox (badness 1552) in paragraph at lines 729--729
 \OT1/cmr/m/n/10.95 es-pa~nol (~10M re-gis-
  []
 
-[24] [25] [26] [27]
-(C:\Users\maribel.fraire\ML classifier\tp_final\build\report.aux
+[33] [34] [35]
+Underfull \hbox (badness 6173) in paragraph at lines 824--825
+[]\OT1/cmr/m/n/12 Groq. (2024). \OT1/cmr/m/it/12 Groq-Cloud do-cu-men-ta-tion\O
+T1/cmr/m/n/12 . [][]$\OT1/cmtt/m/n/12 https : / / console . groq . com / docs /
+
+ []
+
+[36] [37] (C:\Users\maribel.fraire\ML classifier\tp_final\build\report.aux
 LaTeX Info: Redefining \. on input line 11.
 LaTeX Info: Redefining \% on input line 11.
 )
@@ -727,40 +751,45 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: D3A4B2A4BAA005F3DBF03DA41359E260;14681.
+(rerunfilecheck)             Checksum: CDD21E487033B6B1EAE4EA09E3516728;17985.
  ) 
 Here is how much of TeX's memory you used:
- 13677 strings out of 467871
- 221626 string characters out of 5414020
- 649131 words of memory out of 5000000
- 42250 multiletter control sequences out of 15000+600000
- 640206 words of font info for 88 fonts, out of 8000000 for 9000
+ 13770 strings out of 467871
+ 222980 string characters out of 5414020
+ 651214 words of memory out of 5000000
+ 42291 multiletter control sequences out of 15000+600000
+ 641750 words of font info for 93 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,79p,971b,797s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/maribel.fraire/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
-fonts/cm/cmbx10.pfb><C:/Users/maribel.fraire/AppData/Local/Programs/MiKTeX/font
-s/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/maribel.fraire/AppData/Local/Pr
-ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Users/maribel.fra
-ire/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:
-/Users/maribel.fraire/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts
-/cm/cmmi12.pfb><C:/Users/maribel.fraire/AppData/Local/Programs/MiKTeX/fonts/typ
-e1/public/amsfonts/cm/cmmi8.pfb><C:/Users/maribel.fraire/AppData/Local/Programs
-/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/maribel.fraire/AppDa
-ta/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/mar
-ibel.fraire/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.
-pfb><C:/Users/maribel.fraire/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
-msfonts/cm/cmr7.pfb><C:/Users/maribel.fraire/AppData/Local/Programs/MiKTeX/font
-s/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/maribel.fraire/AppData/Local/Prog
-rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/maribel.fraire/
-AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/User
-s/maribel.fraire/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/c
-mti10.pfb><C:/Users/maribel.fraire/AppData/Local/Programs/MiKTeX/fonts/type1/pu
-blic/amsfonts/cm/cmti12.pfb><C:/Users/maribel.fraire/AppData/Local/Programs/MiK
-TeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+ 75i,12n,79p,1315b,798s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\maribel.fraire\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dp
+i600\tcrm1200.pk> <C:\Users\maribel.fraire\AppData\Local\MiKTeX\fonts/pk/ljfour
+/jknappen/ec/dpi600\tcrm1095.pk><C:/Users/maribel.fraire/AppData/Local/Programs
+/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/maribel.fraire/AppD
+ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/m
+aribel.fraire/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx
+ti10.pfb><C:/Users/maribel.fraire/AppData/Local/Programs/MiKTeX/fonts/type1/pub
+lic/amsfonts/cm/cmex10.pfb><C:/Users/maribel.fraire/AppData/Local/Programs/MiKT
+eX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/maribel.fraire/AppData/L
+ocal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/maribel
+.fraire/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb>
+<C:/Users/maribel.fraire/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfo
+nts/cm/cmr12.pfb><C:/Users/maribel.fraire/AppData/Local/Programs/MiKTeX/fonts/t
+ype1/public/amsfonts/cm/cmr17.pfb><C:/Users/maribel.fraire/AppData/Local/Progra
+ms/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/maribel.fraire/AppD
+ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/mar
+ibel.fraire/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10
+.pfb><C:/Users/maribel.fraire/AppData/Local/Programs/MiKTeX/fonts/type1/public/
+amsfonts/cm/cmsy8.pfb><C:/Users/maribel.fraire/AppData/Local/Programs/MiKTeX/fo
+nts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/maribel.fraire/AppData/Local/
+Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/maribel.fra
+ire/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti8.pfb><C:/
+Users/maribel.fraire/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/
+cm/cmtt10.pfb><C:/Users/maribel.fraire/AppData/Local/Programs/MiKTeX/fonts/type
+1/public/amsfonts/cm/cmtt12.pfb>
 Output written on "C:\Users\maribel.fraire\ML classifier\tp_final\build\report.
-pdf" (27 pages, 353313 bytes).
+pdf" (37 pages, 442732 bytes).
 PDF statistics:
- 674 PDF objects out of 1000 (max. 8388607)
- 137 named destinations out of 1000 (max. 500000)
- 569 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 885 PDF objects out of 1000 (max. 8388607)
+ 185 named destinations out of 1000 (max. 500000)
+ 673 words of extra memory for PDF output out of 10000 (max. 10000000)
 

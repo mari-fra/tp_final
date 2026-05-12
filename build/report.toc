@@ -1,72 +1,85 @@
 \babel@toc {spanish}{}\relax 
-\contentsline {section}{\numberline {1}Introducción}{4}{section.1}%
-\contentsline {subsection}{\numberline {1.1}Contexto del Problema}{4}{subsection.1.1}%
-\contentsline {subsection}{\numberline {1.2}Objetivo General}{4}{subsection.1.2}%
-\contentsline {subsection}{\numberline {1.3}Objetivos Específicos}{4}{subsection.1.3}%
-\contentsline {section}{\numberline {2}Marco Teórico}{4}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Conceptos Básicos de Machine Learning para Clasificación}{4}{subsection.2.1}%
-\contentsline {subsubsection}{\numberline {2.1.1}Aprendizaje Automático}{4}{subsubsection.2.1.1}%
-\contentsline {subsubsection}{\numberline {2.1.2}Tarea de Clasificación}{5}{subsubsection.2.1.2}%
-\contentsline {subsubsection}{\numberline {2.1.3}Medida de Rendimiento}{5}{subsubsection.2.1.3}%
-\contentsline {subsubsection}{\numberline {2.1.4}Generalización}{5}{subsubsection.2.1.4}%
-\contentsline {subsubsection}{\numberline {2.1.5}Descenso por Gradiente Estocástico y Función de Pérdida}{7}{subsubsection.2.1.5}%
-\contentsline {subsection}{\numberline {2.2}Procesamiento de Lenguaje Natural (NLP)}{9}{subsection.2.2}%
-\contentsline {subsubsection}{\numberline {2.2.1}Definición y Alcance}{9}{subsubsection.2.2.1}%
-\contentsline {subsubsection}{\numberline {2.2.2}Desafíos del Lenguaje Natural}{10}{subsubsection.2.2.2}%
-\contentsline {subsubsection}{\numberline {2.2.3}Enfoques en la Clasificación de Texto}{10}{subsubsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.3}Deep Learning y Redes Neuronales Profundas}{11}{subsection.2.3}%
-\contentsline {subsubsection}{\numberline {2.3.1}De las Redes Neuronales al Deep Learning}{11}{subsubsection.2.3.1}%
-\contentsline {subsubsection}{\numberline {2.3.2}LSTM (Long Short-Term Memory)}{11}{subsubsection.2.3.2}%
-\contentsline {subsubsection}{\numberline {2.3.3}GRU (Gated Recurrent Unit)}{12}{subsubsection.2.3.3}%
-\contentsline {subsection}{\numberline {2.4}Representación del Texto: Embeddings}{12}{subsection.2.4}%
-\contentsline {subsubsection}{\numberline {2.4.1}De la Representación Esparsa a los Embeddings Densos}{12}{subsubsection.2.4.1}%
-\contentsline {subsubsection}{\numberline {2.4.2}Word2Vec y FastText}{12}{subsubsection.2.4.2}%
-\contentsline {subsubsection}{\numberline {2.4.3}Embeddings Contextuales}{13}{subsubsection.2.4.3}%
-\contentsline {subsection}{\numberline {2.5}Arquitectura Transformer}{13}{subsection.2.5}%
-\contentsline {subsubsection}{\numberline {2.5.1}Tokenización}{14}{subsubsection.2.5.1}%
-\contentsline {subsubsection}{\numberline {2.5.2}Embedding Lookup (Búsqueda de Embeddings)}{14}{subsubsection.2.5.2}%
-\contentsline {subsubsection}{\numberline {2.5.3}Codificación Posicional (\textit {Positional Encoding})}{14}{subsubsection.2.5.3}%
-\contentsline {subsubsection}{\numberline {2.5.4}Mecanismo de Autoatención (\textit {Self-Attention})}{14}{subsubsection.2.5.4}%
-\contentsline {subsubsection}{\numberline {2.5.5}Agregación y Pooling}{15}{subsubsection.2.5.5}%
-\contentsline {subsubsection}{\numberline {2.5.6}Red Neuronal Feed-Forward}{15}{subsubsection.2.5.6}%
-\contentsline {subsection}{\numberline {2.6}Modelos Pre-entrenados para NLP}{15}{subsection.2.6}%
-\contentsline {subsubsection}{\numberline {2.6.1}BERT}{16}{subsubsection.2.6.1}%
-\contentsline {subsubsection}{\numberline {2.6.2}BETO: BERT para el Español}{16}{subsubsection.2.6.2}%
-\contentsline {subsubsection}{\numberline {2.6.3}GPT y Embeddings de OpenAI}{16}{subsubsection.2.6.3}%
-\contentsline {subsection}{\numberline {2.7}Grandes Modelos de Lenguaje (LLM)}{17}{subsection.2.7}%
-\contentsline {subsubsection}{\numberline {2.7.1}Definición y Escala}{17}{subsubsection.2.7.1}%
-\contentsline {subsubsection}{\numberline {2.7.2}Pre-entrenamiento y Fine-tuning}{17}{subsubsection.2.7.2}%
-\contentsline {subsubsection}{\numberline {2.7.3}Encoder vs. Decoder: Relevancia para Clasificación}{17}{subsubsection.2.7.3}%
-\contentsline {subsection}{\numberline {2.8}Métricas de Evaluación}{18}{subsection.2.8}%
-\contentsline {section}{\numberline {3}Metodología}{18}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Dataset}{18}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Preprocesamiento}{18}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Descripción de los Modelos Evaluados}{19}{subsection.3.3}%
-\contentsline {subsubsection}{\numberline {3.3.1}Criterios de Selección}{19}{subsubsection.3.3.1}%
-\contentsline {subsubsection}{\numberline {3.3.2}Resumen Comparativo de Enfoques}{19}{subsubsection.3.3.2}%
-\contentsline {section}{\numberline {4}Implementación y Análisis Experimental}{19}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Modelo 1 --- Embeddings OpenAI GPT}{19}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Modelo 2 --- BETO}{19}{subsection.4.2}%
-\contentsline {subsubsection}{\numberline {4.2.1}Configuración del Entrenamiento}{19}{subsubsection.4.2.1}%
-\contentsline {subsubsection}{\numberline {4.2.2}Dependencia de Accelerate}{20}{subsubsection.4.2.2}%
-\contentsline {subsubsection}{\numberline {4.2.3}Preparación del Dataset}{20}{subsubsection.4.2.3}%
-\contentsline {subsubsection}{\numberline {4.2.4}Requisitos de Software}{20}{subsubsection.4.2.4}%
-\contentsline {subsubsection}{\numberline {4.2.5}Validación de Extrapolabilidad de Resultados}{20}{subsubsection.4.2.5}%
-\contentsline {subsection}{\numberline {4.3}Modelo 3 --- OpenAI Embeddings (text-embedding-3-small)}{21}{subsection.4.3}%
-\contentsline {subsubsection}{\numberline {4.3.1}Metodología del Embedding}{22}{subsubsection.4.3.1}%
-\contentsline {subsubsection}{\numberline {4.3.2}Descripción de la Solución}{22}{subsubsection.4.3.2}%
-\contentsline {subsubsection}{\numberline {4.3.3}Ensayo 1 (03\_tp\_final\_embedding.ipynb)}{22}{subsubsection.4.3.3}%
-\contentsline {subsubsection}{\numberline {4.3.4}Ensayo 2 (03\_tp\_final\_embedding\_2.ipynb)}{22}{subsubsection.4.3.4}%
-\contentsline {subsubsection}{\numberline {4.3.5}Batch API}{23}{subsubsection.4.3.5}%
-\contentsline {subsection}{\numberline {4.4}Modelo 4 --- FastText con Red Neuronal}{23}{subsection.4.4}%
-\contentsline {subsection}{\numberline {4.5}Solución Original del Meli Challenge 2019}{23}{subsection.4.5}%
-\contentsline {subsubsection}{\numberline {4.5.1}Limitaciones de Reproducibilidad}{23}{subsubsection.4.5.1}%
-\contentsline {subsubsection}{\numberline {4.5.2}Workarounds Implementados}{24}{subsubsection.4.5.2}%
-\contentsline {section}{\numberline {5}Resultados}{25}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Métricas de Evaluación}{25}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Análisis Comparativo}{26}{subsection.5.2}%
-\contentsline {section}{\numberline {6}Discusión}{26}{section.6}%
-\contentsline {section}{\numberline {7}Conclusiones}{26}{section.7}%
-\contentsline {section}{\numberline {8}Trabajo Futuro}{26}{section.8}%
-\contentsline {section}{\numberline {9}Referencias}{26}{section.9}%
-\contentsline {section}{\numberline {A}Código y Repositorio}{27}{appendix.Alph1}%
+\contentsline {section}{\numberline {1}Introducción}{5}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Contexto del Problema}{5}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Objetivo General}{5}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Objetivos Específicos}{6}{subsection.1.3}%
+\contentsline {section}{\numberline {2}Marco Teórico}{6}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Conceptos Básicos de Machine Learning para Clasificación}{6}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}Aprendizaje Automático}{6}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}Tarea de Clasificación}{7}{subsubsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.3}Medida de Rendimiento}{7}{subsubsection.2.1.3}%
+\contentsline {subsubsection}{\numberline {2.1.4}Generalización}{7}{subsubsection.2.1.4}%
+\contentsline {subsubsection}{\numberline {2.1.5}Descenso por Gradiente Estocástico y Función de Pérdida}{9}{subsubsection.2.1.5}%
+\contentsline {subsection}{\numberline {2.2}Procesamiento de Lenguaje Natural (NLP)}{11}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Definición y Alcance}{11}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Desafíos del Lenguaje Natural}{12}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.3}Enfoques en la Clasificación de Texto}{12}{subsubsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.3}Deep Learning y Redes Neuronales Profundas}{13}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}De las Redes Neuronales al Deep Learning}{13}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.3.2}LSTM (Long Short-Term Memory)}{13}{subsubsection.2.3.2}%
+\contentsline {subsubsection}{\numberline {2.3.3}GRU (Gated Recurrent Unit)}{14}{subsubsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.4}Representación del Texto: Embeddings}{14}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {2.4.1}De la Representación Esparsa a los Embeddings Densos}{14}{subsubsection.2.4.1}%
+\contentsline {subsubsection}{\numberline {2.4.2}Word2Vec y FastText}{14}{subsubsection.2.4.2}%
+\contentsline {subsubsection}{\numberline {2.4.3}Embeddings Contextuales}{15}{subsubsection.2.4.3}%
+\contentsline {subsection}{\numberline {2.5}Arquitectura Transformer}{15}{subsection.2.5}%
+\contentsline {subsubsection}{\numberline {2.5.1}Tokenización}{16}{subsubsection.2.5.1}%
+\contentsline {subsubsection}{\numberline {2.5.2}Embedding Lookup (Búsqueda de Embeddings)}{16}{subsubsection.2.5.2}%
+\contentsline {subsubsection}{\numberline {2.5.3}Codificación Posicional (\textit {Positional Encoding})}{16}{subsubsection.2.5.3}%
+\contentsline {subsubsection}{\numberline {2.5.4}Mecanismo de Autoatención (\textit {Self-Attention})}{16}{subsubsection.2.5.4}%
+\contentsline {subsubsection}{\numberline {2.5.5}Agregación y Pooling}{17}{subsubsection.2.5.5}%
+\contentsline {subsubsection}{\numberline {2.5.6}Red Neuronal Feed-Forward}{17}{subsubsection.2.5.6}%
+\contentsline {subsection}{\numberline {2.6}Modelos Pre-entrenados para NLP}{17}{subsection.2.6}%
+\contentsline {subsubsection}{\numberline {2.6.1}BERT}{18}{subsubsection.2.6.1}%
+\contentsline {subsubsection}{\numberline {2.6.2}BETO: BERT para el Español}{18}{subsubsection.2.6.2}%
+\contentsline {subsubsection}{\numberline {2.6.3}GPT y Embeddings de OpenAI}{18}{subsubsection.2.6.3}%
+\contentsline {subsection}{\numberline {2.7}Grandes Modelos de Lenguaje (LLM)}{19}{subsection.2.7}%
+\contentsline {subsubsection}{\numberline {2.7.1}Definición y Escala}{19}{subsubsection.2.7.1}%
+\contentsline {subsubsection}{\numberline {2.7.2}Pre-entrenamiento y Fine-tuning}{19}{subsubsection.2.7.2}%
+\contentsline {subsubsection}{\numberline {2.7.3}Encoder vs. Decoder: Relevancia para Clasificación}{19}{subsubsection.2.7.3}%
+\contentsline {subsection}{\numberline {2.8}Métricas de Evaluación}{20}{subsection.2.8}%
+\contentsline {subsection}{\numberline {2.9}Trabajos Relacionados}{20}{subsection.2.9}%
+\contentsline {subsubsection}{\numberline {2.9.1}Clasificación de texto en e-commerce}{20}{subsubsection.2.9.1}%
+\contentsline {subsubsection}{\numberline {2.9.2}Categorización automática de productos en e-commerce}{21}{subsubsection.2.9.2}%
+\contentsline {subsubsection}{\numberline {2.9.3}Clasificación multiclase de texto a gran escala}{21}{subsubsection.2.9.3}%
+\contentsline {subsubsection}{\numberline {2.9.4}Benchmarks comparativos de modelos de NLP}{21}{subsubsection.2.9.4}%
+\contentsline {section}{\numberline {3}Metodología e Implementación}{22}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Entorno de Experimentación}{22}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Dataset}{22}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Preprocesamiento}{23}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Descripción de los Modelos Evaluados}{24}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {3.4.1}Criterios de Selección y Marco Común}{24}{subsubsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.2}Resumen Comparativo de Enfoques}{25}{subsubsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.5}Modelo 1 --- Clasificación por Prompting con GPT (OpenAI)}{25}{subsection.3.5}%
+\contentsline {subsubsection}{\numberline {3.5.1}Descripción del Enfoque}{25}{subsubsection.3.5.1}%
+\contentsline {subsubsection}{\numberline {3.5.2}Preparación del Dataset}{26}{subsubsection.3.5.2}%
+\contentsline {subsubsection}{\numberline {3.5.3}Plataformas de Inferencia: OpenAI API y Groq}{26}{subsubsection.3.5.3}%
+\contentsline {subsubsection}{\numberline {3.5.4}Modelos Evaluados}{26}{subsubsection.3.5.4}%
+\contentsline {subsubsection}{\numberline {3.5.5}Resultados}{27}{subsubsection.3.5.5}%
+\contentsline {subsubsection}{\numberline {3.5.6}Análisis de Viabilidad Económica}{27}{subsubsection.3.5.6}%
+\contentsline {subsection}{\numberline {3.6}Modelo 2 --- BETO}{28}{subsection.3.6}%
+\contentsline {subsubsection}{\numberline {3.6.1}Configuración del Entrenamiento}{28}{subsubsection.3.6.1}%
+\contentsline {subsubsection}{\numberline {3.6.2}Dependencia de Accelerate}{28}{subsubsection.3.6.2}%
+\contentsline {subsubsection}{\numberline {3.6.3}Preparación del Dataset}{29}{subsubsection.3.6.3}%
+\contentsline {subsubsection}{\numberline {3.6.4}Requisitos de Software}{29}{subsubsection.3.6.4}%
+\contentsline {subsubsection}{\numberline {3.6.5}Validación de Extrapolabilidad de Resultados}{29}{subsubsection.3.6.5}%
+\contentsline {subsection}{\numberline {3.7}Modelo 3 --- OpenAI Embeddings (text-embedding-3-small)}{30}{subsection.3.7}%
+\contentsline {subsubsection}{\numberline {3.7.1}Metodología del Embedding}{30}{subsubsection.3.7.1}%
+\contentsline {subsubsection}{\numberline {3.7.2}Descripción de la Solución}{30}{subsubsection.3.7.2}%
+\contentsline {subsubsection}{\numberline {3.7.3}Ensayo 1 (03\_tp\_final\_embedding.ipynb)}{31}{subsubsection.3.7.3}%
+\contentsline {subsubsection}{\numberline {3.7.4}Ensayo 2 (03\_tp\_final\_embedding\_2.ipynb)}{31}{subsubsection.3.7.4}%
+\contentsline {subsubsection}{\numberline {3.7.5}Batch API}{31}{subsubsection.3.7.5}%
+\contentsline {subsection}{\numberline {3.8}Modelo 4 --- FastText con Red Neuronal}{32}{subsection.3.8}%
+\contentsline {subsection}{\numberline {3.9}Solución Original del Meli Challenge 2019}{32}{subsection.3.9}%
+\contentsline {subsubsection}{\numberline {3.9.1}Limitaciones de Reproducibilidad}{32}{subsubsection.3.9.1}%
+\contentsline {subsubsection}{\numberline {3.9.2}Workarounds Implementados}{32}{subsubsection.3.9.2}%
+\contentsline {subsection}{\numberline {3.10}Limitaciones del Estudio}{33}{subsection.3.10}%
+\contentsline {subsection}{\numberline {3.11}Resultados}{34}{subsection.3.11}%
+\contentsline {subsubsection}{\numberline {3.11.1}Métricas de Evaluación}{34}{subsubsection.3.11.1}%
+\contentsline {subsubsection}{\numberline {3.11.2}Análisis Comparativo}{35}{subsubsection.3.11.2}%
+\contentsline {section}{\numberline {4}Discusión}{35}{section.4}%
+\contentsline {section}{\numberline {5}Conclusiones y Trabajo Futuro}{35}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Conclusiones}{35}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Trabajo Futuro}{35}{subsection.5.2}%
+\contentsline {section}{\numberline {6}Referencias}{35}{section.6}%
+\contentsline {section}{\numberline {A}Código y Repositorio}{37}{appendix.Alph1}%

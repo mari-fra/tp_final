@@ -33,8 +33,12 @@
 }
 
 % Información del documento
-\title{Proyecto Final\\Trabajo Práctico de Clasificación con Machine Learning\\Comparación de Modelos ML contra la Solución Ganadora del\\Meli Challenge 2019}
-\author{Maribel Fraire\\Maestría en Data Science}
+\title{Evaluación del impacto de la evolución de arquitecturas de NLP\\en la clasificación de texto a escala industrial:\\Un análisis comparativo sobre el Meli Challenge 2019}
+\author{Maribel Fraire\\
+Maestría en Explotación de Datos y Gestión del Conocimiento\\
+Universidad Austral\\[0.5em]
+Director: Mariano Crosetti\\
+Codirectora: Fernanda Mendez}
 \date{\today}
 
 \begin{document}
@@ -42,7 +46,16 @@
 \maketitle
 
 \begin{abstract}
-Este trabajo presenta un análisis comparativo de diferentes modelos de Machine Learning aplicados al problema de clasificación propuesto por Mercado Libre en la competencia de Kaggle (Meli Challenge 2019). El objetivo principal es evaluar y comparar el rendimiento de diversos modelos contra la solución ganadora, explorando enfoques que van desde embeddings clásicos hasta modelos basados en arquitecturas Transformer y grandes modelos de lenguaje.
+La clasificación automática de texto es una tarea central del Procesamiento de Lenguaje Natural (NLP) que se enmarca dentro del aprendizaje supervisado. En este paradigma, el algoritmo aprende a partir de un conjunto de instancias etiquetadas, ajustando iterativamente los parámetros del modelo mediante la minimización de una función de pérdida, con el objetivo de generalizar y predecir la categoría correcta para nuevas instancias no vistas durante el entrenamiento. Automatizar este tipo de tarea representa un desafío significativo en la industria, dado que transformar datos no estructurados ---como los títulos de productos de un e-commerce--- en categorías estructuradas es determinante para el funcionamiento de los sistemas de búsqueda y la generación de métricas que permitan la toma de decisiones.
+
+En el contexto de la competencia de Kaggle denominada Meli Challenge 2019, la tarea consiste en clasificar títulos y descripciones de productos que los usuarios del e-commerce han ingresado manualmente en categorías de productos específicas, donde cada título de producto representa una instancia y cada categoría representa una clase posible. Este caso presenta, además, el desafío de que los títulos pueden estar en español o portugués pero el \textit{output} ---la categoría--- es en inglés.
+
+En este trabajo se propone evaluar el rendimiento de distintos enfoques de clasificación de texto aplicados al dataset del Meli Challenge 2019: clasificación directa mediante \emph{few-shot prompting} con modelos GPT (OpenAI y Groq), embeddings contextuales utilizando BETO (versión en español de BERT, con fine-tuning sobre el dataset completo), embeddings contextuales de OpenAI (\texttt{text-embedding-3-small}) con clasificadores KNN y Random Forest, embeddings estáticos FastText combinados con una red neuronal densa, y la replicación de la solución ganadora de la competencia basada en LSTM/GRU con embeddings FastText pre-entrenados. La comparación se realizará mediante métricas estándar (accuracy, F1-score) y permitirá identificar los factores que explican las diferencias de rendimiento entre enfoques de distinta generación y escala.
+
+La metodología propuesta incluye el preprocesamiento del dataset (limpieza, normalización), la implementación de pipelines completos de clasificación, el análisis comparativo de resultados y la discusión de las limitaciones de reproducibilidad de soluciones basadas en dependencias tecnológicas obsoletas. Los resultados contribuyen a comprender el alcance práctico de cada paradigma (embeddings estáticos, modelos Transformer, LLM) en un problema real de NLP en español.
+
+\smallskip
+\noindent\textbf{Palabras clave:} Clasificación de texto, Deep Learning, embeddings, Large Language Models (LLM), Machine Learning, Procesamiento de Lenguaje Natural (NLP), Transformers.
 \end{abstract}
 
 \tableofcontents
@@ -54,18 +67,22 @@ Este trabajo presenta un análisis comparativo de diferentes modelos de Machine 
 
 \subsection{Contexto del Problema}
 
-El Meli Challenge 2019 fue una competencia de Kaggle organizada por Mercado Libre con el objetivo de clasificar productos en diferentes categorías basándose en sus títulos y descripciones. La solución ganadora alcanzó un score de 0.91733 en el Public Leaderboard, ocupando el primer lugar.
+En el núcleo del Procesamiento de Lenguaje Natural (NLP) se encuentra un problema fundamental: cómo representar el significado del lenguaje de forma que una computadora pueda razonarlo. Jurafsky y Martin (2024) ilustran esta complejidad señalando que una misma palabra puede tener múltiples sentidos según el contexto, y que un modelo útil del significado debe permitir realizar inferencias para resolver tareas como la clasificación \cite{jurafsky2024}. Esta ambigüedad es el problema operacional central en dominios como el comercio electrónico: el título ``funda negra 13 pulgadas'' puede corresponder a fundas para celulares, laptops o accesorios de moda, y el modelo debe capturar el significado contextual para resolverlo correctamente. Manning y Schütze (1999) señalan que abordar este problema requiere integrar conocimiento lingüístico con modelos estadísticos de lenguaje \cite{manning1999}.
+
+La motivación central de este trabajo es adquirir dominio sobre los conceptos y herramientas que definen el estado del arte en NLP. En particular, tres paradigmas concentran el interés académico y la demanda industrial actual. Las \textbf{redes neuronales recurrentes} (RNN, LSTM, GRU) fueron el primer enfoque capaz de capturar dependencias secuenciales en el texto, demostrando que la arquitectura del modelo importa tanto como los datos \cite{hochreiter1997,cho2014}. La arquitectura \textbf{Transformer}, propuesta por Vaswani et al. (2017) \cite{vaswani2017}, reemplazó a las RNN como referencia al introducir el mecanismo de autoatención, que permite procesar secuencias completas en paralelo y capturar relaciones de largo alcance sin degradación del gradiente. Sobre esta base, los \textbf{grandes modelos de lenguaje} (LLM) como BERT y GPT, pre-entrenados sobre corpus masivos y adaptables a tareas específicas mediante fine-tuning, constituyen hoy el paradigma dominante en NLP \cite{devlin2019,zhao2023}. Aprender a trabajar con estos tres paradigmas en un problema real es el objetivo formativo que orienta este trabajo.
+
+El Meli Challenge 2019 constituye el marco experimental: una competencia real de Kaggle organizada por Mercado Libre que plantea la clasificación de títulos de productos en más de 1.500 categorías \cite{meli2019}. Este problema condensa los desafíos centrales del NLP aplicado ---variabilidad léxica, multilingüismo, escala de datos, desbalance de clases \cite{he2009}--- y permite implementar y comparar los tres paradigmas mencionados sobre el mismo dataset, con las mismas métricas y en condiciones reproducibles. La solución ganadora de la competencia alcanzó un score de 0.91733 en el Public Leaderboard, combinando embeddings FastText con capas LSTM y GRU.
 
 \subsection{Objetivo General}
 
-Evaluar el rendimiento de enfoques de clasificación de texto que incluye embeddings clásicos, aprendizaje profundo y modelos basados en transformers, en el marco del Meli Challenge 2019.
+Evaluar el rendimiento de enfoques de clasificación de texto ---embeddings estáticos, aprendizaje profundo y modelos basados en Transformers--- en el marco del Meli Challenge 2019, identificando los factores técnicos y metodológicos que explican las diferencias de rendimiento entre modelos de distinta generación y escala.
 
 \subsection{Objetivos Específicos}
 
 \begin{enumerate}
-    \item Analizar las características y el alcance de los modelos de clasificación de texto utilizados en la práctica: embeddings clásicos, aprendizaje profundo y modelos basados en la arquitectura Transformer o LLM.
-    \item Implementar pipelines completos de clasificación de texto que incluyan tokenización, obtención de embeddings, clasificación con diferentes soluciones aplicadas en la práctica tales como embeddings OpenAI (\texttt{text-embedding-3-small}), modelos pre-entrenados BETO/BERT y GPT, embeddings FastText con red neuronal y solución ganadora con LSTM/GRU.
-    \item Comparar las métricas de rendimiento de los modelos implementados y de la solución ganadora, para identificar factores que explican sus diferencias en el problema de categorización del Meli Challenge 2019.
+    \item Analizar las características y el alcance de los modelos de clasificación de texto utilizados en la práctica: embeddings estáticos, aprendizaje profundo y modelos basados en la arquitectura Transformer y LLM, en el contexto del procesamiento de lenguaje natural para e-commerce.
+    \item Implementar pipelines completos de clasificación de texto que incluyan preprocesamiento, tokenización, obtención de embeddings y clasificación, utilizando: clasificación directa por \emph{few-shot prompting} con modelos GPT (OpenAI API y Groq), embeddings OpenAI (\texttt{text-embedding-3-small}) con clasificadores KNN y Random Forest, el modelo pre-entrenado BETO con fine-tuning, embeddings FastText con red neuronal densa, y la replicación de la solución ganadora con LSTM/GRU.
+    \item Comparar las métricas de rendimiento (accuracy, F1-score) de los modelos implementados y de la solución ganadora, para identificar los factores técnicos y de datos que explican sus diferencias en el problema de categorización del Meli Challenge 2019.
 \end{enumerate}
 
 % ============================================================
@@ -291,7 +308,7 @@ En el Modelo 2 (Sección~4.2), BETO se utiliza con fine-tuning sobre el dataset 
 
 \textbf{GPT} (\textit{Generative Pre-trained Transformer}) es la familia de modelos de OpenAI basados en la arquitectura Transformer \emph{decoder}. A diferencia de BERT (encoder bidireccional), GPT procesa texto de izquierda a derecha y está optimizado para generación de texto. Los modelos de la familia GPT se pre-entrenan mediante modelado de lenguaje causal: predecir el siguiente token dado el contexto previo.
 
-Para tareas de clasificación, OpenAI ofrece modelos de embedding dedicados (como \texttt{text-embedding-3-small}) que, aunque no divulgan su arquitectura interna, producen representaciones vectoriales de texto de alta calidad utilizables como features para clasificadores externos. En el Modelo 1 (Sección~4.1) y el Modelo 3 (Sección~4.3) se utilizan embeddings de OpenAI como representación de los títulos de productos.
+Para tareas de clasificación, OpenAI ofrece modelos de embedding dedicados (como \texttt{text-embedding-3-small}) que, aunque no divulgan su arquitectura interna, producen representaciones vectoriales de texto de alta calidad utilizables como features para clasificadores externos. En el Modelo 3 (Sección~4.3) se utilizan embeddings de OpenAI (\texttt{text-embedding-3-small}) como representación de los títulos de productos; el Modelo 1 (Sección~4.1), en cambio, emplea modelos GPT directamente como clasificadores mediante prompting.
 
 % ============================================================
 \subsection{Grandes Modelos de Lenguaje (LLM)}
@@ -330,22 +347,77 @@ F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \te
 En problemas multiclase, estas métricas se calculan por clase y se promedian (macro-average, micro-average o weighted-average) para obtener una métrica global.
 
 % ============================================================
-\section{Metodología}
+\subsection{Trabajos Relacionados}
 % ============================================================
+
+\subsubsection{Clasificación de texto en e-commerce}
+
+La propuesta de este trabajo contrasta con la solución ganadora del Meli Challenge 2019, que combina LSTM/GRU con embeddings FastText, en dos dimensiones principales. En primer lugar, incorpora paradigmas que no existían o no estaban disponibles en 2019: modelos Transformer con fine-tuning (BETO) y embeddings de LLM vía API (OpenAI \texttt{text-embedding-3-small}), lo que permite evaluar si los avances del campo desde entonces se traducen en mejoras concretas sobre este problema específico. Devlin et al. (2019) demostraron que el paradigma de pre-entrenamiento y fine-tuning supera a los enfoques basados en redes recurrentes en la mayoría de las tareas de comprensión del lenguaje \cite{devlin2019}, hipótesis que este trabajo pone a prueba en el dominio concreto de categorización de productos en español. En segundo lugar, complementa el enfoque recurrente original incorporando FastText combinado con una red neuronal densa ---en lugar de LSTM/GRU--- como punto de comparación dentro del mismo paradigma de embeddings de subpalabras, permitiendo aislar el impacto de la arquitectura recurrente respecto de la representación del texto.
+
+\subsubsection{Categorización automática de productos en e-commerce}
+
+Kozareva (2015) \cite{kozareva2015} identificó el problema de categorización automática de productos en e-commerce como un desafío de clasificación multiclase con características propias del dominio: la ausencia de recursos léxicos preexistentes que capturen marcas, modelos y abreviaturas técnicas obliga a construir representaciones directamente desde los datos, sin poder apoyarse en ontologías o diccionarios de propósito general. Este trabajo parte de ese diagnóstico e incorpora representaciones basadas en embeddings densos y modelos Transformer, que capturan relaciones semánticas que las representaciones léxicas tradicionales no pueden expresar, evaluando si esos avances resuelven las limitaciones identificadas por Kozareva en el mismo tipo de problema.
+
+\subsubsection{Clasificación multiclase de texto a gran escala}
+
+Dos líneas de trabajo son especialmente relevantes como antecedentes. Por un lado, Cañete et al. (2020) desarrollaron BETO, el primer modelo BERT pre-entrenado exclusivamente en español, demostrando que el fine-tuning sobre un modelo monolingüe obtiene mejores resultados que los modelos BERT entrenados en corpus multilingües en la mayoría de las tareas de NLP en español \cite{canete2020}. Este trabajo utiliza BETO como modelo central del benchmark, adoptando directamente esa metodología de pre-entrenamiento monolingüe y fine-tuning supervisado. Por otro lado, Nam et al. (2014) demostraron que redes neuronales simples equipadas con técnicas modernas de entrenamiento ---ReLU, dropout y AdaGrad--- con cross entropy como función de pérdida alcanzan o superan el estado del arte en clasificación multiclase de texto a gran escala \cite{nam2014}. Este trabajo extiende esa línea incorporando paradigmas posteriores ---embeddings contextuales y Transformers--- evaluando su comportamiento en el dominio específico de categorización de productos de e-commerce en español.
+
+\subsubsection{Benchmarks comparativos de modelos de NLP}
+
+Los benchmarks comparativos de modelos de NLP han sido un área de investigación activa desde la introducción de GLUE (Wang et al., 2018) \cite{wang2018}, que evaluó sistemáticamente BERT y sus variantes en tareas diversas de comprensión del lenguaje estableciendo un protocolo de comparación sobre el mismo conjunto de datos y métricas. Zhao et al. (2023) \cite{zhao2023}, en su survey de LLM, proporcionan una síntesis actualizada del estado del arte en clasificación de texto, incluyendo el impacto de la escala del modelo y del volumen de datos de pre-entrenamiento. La metodología de este trabajo sigue ese enfoque de benchmarking sistemático, aplicándolo a un problema específico ---categorización de productos de e-commerce en español--- con modelos de distintas generaciones y paradigmas.
+
+% ============================================================
+\section{Metodología e Implementación}
+% ============================================================
+
+\subsection{Entorno de Experimentación}
+
+Los experimentos se ejecutaron en dos entornos computacionales según los requerimientos de cada modelo. Los modelos que demandan mayor capacidad de cómputo ---como BETO con fine-tuning sobre el dataset completo--- se ejecutaron en un entorno local con GPU NVIDIA RTX 3060 (12GB VRAM). Los modelos basados en embeddings de API (OpenAI \texttt{text-embedding-3-small} y prompting con GPT) se obtuvieron mediante llamadas a servicios en la nube de OpenAI y Groq. Para el experimento con GPT-OSS-120B se utilizó el nivel gratuito de \textbf{GroqCloud} \cite{groq2024}, una plataforma que ejecuta LLM sobre \emph{Language Processing Units} (LPU), una nueva categoría de procesador diseñada específicamente para inferencia de modelos de lenguaje que opera hasta 10 veces más eficientemente en términos energéticos que las GPU convencionales, a la vez que ofrece mayor velocidad de inferencia \cite{groq-lpu}. Adicionalmente, se utilizó Google Colaboratory (Colab) como entorno de experimentación complementario en la nube pública de Google, que provee acceso a recursos de cómputo GPU/TPU sin infraestructura propia, especialmente útil para prototipado y validación de pipelines. El repositorio del código es público: \url{https://github.com/mari-fra/tp_final}.
 
 \subsection{Dataset}
 
-El dataset utilizado corresponde al proporcionado por Mercado Libre para la competencia Meli Challenge 2019 \cite{meli2019}. Este contiene información de productos de e-commerce con sus respectivas categorías como variable objetivo. El dataset en español comprende aproximadamente 10 millones de registros distribuidos en más de 1,500 categorías.
+Se utiliza el dataset público del Meli Challenge 2019 \cite{meli2019}, proporcionado por Mercado Libre para la competencia de Kaggle. El dataset completo en portugués y español contiene 20 millones de registros. El subconjunto en español, sobre el que se centra este trabajo, comprende \textbf{10 millones de registros} con dos columnas principales: título del producto (texto libre en español) y categoría (etiqueta de clase). El dataset presenta más de \textbf{1.588 categorías con distribución desbalanceada}: las categorías más frecuentes concentran la mayor parte de los registros, mientras que muchas categorías tienen pocas decenas de ejemplos. Este desbalance es uno de los principales desafíos en aprendizaje automático sobre este tipo de datos, ya que los modelos tienden a favorecer las clases mayoritarias, degradando el rendimiento sobre las categorías menos frecuentes \cite{he2009}.
+
+Para los experimentos con la API de OpenAI (costo por token), se utilizaron muestras estratificadas de 1.000 y 10.000 registros, aplicando muestreo estratificado por categoría para asegurar que las clases más relevantes estén representadas proporcionalmente. Para los modelos entrenados localmente o en Colab (BETO, FastText), se realizaron ensayos con muestras más amplias llegando hasta el dataset completo.
 
 \subsection{Preprocesamiento}
 
-El preprocesamiento de texto es crucial para el rendimiento de los modelos. La solución ganadora implementó técnicas específicas de normalización, incluyendo la normalización de valores numéricos a representaciones consistentes sin eliminarlos completamente, lo cual demostró ser una estrategia exitosa.
+Las variables de entrada son los títulos de productos (texto libre). La variable de salida es la categoría del producto (clasificación multiclase con más de 1.500 clases). El preprocesamiento incluye normalización de caracteres y manejo de valores numéricos ---normalizados pero no eliminados, siguiendo la estrategia de la solución ganadora que demostró que preservar los números mejora el rendimiento en categorías donde las especificaciones técnicas son discriminativas (p.\ ej., ``disco duro 1TB'' vs.\ ``disco duro 500GB''). Se aplicó además un filtrado de categorías con menos de 20 ejemplos para garantizar la estratificación del split train/validación/test.
+
+Una decisión central en el pipeline es la \textbf{estrategia de tokenización}, que varía según el modelo: los modelos basados en FastText (Modelo 4 y solución ganadora) utilizan n-gramas de caracteres, lo que permite representar términos no vistos mediante subunidades; los modelos Transformer (BETO, embeddings OpenAI) utilizan tokenización por subpalabras mediante esquemas BPE/WordPiece, con vocabularios que varían según la arquitectura: BERT utiliza WordPiece con vocabularios de \textasciitilde30.000 tokens (entrenado sobre inglés), mientras que GPT-3 usa Byte-level BPE con \textasciitilde50.000 tokens; los modelos GPT más modernos y multilingües a menudo superan los 100.000 tokens de vocabulario para cubrir múltiples idiomas y scripts.
+
+Para representar un título completo como un único vector a partir de los embeddings de sus palabras constituyentes, se aplica \emph{mean pooling}: el vector del título $p$ se obtiene como el promedio de los vectores de cada uno de sus $M$ tokens, siguiendo la metodología de Kozareva (2015) \cite{kozareva2015}:
+
+\begin{equation}
+p = [e_1, \ldots, e_d] \quad \text{donde} \quad e_i = \frac{1}{M} \sum_{j=1}^{M} e_i w_j
+\label{eq:meanpooling}
+\end{equation}
+
+donde $d$ es la dimensión del vector de embedding, $e_i$ es el valor en la posición $i$ del vector del título, y $e_i w_j$ es el valor en la posición $i$ del vector de la palabra $w_j$. Este enfoque es utilizado en los modelos basados en embeddings estáticos (FastText). Los modelos Transformer (BETO) utilizan el vector del token especial \texttt{[CLS]} como representación del título completo, mientras que la API de OpenAI devuelve directamente el vector agregado.
 
 \subsection{Descripción de los Modelos Evaluados}
 
-\subsubsection{Criterios de Selección}
+\subsubsection{Criterios de Selección y Marco Común}
 
-Los modelos evaluados fueron seleccionados para representar los tres enfoques descritos en el Marco Teórico: enfoques basados en embeddings pre-entrenados (Modelos 1 y 3), modelos Transformer con fine-tuning (Modelo 2), y aprendizaje profundo con embeddings de subpalabras (Modelo 4), en comparación con la solución ganadora basada en LSTM/GRU (2019).
+Los modelos evaluados fueron seleccionados para representar los tres enfoques descritos en el Marco Teórico: enfoques de clasificación directa por prompting con LLM (Modelo 1), modelos Transformer con fine-tuning (Modelo 2), embeddings contextuales de API con clasificadores externos (Modelo 3), y aprendizaje profundo con embeddings de subpalabras (Modelo 4), en comparación con la solución ganadora basada en LSTM/GRU (2019).
+
+Para todos los modelos que incluyen una capa de clasificación neuronal, la función de salida es la función \textbf{softmax}, que transforma los logits de salida en una distribución de probabilidad sobre las $K$ categorías posibles \cite{goodfellow2016}:
+
+\begin{equation}
+\hat{y}_k = \frac{\exp(z_k)}{\sum_{j=1}^{K} \exp(z_j)}, \quad k = 1, \ldots, K
+\label{eq:softmax}
+\end{equation}
+
+donde $z_k$ es el logit de la clase $k$ y $K$ es el número total de categorías (1.588 en el dataset del Meli Challenge 2019). La clase predicha es aquella con mayor probabilidad: $\hat{y} = \arg\max_k \hat{y}_k$.
+
+El entrenamiento de los modelos neuronales minimiza la función de pérdida de \textbf{entropía cruzada} (\textit{cross-entropy}), que mide la discrepancia entre la distribución predicha y la distribución real de clases \cite{goodfellow2016,nam2014}:
+
+\begin{equation}
+L = -\sum_{k=1}^{K} y_k \cdot \log(\hat{y}_k)
+\label{eq:crossentropy}
+\end{equation}
+
+donde $y_k$ es 1 si la instancia pertenece a la clase $k$ y 0 en caso contrario (\textit{one-hot encoding}), y $\hat{y}_k$ es la probabilidad predicha para la clase $k$ por la función softmax. La minimización de esta función mediante Descenso de Gradiente Estocástico (SGD) ajusta iterativamente los parámetros del modelo para mejorar la predicción sobre el conjunto de entrenamiento. Esta función de pérdida es utilizada por BETO (Modelo 2), FastText con red neuronal (Modelo 4) y la solución ganadora con LSTM/GRU.
 
 \subsubsection{Resumen Comparativo de Enfoques}
 
@@ -357,7 +429,7 @@ Los modelos evaluados fueron seleccionados para representar los tres enfoques de
 \toprule
 Modelo & Representación & Clasificador & Notebook \\
 \midrule
-Modelo 1 & Embeddings OpenAI GPT OSS & Clasificador externo & 01 \\
+Modelo 1 & Prompting con GPT (OpenAI/Groq) & Generación directa & 01 \\
 Modelo 2 & BETO (fine-tuning) & Capa softmax & 02, 02\_all \\
 Modelo 3 & text-embedding-3-small & KNN, Random Forest & 03, 03b \\
 Modelo 4 & FastText + Red Neuronal & Red neuronal densa & 04 \\
@@ -367,14 +439,101 @@ Solución 2019 & FastText + LSTM/GRU & Softmax & (ganador) \\
 \label{tab:modelos}
 \end{table}
 
-% ============================================================
-\section{Implementación y Análisis Experimental}
-% ============================================================
+\subsection{Modelo 1 --- Clasificación por Prompting con GPT (OpenAI)}
+\label{sec:modelo1}
 
-\subsection{Modelo 1 --- Embeddings OpenAI GPT}
+El Modelo 1 emplea modelos GPT de OpenAI como clasificadores directos mediante \emph{few-shot prompting}: el modelo recibe el título del producto junto a una lista de categorías y genera directamente el nombre de la categoría predicha, sin entrenamiento adicional sobre el dataset del Meli Challenge 2019. Se evaluaron tres variantes de modelos GPT con el mismo protocolo experimental, lo que permite comparar rendimiento y costo.
 
-% Descripción del notebook 01_tp_final_openai_gpt_oss.ipynb
-% [Completar con el contenido del notebook 01]
+\subsubsection{Descripción del Enfoque}
+
+Los LLM han demostrado capacidad para realizar aprendizaje en contexto (\emph{in-context learning}) mediante \emph{few-shot prompting}, técnica que permite resolver tareas condicionando la respuesta del modelo a un prompt construido con unos pocos ejemplos de entrada-salida, sin necesidad de fine-tuning y aprovechando el conocimiento adquirido durante el pre-entrenamiento \cite{zhao2023}. En este trabajo se aplica para clasificar títulos de productos en español y portugués en categorías en inglés, combinando comprensión multilingüe y conocimiento del dominio de e-commerce.
+
+El pipeline de clasificación consta de los siguientes pasos:
+\begin{enumerate}
+    \item Para cada título de producto, se construye un prompt que incluye: (a) un \emph{system message} que define el rol del modelo como clasificador; (b) tres ejemplos etiquetados (\emph{few-shot examples}) de las categorías más frecuentes del dataset; (c) la lista completa de categorías válidas en la muestra; y (d) el título del producto a clasificar.
+    \item El modelo responde con el nombre de la categoría predicha, sin texto adicional.
+    \item La predicción se compara con la etiqueta real para calcular las métricas de evaluación.
+\end{enumerate}
+
+El \emph{system message} utilizado en los tres experimentos fue:
+
+\begin{quote}
+\textit{``You are a product classifier for MercadoLibre product titles. Titles may be in Spanish or Portuguese. Always classify them into one of the provided categories, which are in English. Return only the category name, without explanations or extra text. If no category seems perfect, choose the closest match from the list. Do not invent new categories.''}
+\end{quote}
+
+Los tres ejemplos \emph{few-shot} corresponden a títulos reales de las tres categorías más frecuentes del dataset:
+
+\begin{enumerate}
+    \item \texttt{`Butaca 6 Cuotas Sin Interes!! Para Auto Bebesit Hasta 25kg'} $\to$ \texttt{BABY\_CAR\_SEATS}
+    \item \texttt{`Cafetera De Filtro Hamilton Beach 12 Tazas'} $\to$ \texttt{COFFEE\_MAKERS}
+    \item \texttt{`Calça Feminina Pra Mulher Gravidas Dois Bolso Cintura Alta'} $\to$ \texttt{PANTS}
+\end{enumerate}
+
+\subsubsection{Preparación del Dataset}
+
+Se tomó una muestra aleatoria reproducible de 1.000 registros del dataset completo (\texttt{random\_state=42}) y se aplicó un filtro mínimo de 3 ejemplos por categoría, resultando en 247 registros distribuidos en 73 categorías. Este tamaño reducido de muestra se justifica por el costo por token de las APIs utilizadas: cada solicitud de clasificación consume aproximadamente 569 tokens (instrucciones del sistema + ejemplos \emph{few-shot} + lista de 73 categorías + título del producto).
+
+\subsubsection{Plataformas de Inferencia: OpenAI API y Groq}
+\label{sec:modelo1-plataformas}
+
+Los experimentos con GPT-5-nano y GPT-5-mini se ejecutaron directamente sobre la \textbf{OpenAI API}, el servicio de inferencia en la nube de OpenAI que da acceso a sus modelos propietarios con facturación por token consumido.
+
+El experimento con GPT-OSS-120B se ejecutó sobre \textbf{Groq} \cite{groq2024}, una plataforma en la nube que permite ejecutar distintos LLM (LLaMA, GPT, entre otros) con mayor velocidad y menor latencia que las implementaciones convencionales basadas en GPU, gracias al uso de unidades de procesamiento de lenguaje propias (\emph{Language Processing Units}, LPU).
+
+\subsubsection{Modelos Evaluados}
+
+\begin{itemize}
+    \item \textbf{GPT-5-nano} (OpenAI API): modelo más compacto de la familia GPT-5, optimizado para bajo costo y alta velocidad de inferencia.
+    \item \textbf{GPT-5-mini} (OpenAI API): modelo de capacidad intermedia de la familia GPT-5, con mayor rendimiento que \textit{nano}.
+    \item \textbf{GPT-OSS-120B} (Groq): modelo de código abierto de 120 mil millones de parámetros publicado por OpenAI, ejecutado sobre Groq bajo el identificador \texttt{openai/gpt-oss-120b} \cite{groq-gptoss2024} en el nivel gratuito de la plataforma.
+\end{itemize}
+
+\subsubsection{Resultados}
+
+\begin{table}[H]
+\centering
+\caption{Resultados comparativos --- Modelo 1 (Clasificación por Prompting con GPT)}
+\small
+\begin{tabular}{llccc}
+\toprule
+Modelo & Plataforma & Registros evaluados & Accuracy & F1-Score (macro) \\
+\midrule
+GPT-5-nano   & OpenAI API & 247                          & 0.866          & 0.844 \\
+GPT-OSS-120B & Groq API   & 201\textsuperscript{*}       & 0.910          & 0.894 \\
+GPT-5-mini   & OpenAI API & 247                          & \textbf{0.919} & \textbf{0.915} \\
+\bottomrule
+\end{tabular}
+\label{tab:modelo1-resultados}
+\end{table}
+
+\noindent\textit{\textsuperscript{*}El experimento con GPT-OSS-120B se interrumpió al alcanzar el límite diario gratuito de la plataforma Groq (199.566 de 200.000 tokens por día consumidos). Los 201 registros procesados representan el 81\% de la muestra.}
+
+\vspace{0.5em}
+
+Los tres modelos alcanzan una accuracy superior a 0.86 sobre la muestra de 73 categorías, siendo GPT-5-mini el de mejor rendimiento (accuracy 0.919, F1-macro 0.915). Cabe señalar que estos resultados se obtuvieron sobre tan solo 73 de las 1.588 categorías del dataset original, lo que reduce sustancialmente la dificultad del problema respecto a la clasificación completa. Esta limitación se aborda en el análisis comparativo de la Sección~5.
+
+\subsubsection{Análisis de Viabilidad Económica}
+
+El costo por inferencia es una limitación central de este enfoque a escala industrial. Con las 1.588 categorías del dataset completo, cada solicitud requeriría aproximadamente 10.000 tokens entre instrucciones, contexto y categorías posibles. La Tabla~\ref{tab:modelo1-costos} muestra el costo estimado para clasificar los 20 millones de registros del dataset completo, basado en los precios publicados por OpenAI \cite{openai-pricing}.
+
+\begin{table}[H]
+\centering
+\caption{Estimación de costo para clasificar el dataset completo (20M registros, $\sim$10.000 tokens/solicitud)}
+\small
+\begin{tabular}{lcc}
+\toprule
+Modelo & Precio & Costo estimado \\
+\midrule
+GPT-5-nano  & \$0,0001 / 1k tokens & $\sim$\$20.000 \\
+GPT-4o-mini & \$0,15 / 1M tokens   & $\sim$\$30.000 \\
+GPT-4o      & \$2,50 / 1M tokens   & $\sim$\$500.000 \\
+GPT-4-turbo & \$10,00 / 1M tokens  & $\sim$\$2.000.000 \\
+\bottomrule
+\end{tabular}
+\label{tab:modelo1-costos}
+\end{table}
+
+Aun con el modelo más económico, clasificar el dataset completo tendría un costo estimado de \$20.000, lo que evidencia que el enfoque de \emph{prompting} con LLM no es viable en producción para este problema sin ajustes significativos en el diseño de la solución.
 
 \subsection{Modelo 2 --- BETO}
 
@@ -532,10 +691,22 @@ Para poder evaluar los modelos, se implementaron las siguientes soluciones alter
 \textbf{Nota importante:} Estos workarounds permiten la ejecución funcional pero alteran la arquitectura original, haciendo imposible una replicación exacta de la solución ganadora del 2019 en entornos modernos.
 
 % ============================================================
-\section{Resultados}
+\subsection{Limitaciones del Estudio}
 % ============================================================
 
-\subsection{Métricas de Evaluación}
+El presente trabajo opera bajo tres limitaciones principales que deben considerarse al interpretar los resultados:
+
+\begin{enumerate}
+    \item \textbf{Reproducibilidad parcial de la solución ganadora.} La replicación del modelo ganador del Meli Challenge 2019 no es exacta debido a incompatibilidades de dependencias (TensorFlow 1.14, CUDA 10.0) con hardware moderno. El reemplazo de \texttt{CuDNNLSTM}/\texttt{CuDNNGRU} por sus equivalentes estándar altera la arquitectura original y puede afectar el rendimiento respecto al reportado originalmente \cite{pineau2021}.
+    \item \textbf{Tamaño de muestra en experimentos con API.} Los experimentos con la API de OpenAI ---tanto embeddings (Modelo 3) como prompting (Modelo 1)--- están limitados en tamaño de muestra por razones de costo por token. Las métricas obtenidas sobre muestras de 247 a 10.000 registros no son directamente comparables con los resultados obtenidos sobre el dataset completo de 10 millones de registros.
+    \item \textbf{Especificidad del dominio.} Los resultados son específicos del dominio de e-commerce en español y portugués, con títulos de productos como texto de entrada y categorías en inglés como \textit{output}. La generalización de las conclusiones a otros dominios o idiomas requiere validación adicional \cite{kozareva2015}.
+\end{enumerate}
+
+% ============================================================
+\subsection{Resultados}
+% ============================================================
+
+\subsubsection{Métricas de Evaluación}
 
 \begin{table}[H]
 \centering
@@ -547,7 +718,7 @@ Para poder evaluar los modelos, se implementaron las siguientes soluciones alter
 Modelo & Descripción & Accuracy & Precision & Recall & F1-Score \\
 \midrule
 Solución Original (2019) & Dataset completo, modelo ganador del Meli Challenge 2019 & 0.917 & --- & --- & --- \\
-Modelo 1 (GPT OSS) & Muestra de 1,000 registros, embeddings de OpenAI GPT & 0.91 & --- & --- & 0.89 \\
+Modelo 1 (GPT-5-mini) & Muestra 247 registros, 73 categorías, few-shot prompting & 0.919 & --- & --- & 0.915 \\
 Modelo 2 (BETO) & Muestra de 70,000 registros en español, BETO (BERT pre-entrenado) & 0.47 & --- & --- & --- \\
 Modelo 2 (BETO completo) & Dataset completo en español (\textasciitilde10M registros), BETO & 0.88 & --- & --- & 0.84 \\
 Modelo 3 (Embeddings v1) & Muestra 1k $\to$ 247 filas, text-embedding-3-small, API síncrona, KNN escalado & 0.53 & --- & --- & --- \\
@@ -561,7 +732,7 @@ Modelo 4 (FastText NN) & Dataset completo en español (\textasciitilde10M regist
 
 \textbf{Nota:} Los valores ``---'' indican métricas no reportadas en el notebook correspondiente (precision/recall no calculados en todos los experimentos).
 
-\subsection{Análisis Comparativo}
+\subsubsection{Análisis Comparativo}
 
 % Analiza los resultados obtenidos
 % Compara el rendimiento de cada modelo con la solución ganadora
@@ -576,17 +747,17 @@ Modelo 4 (FastText NN) & Dataset completo en español (\textasciitilde10M regist
 % Relaciona los resultados con la metodología y el preprocesamiento utilizado
 
 % ============================================================
-\section{Conclusiones}
+\section{Conclusiones y Trabajo Futuro}
 % ============================================================
+
+\subsection{Conclusiones}
 
 % Conclusiones del trabajo
 % Resumen de los hallazgos principales
 % Reflexiones sobre la reproducibilidad de soluciones antiguas
 % Lecciones aprendidas sobre mantenimiento de código y dependencias
 
-% ============================================================
-\section{Trabajo Futuro}
-% ============================================================
+\subsection{Trabajo Futuro}
 
 % Propuestas de trabajo futuro
 % Mejoras posibles a los modelos implementados
@@ -645,6 +816,39 @@ OpenAI. (2024). \textit{Text embeddings} [documentación de API]. \url{https://p
 
 \bibitem{openai-batch}
 OpenAI. (2024). \textit{Batch API} [documentación de API]. \url{https://platform.openai.com/docs/guides/batch}
+
+\bibitem{huang2023}
+Huang, J., \& Chang, K. C.-C. (2023). Towards reasoning in large language models: A survey. \textit{arXiv preprint arXiv:2303.13217}. \url{https://arxiv.org/abs/2303.13217}
+
+\bibitem{groq2024}
+Groq. (2024). \textit{GroqCloud documentation}. \url{https://console.groq.com/docs/overview}
+
+\bibitem{groq-gptoss2024}
+Groq. (2024). \textit{GPT-OSS-120B model on GroqCloud} [documentación de modelo]. \url{https://console.groq.com/docs/model/openai/gpt-oss-120b}
+
+\bibitem{groq-lpu}
+Groq. (2024). \textit{The Groq LPU explained} [blog oficial]. \url{https://groq.com/blog/the-groq-lpu-explained}
+
+\bibitem{openai-pricing}
+OpenAI. (2024). \textit{OpenAI API pricing} [página oficial]. \url{https://openai.com/api/pricing/}
+
+\bibitem{kozareva2015}
+Kozareva, Z. (2015). Everyone likes shopping! Multi-class product categorization for e-commerce. \textit{Human Language Technologies: The 2015 Annual Conference of the North American Chapter of the ACL}, 1329--1333. \url{https://aclanthology.org/N15-1147}
+
+\bibitem{he2009}
+He, H., \& Garcia, E. A. (2009). Learning from imbalanced data. \textit{IEEE Transactions on Knowledge and Data Engineering}, \textit{21}(9), 1263--1284. \url{https://doi.org/10.1109/TKDE.2008.239}
+
+\bibitem{manning1999}
+Manning, C. D., \& Schütze, H. (1999). \textit{Foundations of statistical natural language processing}. MIT Press.
+
+\bibitem{nam2014}
+Nam, J., Kim, J., Loza Mencía, E., Gurevych, I., \& Fürnkranz, J. (2014). Large-scale multi-label text classification --- revisiting neural networks. \textit{Proceedings of ECML PKDD 2014}, 437--452. \url{https://doi.org/10.1007/978-3-662-44851-9_28}
+
+\bibitem{pineau2021}
+Pineau, J., Vincent-Lamarre, P., Sinha, K., Larivière, V., Beygelzimer, A., d'Alché-Buc, F., Fox, E., \& Larochelle, H. (2021). Improving reproducibility in machine learning research. \textit{Journal of Machine Learning Research}, \textit{22}(1), 7459--7478. \url{https://jmlr.org/papers/v22/20-1364.html}
+
+\bibitem{wang2018}
+Wang, A., Singh, A., Michael, J., Hill, F., Levy, O., \& Bowman, S. R. (2018). GLUE: A multi-task benchmark and analysis platform for natural language understanding. \textit{Proceedings of EMNLP 2018 Workshop BlackboxNLP}. \url{https://arxiv.org/abs/1804.07461}
 
 \end{thebibliography}
 
