@@ -1,49 +1,104 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[11pt,a4paper,draft]{article}
 
-% Normas APA 7.ª ed.: A4, márgenes 2.54 cm, interlineado 1.5
+% Márgenes APA 7.ª ed.: A4, 2.54 cm
 \usepackage[
     top=2.54cm,
     bottom=2.54cm,
     left=2.54cm,
     right=2.54cm
 ]{geometry}
+
+% Interlineado 1.5
 \usepackage{setspace}
 \onehalfspacing
 
+% Fuente Times New Roman (cuerpo 11pt, títulos 12pt = \large en base 11pt)
+\usepackage{mathptmx}
+
 % Paquetes esenciales
 \usepackage[utf8]{inputenc}
-\usepackage[spanish]{babel}
+\usepackage[spanish,es-nodecimaldot]{babel}
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{graphicx}
-\usepackage{hyperref}
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{float}
 \usepackage{caption}
 \usepackage{subcaption}
 
-% Configuración de hipervínculos
+% Formato de títulos de sección: 12pt negrita para \section, 11pt para sub
+\usepackage{titlesec}
+\titleformat{\section}{\normalfont\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\itshape}{\thesubsubsection}{1em}{}
+
+% Notas al pie: 10pt (\small en base 11pt)
+\renewcommand{\footnotesize}{\small}
+
+% Paginación: número en ángulo inferior derecho
+\usepackage{fancyhdr}
+\fancypagestyle{mainpages}{%
+    \fancyhf{}
+    \fancyfoot[R]{\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+}
+% Páginas de inicio de sección (plain): número centrado inferior
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \fancyfoot[C]{\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+}
+
+% Hipervínculos (cargado al final del preámbulo para evitar conflictos)
+\usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
-    filecolor=magenta,      
+    filecolor=magenta,
     urlcolor=cyan,
     citecolor=green,
-    pdftitle={Proyecto Final - Clasificación ML - Meli Challenge 2019},
+    pdftitle={Evaluación del impacto de la evolución de arquitecturas de NLP en la clasificación de texto a escala industrial},
+    pdfauthor={Maribel Fraire},
 }
-
-% Información del documento
-\title{Evaluación del impacto de la evolución de arquitecturas de NLP\\en la clasificación de texto a escala industrial:\\Un análisis comparativo sobre el Meli Challenge 2019}
-\author{Maribel Fraire\\
-Maestría en Explotación de Datos y Gestión del Conocimiento\\
-Universidad Austral\\[0.5em]
-Director: Mariano Crosetti\\
-Codirectora: Fernanda Mendez}
-\date{\today}
 
 \begin{document}
 
-\maketitle
+% ============================================================
+% PORTADA — sin numeración
+% ============================================================
+\begin{titlepage}
+\thispagestyle{empty}
+\centering
+
+% Logo Universidad Austral
+% INSTRUCCIÓN: colocar el archivo logo_austral.png en la carpeta del proyecto
+\includegraphics[width=0.45\textwidth]{logo_austral.png}\\[1.5cm]
+
+{\large\bfseries MAESTRÍA EN EXPLOTACIÓN DE DATOS Y GESTIÓN DEL CONOCIMIENTO}\\[0.5cm]
+{\normalsize Universidad Austral}\\[2cm]
+
+{\large\bfseries TRABAJO FINAL DE MAESTRÍA}\\[1.5cm]
+
+{\LARGE\bfseries Evaluación del impacto de la evolución de\\[0.3cm]
+arquitecturas de NLP en la clasificación de\\[0.3cm]
+texto a escala industrial:\\[0.5cm]
+\large Un análisis comparativo sobre el Meli Challenge 2019}\\[2.5cm]
+
+{\normalsize\textbf{Autora:} Maribel Fraire}\\[0.4cm]
+{\normalsize\textbf{Director:} Mariano Crosetti}\\[0.2cm]
+{\normalsize\textbf{Codirectora:} Fernanda Mendez}\\[2cm]
+
+\vfill
+{\normalsize Mayo de 2026}
+
+\end{titlepage}
+
+% ============================================================
+% PÁGINAS PRELIMINARES — numeración romana desde II
+% ============================================================
+\pagenumbering{roman}
+\setcounter{page}{2}
+\pagestyle{mainpages}
 
 \begin{abstract}
 La clasificación automática de texto es una tarea central del Procesamiento de Lenguaje Natural (NLP) que se enmarca dentro del aprendizaje supervisado. En este paradigma, el algoritmo aprende a partir de un conjunto de instancias etiquetadas, ajustando iterativamente los parámetros del modelo mediante la minimización de una función de pérdida, con el objetivo de generalizar y predecir la categoría correcta para nuevas instancias no vistas durante el entrenamiento. Automatizar este tipo de tarea representa un desafío significativo en la industria, dado que transformar datos no estructurados ---como los títulos de productos de un e-commerce--- en categorías estructuradas es determinante para el funcionamiento de los sistemas de búsqueda y la generación de métricas que permitan la toma de decisiones.
@@ -60,6 +115,12 @@ La metodología propuesta incluye el preprocesamiento del dataset (limpieza, nor
 
 \tableofcontents
 \newpage
+
+% ============================================================
+% CUERPO — numeración arábiga desde la Introducción
+% ============================================================
+\pagenumbering{arabic}
+\pagestyle{mainpages}
 
 % ============================================================
 \section{Introducción}
@@ -88,6 +149,8 @@ Evaluar el rendimiento de enfoques de clasificación de texto ---embeddings est�
 % ============================================================
 \section{Marco Teórico}
 % ============================================================
+
+Este capítulo presenta los fundamentos conceptuales que sustentan los modelos evaluados en el trabajo. El campo del NLP ha atravesado tres generaciones de paradigmas: las \textbf{redes neuronales recurrentes} (RNN, LSTM, GRU), dominantes hasta 2017; la arquitectura \textbf{Transformer} con pre-entrenamiento y fine-tuning, que transformó el campo a partir de 2018; y los \textbf{grandes modelos de lenguaje} (LLM), que habilitan la clasificación directa mediante prompting. Comprender esta evolución es necesario para interpretar las diferencias de rendimiento observadas entre los modelos implementados.
 
 \subsection{Conceptos Básicos de Machine Learning para Clasificación}
 
@@ -132,40 +195,13 @@ La relación entre la capacidad del modelo y los errores de entrenamiento y gene
 \label{fig:capacidad-error}
 \end{figure}
 
-\subsubsection{Descenso por Gradiente Estocástico y Función de Pérdida}
-
-El descenso de gradiente (GD) es un algoritmo de optimización que minimiza iterativamente una función objetivo. En el contexto del Machine Learning, esta técnica se utiliza durante la fase de entrenamiento de un modelo supervisado para minimizar la función de pérdida o costo, que mide qué tan lejos están las predicciones del modelo de los valores reales de los datos \cite{goodfellow2016}. Un ejemplo común de función de costo es el error cuadrático medio.
-
-El algoritmo calcula el gradiente, o la pendiente, de la pérdida con respecto a los parámetros del modelo. Con este gradiente, da un paso en la dirección opuesta para reducir la pérdida. La tasa de aprendizaje $\alpha$ es el tamaño de los pasos y permanece fija para todos los parámetros del modelo. Este proceso se repite iterativamente hasta que el modelo logra una convergencia cercana a un mínimo. El mínimo global es el valor absoluto más bajo de la función de pérdida en todo su dominio, lo que representa la mejor solución posible para el problema. Si la tasa de aprendizaje no es lo suficientemente pequeña, el algoritmo a menudo convergerá en un mínimo local en lugar del mínimo global. Una tasa de aprendizaje bien elegida es esencial para minimizar la función de pérdida y lograr la convergencia en un mínimo global.
-
-El uso de \emph{Stochastic Gradient Descent} (SGD) en redes neuronales se debe al alto costo computacional de ejecutar la backpropagation sobre el conjunto de entrenamiento completo \cite{goodfellow2016}. SGD puede superar este costo y, aun así, conducir a una convergencia rápida. A diferencia del descenso de gradiente estándar, que actualiza los parámetros $\theta$ de la función objetivo $J(\theta)$ usando todo el conjunto de entrenamiento, SGD calcula el gradiente de los parámetros utilizando solo una muestra o unas pocas muestras de entrenamiento (minibatch). La actualización de parámetros en SGD está dada por:
-
-\begin{equation}
-\theta = \theta - \alpha \nabla_\theta J(\theta; x^{(i)}, y^{(i)})
-\end{equation}
-
-donde $(x^{(i)}, y^{(i)})$ es un par del conjunto de entrenamiento. Generalmente, cada actualización de parámetros en SGD se calcula con respecto a unas pocas muestras de entrenamiento o un minibatch, en lugar de una sola muestra. Esto reduce la varianza en la actualización de parámetros y puede conducir a una convergencia más estable.
-
-El proceso de optimización mediante SGD se ilustra en la Figura~\ref{fig:sgd-optimizacion}, donde se observa cómo el algoritmo itera desde un punto inicial, ajustando los parámetros del modelo (pesos) para reducir progresivamente la pérdida hasta alcanzar un mínimo.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.8\textwidth]{sgd_optimizacion.png}
-\caption{Proceso de optimización mediante descenso por gradiente estocástico.}
-\label{fig:sgd-optimizacion}
-\end{figure}
-
 % ============================================================
 \subsection{Procesamiento de Lenguaje Natural (NLP)}
 % ============================================================
 
-El Procesamiento de Lenguaje Natural (NLP, por sus siglas en inglés \textit{Natural Language Processing}) es una disciplina que se sitúa en la intersección de la lingüística computacional, la inteligencia artificial y el aprendizaje automático. Su objetivo es dotar a las computadoras de la capacidad de comprender, interpretar y generar lenguaje humano de manera útil \cite{jurafsky2024}. El problema de clasificación del Meli Challenge 2019 es, en esencia, un problema de NLP: dado el título de un producto en lenguaje natural, se busca asignarlo a una categoría del catálogo.
+El Procesamiento de Lenguaje Natural (NLP, por sus siglas en inglés \textit{Natural Language Processing}) es una disciplina que se sitúa en la intersección de la lingüística computacional, la inteligencia artificial y el aprendizaje automático. Su objetivo es dotar a las computadoras de la capacidad de comprender, interpretar y generar lenguaje humano de manera útil \cite{jurafsky2024}. Jurafsky y Martin (2024) definen el NLP como el conjunto de técnicas computacionales para analizar y representar textos de lenguaje natural a uno o más niveles de análisis lingüístico, con el propósito de lograr un procesamiento similar al humano para una variedad de tareas \cite{jurafsky2024}. Esto abarca desde el nivel léxico (palabras) hasta el semántico (significado) y el pragmático (uso en contexto).
 
-\subsubsection{Definición y Alcance}
-
-Jurafsky y Martin (2024) definen el NLP como el conjunto de técnicas computacionales para analizar y representar textos de lenguaje natural a uno o más niveles de análisis lingüístico, con el propósito de lograr un procesamiento similar al humano para una variedad de tareas \cite{jurafsky2024}. Esto abarca desde el nivel léxico (palabras) hasta el semántico (significado) y el pragmático (uso en contexto).
-
-Las tareas de NLP pueden organizarse en un espectro de complejidad creciente: en el extremo más simple se encuentran la tokenización y el etiquetado morfológico (\textit{POS tagging}); en un nivel intermedio, tareas como la clasificación de texto, el análisis de sentimientos y la extracción de entidades nombradas; y en el nivel más complejo, la traducción automática, la generación de texto y la respuesta a preguntas. Este trabajo se focaliza en la \textbf{clasificación de texto}, tarea central del Meli Challenge 2019.
+Las tareas de NLP pueden organizarse en un espectro de complejidad creciente: en el extremo más simple se encuentran la tokenización y el etiquetado morfológico (\textit{POS tagging}); en un nivel intermedio, tareas como la clasificación de texto, el análisis de sentimientos y la extracción de entidades nombradas; y en el nivel más complejo, la traducción automática, la generación de texto y la respuesta a preguntas. Este trabajo se focaliza en la \textbf{clasificación de texto}, tarea central del Meli Challenge 2019: dado el título de un producto en lenguaje natural, el objetivo es aprender una representación vectorial que capture su significado semántico y, a partir de ella, asignarlo a la categoría correcta entre más de 1.500 opciones del catálogo de Mercado Libre.
 
 \subsubsection{Desafíos del Lenguaje Natural}
 
@@ -180,21 +216,59 @@ El lenguaje natural presenta desafíos que no aparecen en otros dominios del apr
 
 Estos desafíos motivan la evolución desde representaciones esparsa (Sección~\ref{sec:embeddings}) hacia modelos contextuales profundos basados en la arquitectura Transformer (Sección~\ref{sec:transformer}).
 
-\subsubsection{Enfoques en la Clasificación de Texto}
+\subsubsection{Evolución de Paradigmas en la Clasificación de Texto}
 
-En la literatura es habitual organizar los enfoques de clasificación de texto en tres grandes grupos \cite{jurafsky2024}. Los \emph{enfoques tradicionales} incluyen representaciones como TF-IDF con clasificadores clásicos (regresión logística, SVM o árboles de decisión). El \emph{aprendizaje profundo} abarca redes recurrentes (LSTM, GRU) y convolucionales aplicadas al texto. Los \emph{transformers} corresponden a arquitecturas basadas en mecanismos de atención (BERT, BETO, GPT). Esta taxonomía es la que se adopta en el presente trabajo para comparar modelos.
+La clasificación automática de texto ha sido abordada desde múltiples perspectivas en la literatura, con una evolución clara de paradigmas que estructura también el benchmark de este trabajo.
+
+Hasta 2017, las \textbf{redes neuronales recurrentes} (RNN) constituían el estado del arte en modelado de secuencias, tal como documenta la introducción de Vaswani et al. (2017), que describe los modelos recurrentes como la referencia establecida en transducción de secuencias y modelado del lenguaje antes de proponer el Transformer \cite{vaswani2017}. Hochreiter y Schmidhuber (1997) introdujeron las redes LSTM para resolver el problema del gradiente que se desvanece en redes estándar \cite{hochreiter1997}, y Cho et al. (2014) extendieron este paradigma con las GRU \cite{cho2014}. La solución ganadora del Meli Challenge 2019 es representativa de este enfoque: combina embeddings FastText con capas LSTM y GRU, alcanzando una accuracy de 0.917 sobre el dataset completo.
+
+A partir de 2018, la arquitectura \textbf{Transformer} y el paradigma de \emph{pre-entrenamiento} y \emph{fine-tuning} transformaron el campo. Como señalan Devlin et al. (2019) en la introducción de BERT, el pre-entrenamiento de modelos de lenguaje ha demostrado ser efectivo para mejorar numerosas tareas de NLP \cite{devlin2019}: durante el pre-entrenamiento el modelo se entrena sobre datos no etiquetados mediante objetivos de modelado de lenguaje; durante el fine-tuning, los parámetros pre-entrenados se ajustan con datos etiquetados de la tarea específica. Este paradigma es aplicable a distintas tareas simplemente conectando las entradas y salidas correspondientes, sin rediseñar la arquitectura. BETO \cite{canete2020} aplica este paradigma al español y es el modelo central del Modelo 2 de este trabajo.
+
+Más recientemente, los \textbf{grandes modelos de lenguaje} (LLM) han consolidado un tercer paradigma: modelos pre-entrenados a escala masiva capaces de resolver tareas mediante instrucciones en lenguaje natural (\emph{prompting}), sin fine-tuning, aprovechando capacidades emergentes que surgen con la escala \cite{zhao2023}. Este trabajo evalúa dos variantes de este paradigma: clasificación directa por \emph{few-shot prompting} con modelos GPT (Modelo 1) y uso de embeddings de alta calidad producidos por la API de OpenAI como representaciones para clasificadores externos (Modelo 3).
+
+Esta taxonomía de tres generaciones ---redes recurrentes, Transformers con fine-tuning, y LLM--- articula el diseño comparativo del presente trabajo y orienta la lectura del Marco Teórico que sigue.
 
 % ============================================================
 \subsection{Deep Learning y Redes Neuronales Profundas}
 % ============================================================
 
-\subsubsection{De las Redes Neuronales al Deep Learning}
+\subsubsection{Redes Neuronales Profundas (Deep Feedforward Networks)}
 
-Las redes neuronales artificiales son modelos computacionales inspirados en la estructura del cerebro biológico. En su forma más básica, una red neuronal consiste en capas de unidades de cómputo (\emph{neuronas}) conectadas entre sí: una capa de entrada, una o más capas ocultas, y una capa de salida. Cada conexión tiene un peso asociado que se ajusta durante el entrenamiento mediante el algoritmo de \emph{backpropagation} (retropropagación del gradiente) en combinación con SGD (Sección~2.1.5).
+Las redes neuronales \emph{feedforward} —también llamadas redes multicapa (\textit{multilayer perceptrons}, MLP)— son el modelo central del Deep Learning \cite{goodfellow2016}. Su objetivo es aproximar una función $f^*$: para un clasificador, $y = f^*(\mathbf{x})$ mapea una entrada $\mathbf{x}$ a una categoría $y$; la red aprende el mapeo $y = f(\mathbf{x};\boldsymbol{\theta})$ ajustando los parámetros $\boldsymbol{\theta}$ que producen la mejor aproximación a $f^*$. La arquitectura consiste en capas de neuronas sucesivas: una capa de entrada, una o más capas ocultas y una capa de salida. Cada conexión entre neuronas tiene un \emph{peso} (\textit{weight}) asociado y cada neurona tiene un \emph{sesgo} (\textit{bias}); pesos y sesgos son los parámetros aprendibles del modelo $\boldsymbol{\theta}$ \cite{goodfellow2016}. En cada neurona se aplica una \emph{función de activación} no lineal a la suma ponderada de sus entradas, lo que permite a la red aprender relaciones complejas entre variables; en la capa de salida, para clasificación multiclase, se utiliza la función \emph{softmax}, que transforma los valores de salida en una distribución de probabilidad sobre las clases posibles. El algoritmo de aprendizaje determina cómo utilizar las capas ocultas para aproximar mejor $f^*$; dado que los datos de entrenamiento no especifican una salida deseada para cada capa oculta en particular, éstas se denominan \emph{capas ocultas} \cite{goodfellow2016}. En estas redes la información fluye en una sola dirección durante la inferencia; cuando se incorporan conexiones de retroalimentación se obtienen las redes neuronales recurrentes (RNN), descritas a continuación.
 
-El término \emph{Deep Learning} hace referencia específicamente a redes neuronales con múltiples capas ocultas (redes ``profundas''), capaces de aprender representaciones jerárquicas de los datos \cite{goodfellow2016}. Cada capa aprende a detectar patrones de complejidad creciente: en el caso del lenguaje, las primeras capas pueden capturar patrones ortográficos o morfológicos, mientras que las capas superiores capturan relaciones semánticas abstractas.
+El entrenamiento se realiza mediante iteraciones de dos pasos \cite{goodfellow2016}. En el paso de \emph{forward propagation}, la entrada $\mathbf{x}$ se procesa capa por capa y la predicción resultante se compara con la etiqueta real para calcular un error escalar. En el paso de \emph{backpropagation}, ese error se distribuye hacia atrás a través de la red, proveyendo a cada neurona una medida de su contribución al error total; con esta información, el algoritmo de optimización ajusta los pesos y sesgos para reducir el error y mejorar la precisión del modelo en las siguientes predicciones. Este proceso se repite iterativamente ---alternando pases hacia adelante y hacia atrás--- hasta que el modelo converge. El algoritmo que aplica los ajustes de parámetros en cada iteración es el descenso por gradiente estocástico (SGD, Sección~\ref{sec:sgd}).
 
-La capacidad de las redes profundas para aprender representaciones automáticamente a partir de datos crudos (sin \textit{feature engineering} manual) es lo que las hace especialmente adecuadas para problemas de NLP. En el contexto del Meli Challenge 2019, esto significa que el modelo puede aprender qué características de los títulos de productos son relevantes para la clasificación sin que el investigador deba definirlas a priori.
+El término \emph{Deep Learning} designa las redes con múltiples capas ocultas, capaces de aprender representaciones jerárquicas de los datos \cite{goodfellow2016}: cada capa transforma la representación anterior en una abstracción de mayor complejidad, construyendo conceptos elaborados a partir de conceptos más simples. La ventaja central de estas arquitecturas radica en su capacidad de aprender representaciones directamente a partir de datos crudos, sin necesidad de \textit{feature engineering} manual \cite{goodfellow2016}. En el contexto del Meli Challenge 2019, esto implica que el modelo descubre por sí mismo qué características de los títulos de productos son discriminativas para la clasificación, sin que el investigador deba definirlas a priori.
+
+\subsubsection{Descenso por Gradiente Estocástico y Función de Pérdida}
+\label{sec:sgd}
+
+El descenso de gradiente (GD) es un algoritmo de optimización que minimiza iterativamente una función objetivo. En el contexto del Machine Learning, esta técnica se utiliza durante la fase de entrenamiento de un modelo supervisado para minimizar la función de pérdida o costo, que mide qué tan lejos están las predicciones del modelo de los valores reales de los datos \cite{goodfellow2016}. Un ejemplo común de función de costo es el error cuadrático medio.
+
+El algoritmo calcula el gradiente de la pérdida con respecto a los parámetros del modelo y da un paso en la dirección opuesta para reducirla. La tasa de aprendizaje $\alpha$ controla el tamaño de cada paso. Este proceso se repite iterativamente hasta alcanzar la convergencia. Si $\alpha$ es demasiado grande, el algoritmo puede oscilar y converger a un mínimo local en lugar del mínimo global; una tasa de aprendizaje bien calibrada es esencial para lograr la convergencia.
+
+El uso de \emph{Stochastic Gradient Descent} (SGD) en redes neuronales se debe al alto costo computacional de calcular el gradiente sobre el conjunto de entrenamiento completo \cite{goodfellow2016}. SGD aproxima ese gradiente utilizando solo un pequeño subconjunto de muestras (\textit{minibatch}) en cada iteración. La actualización de parámetros en cada paso está dada por:
+
+\begin{equation}
+\theta = \theta - \alpha \nabla_\theta J(\theta; x^{(i)}, y^{(i)})
+\end{equation}
+
+donde $(x^{(i)}, y^{(i)})$ es un par del conjunto de entrenamiento. El uso de minibatches reduce la varianza de la actualización y conduce a una convergencia más estable respecto al gradiente sobre una sola muestra.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{sgd_optimizacion.png}
+\caption{Proceso de optimización mediante descenso por gradiente estocástico.}
+\label{fig:sgd-optimizacion}
+\end{figure}
+
+Para problemas de clasificación, la función de pérdida estándar es la \textbf{entropía cruzada} (\textit{cross-entropy}). Desde la perspectiva estadística, el modelo define una distribución de probabilidad $p(y \mid \mathbf{x};\boldsymbol{\theta})$ sobre las clases posibles; el principio de \emph{máxima verosimilitud} establece que los parámetros óptimos son aquellos que maximizan la probabilidad asignada a las clases correctas en los datos de entrenamiento \cite{goodfellow2016}. Maximizar esa verosimilitud es equivalente a minimizar la entropía cruzada entre la distribución predicha y la distribución real:
+
+\begin{equation}
+\mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N}\sum_{c=1}^{K} y_{ic}\,\log\,\hat{p}_{ic}
+\end{equation}
+
+donde $y_{ic} \in \{0,1\}$ indica si la instancia $i$ pertenece a la clase $c$, y $\hat{p}_{ic}$ es la probabilidad predicha por el modelo. La entropía cruzada penaliza de forma asimétrica: cuando el modelo concentra su confianza en clases incorrectas (probabilidad baja para la clase correcta), la penalización $-\log\,\hat{p}_{ic^*}$ crece rápidamente; cuando el modelo asigna alta probabilidad a la clase correcta, la pérdida tiende a cero. En el Meli Challenge 2019, con más de 1.500 categorías, la entropía cruzada es la función de pérdida estándar para clasificación multiclase \cite{goodfellow2016}.
 
 \subsubsection{LSTM (Long Short-Term Memory)}
 
@@ -254,7 +328,11 @@ Los embeddings de texto utilizados en clasificación, búsqueda y bases vectoria
 
 La tokenización es el proceso de dividir el texto en unidades más pequeñas o \emph{tokens}. Los tokens pueden ser palabras, subpalabras o caracteres. En modelos clásicos como Word2Vec se usaba vocabulario a nivel de palabra, lo que limita el manejo de palabras fuera de vocabulario (OOV) y hace crecer el modelo con el tamaño del vocabulario.
 
-Entre las técnicas de \emph{subpalabras} utilizadas en este proyecto cabe destacar dos familias. Por un lado, \textbf{FastText} (Modelo 4) define las subpalabras como \emph{n-gramas de caracteres} de cada palabra. El vector de la palabra se obtiene como la suma de los vectores de sus n-gramas; así se pueden representar palabras OOV que comparten n-gramas con el corpus de entrenamiento. Por otro lado, los modelos tipo Transformer (BERT, APIs como OpenAI) usan \emph{tokenización por subpalabras} con esquemas como Byte Pair Encoding (BPE) o WordPiece: las palabras frecuentes se mantienen enteras y las raras se descomponen en subunidades, con vocabularios del orden de 30k--50k tokens (p. ej. en BERT o GPT-2). En ambos casos se controla el tamaño del vocabulario y se mejora el manejo de OOV. La elección del esquema de tokenización afecta el tamaño del modelo, el manejo de OOV y la calidad final de los embeddings.
+Entre las técnicas de \emph{subpalabras} utilizadas en este proyecto cabe destacar dos familias. Por un lado, \textbf{FastText} (Modelo 4) define las subpalabras como \emph{n-gramas de caracteres} de cada palabra. El vector de la palabra se obtiene como la suma de los vectores de sus n-gramas; así se pueden representar palabras OOV que comparten n-gramas con el corpus de entrenamiento. Por otro lado, los modelos basados en Transformer utilizan \emph{tokenización por subpalabras}: un enfoque intermedio que mantiene las palabras frecuentes como un único token y descompone las palabras raras en fragmentos con significado, equilibrando el tamaño del vocabulario con la cobertura del corpus \cite{huggingface-tokenizers}.
+
+El algoritmo \textbf{Byte-Pair Encoding (BPE)} parte de una fase de \emph{pre-tokenización} que divide el corpus de entrenamiento en palabras y cuenta la frecuencia de cada una. Con ese conteo se construye un \emph{vocabulario base} formado por todos los símbolos únicos del corpus (típicamente caracteres individuales). A continuación, BPE aprende iterativamente \emph{reglas de fusión}: en cada paso identifica el par de símbolos adyacentes que aparece con mayor frecuencia y los combina en un nuevo símbolo, que se agrega al vocabulario. Este proceso se repite hasta que el vocabulario alcanza el tamaño deseado, que es un hiperparámetro definido antes del entrenamiento. El tamaño final del vocabulario es igual al tamaño del vocabulario base más el número de combinaciones aprendidas \cite{huggingface-tokenizers}. La variante \textbf{Byte-level BPE}, adoptada por GPT-2 y sus sucesores, utiliza los 256 bytes posibles como vocabulario base, lo que garantiza que cualquier texto sea representable sin producir tokens desconocidos; GPT-2 alcanza un vocabulario de 50.257 tokens (256 bytes + 1 token especial + 50.000 combinaciones), y modelos modernos multilingües superan los 100.000.
+
+\textbf{WordPiece}, empleado por BERT y BETO, sigue una lógica similar a BPE pero con un criterio de fusión distinto: en lugar de elegir el par de símbolos más frecuente, elige en cada paso el par cuya fusión \emph{maximiza la probabilidad} de los datos de entrenamiento \cite{huggingface-tokenizers}. Intuitivamente, WordPiece evalúa si la ganancia de unir dos símbolos justifica perder la flexibilidad de tenerlos separados. El resultado son vocabularios de aproximadamente 30.000 tokens. La elección del esquema de tokenización afecta el tamaño del modelo, el manejo de OOV y la calidad final de los embeddings.
 
 \subsubsection{Embedding Lookup (Búsqueda de Embeddings)}
 
@@ -328,7 +406,7 @@ El ciclo de vida de un LLM contempla dos etapas principales. En el \emph{pre-ent
 
 Una distinción arquitectónica fundamental entre los LLM es si actúan como \emph{encoders} o \emph{decoders}. Los modelos encoder (como BERT/BETO) procesan la secuencia completa de forma bidireccional y son especialmente adecuados para tareas de comprensión, como clasificación y extracción de información. Los modelos decoder (como GPT) generan texto de forma autoregresiva y son adecuados para tareas de generación.
 
-En el contexto de este trabajo, esta distinción es relevante: BETO (encoder) se usa directamente para clasificación mediante fine-tuning, mientras que los embeddings de OpenAI (basados en GPT, decoder) se usan como representaciones de features para clasificadores externos (KNN, Random Forest). Ambos enfoques han demostrado rendimiento comparable en el Meli Challenge 2019, con sus respectivas ventajas y limitaciones en términos de costo computacional, volumen de datos requerido y flexibilidad de uso.
+En el contexto de este trabajo, esta distinción atraviesa los tres paradigmas evaluados: BETO (encoder) se ajusta mediante fine-tuning supervisado sobre el dataset del Meli Challenge para clasificar directamente (Modelo 2); en el Modelo 3, la API de OpenAI (\texttt{text-embedding-3-small}) genera representaciones vectoriales densas de los títulos de productos, que luego se usan como features para clasificadores externos como KNN y Random Forest; y en el Modelo 1, los modelos GPT actúan directamente como clasificadores mediante \emph{few-shot prompting}, sin necesidad de embeddings ni entrenamiento adicional.
 
 % ============================================================
 \subsection{Métricas de Evaluación}
@@ -849,6 +927,9 @@ Pineau, J., Vincent-Lamarre, P., Sinha, K., Larivière, V., Beygelzimer, A., d'A
 
 \bibitem{wang2018}
 Wang, A., Singh, A., Michael, J., Hill, F., Levy, O., \& Bowman, S. R. (2018). GLUE: A multi-task benchmark and analysis platform for natural language understanding. \textit{Proceedings of EMNLP 2018 Workshop BlackboxNLP}. \url{https://arxiv.org/abs/1804.07461}
+
+\bibitem{huggingface-tokenizers}
+HuggingFace. (2024). \textit{Descripción general de los tokenizadores} [documentación de Transformers]. \url{https://huggingface.co/docs/transformers/es/tokenizer_summary}
 
 \end{thebibliography}
 
