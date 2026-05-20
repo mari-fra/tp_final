@@ -1,4 +1,4 @@
-\documentclass[11pt,a4paper,draft]{article}
+\documentclass[11pt,a4paper]{article}
 
 % Márgenes APA 7.ª ed.: A4, 2.54 cm
 \usepackage[
@@ -263,19 +263,19 @@ El descenso de gradiente (GD) es un algoritmo de optimización que minimiza iter
 
 El algoritmo calcula el gradiente de la pérdida con respecto a los parámetros del modelo y da un paso en la dirección opuesta para reducirla. La tasa de aprendizaje $\alpha$ controla el tamaño de cada paso. Este proceso se repite iterativamente hasta alcanzar la convergencia. Si $\alpha$ es demasiado grande, el algoritmo puede oscilar y converger a un mínimo local en lugar del mínimo global; una tasa de aprendizaje bien calibrada es esencial para lograr la convergencia.
 
-El uso de \emph{Stochastic Gradient Descent} (SGD) en redes neuronales se debe al alto costo computacional de calcular el gradiente sobre el conjunto de entrenamiento completo \cite{goodfellow2016}. SGD aproxima ese gradiente utilizando solo un pequeño subconjunto de muestras (\textit{minibatch}) en cada iteración. La actualización de parámetros en cada paso está dada por:
+En la práctica, el término \emph{Stochastic Gradient Descent} (SGD) se usa para referirse al \emph{descenso de gradiente de minilotes} (\textit{mini-batch gradient descent}): en lugar del conjunto de entrenamiento completo ---costoso computacionalmente--- o de una sola muestra ---ruidoso---, se utiliza un pequeño subconjunto (\textit{minibatch}) en cada actualización \cite{ibm-sgd,goodfellow2016}. El gradiente resultante es el promedio de las pérdidas de ese minilote, lo que reduce el ruido y conduce a una convergencia más estable. El SGD estricto sobre una sola muestra rara vez se usa en la práctica; las bibliotecas PyTorch y TensorFlow denominan ``SGD'' a sus optimizadores aunque internamente emplean minilotes \cite{ibm-sgd}. La actualización de parámetros en cada paso está dada por:
 
 \begin{equation}
 \theta = \theta - \alpha \nabla_\theta J(\theta; x^{(i)}, y^{(i)})
 \end{equation}
 
-donde $(x^{(i)}, y^{(i)})$ es un par del conjunto de entrenamiento. El uso de minibatches reduce la varianza de la actualización y conduce a una convergencia más estable respecto al gradiente sobre una sola muestra.
+donde $(x^{(i)}, y^{(i)})$ representa un par (o minilote) del conjunto de entrenamiento y $\alpha$ es la tasa de aprendizaje.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{sgd_optimizacion.png}
-\caption{Proceso de optimización mediante descenso por gradiente estocástico.}
-\label{fig:sgd-optimizacion}
+\includegraphics[width=0.85\textwidth]{Bibliografia/Imagenes/gradient-descent-variants_IBM.png}
+\caption{Cómo aumentar el tamaño de la muestra de los datos de entrenamiento reduce las oscilaciones y el ruido en la trayectoria de optimización. Fuente: IBM \cite{ibm-sgd}.}
+\label{fig:sgd-variantes}
 \end{figure}
 
 Para problemas de clasificación, la función de pérdida estándar es la \textbf{entropía cruzada} (\textit{cross-entropy}). Desde la perspectiva estadística, el modelo define una distribución de probabilidad $p(y \mid \mathbf{x};\boldsymbol{\theta})$ sobre las clases posibles; el principio de \emph{máxima verosimilitud} establece que los parámetros óptimos son aquellos que maximizan la probabilidad asignada a las clases correctas en los datos de entrenamiento \cite{goodfellow2016}. Maximizar esa verosimilitud es equivalente a minimizar la entropía cruzada entre la distribución predicha y la distribución real:
@@ -943,6 +943,9 @@ Wang, A., Singh, A., Michael, J., Hill, F., Levy, O., \& Bowman, S. R. (2018). G
 
 \bibitem{huggingface-tokenizers}
 HuggingFace. (2024). \textit{Descripción general de los tokenizadores} [documentación de Transformers]. \url{https://huggingface.co/docs/transformers/es/tokenizer_summary}
+
+\bibitem{ibm-sgd}
+IBM. (2024). \textit{Stochastic gradient descent}. IBM Think. \url{https://www.ibm.com/mx-es/think/topics/stochastic-gradient-descent}
 
 \end{thebibliography}
 
