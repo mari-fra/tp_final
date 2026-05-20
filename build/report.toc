@@ -15,11 +15,11 @@
 \contentsline {subsection}{\numberline {2.3}Deep Learning y Redes Neuronales Profundas}{6}{subsection.2.3}%
 \contentsline {subsubsection}{\numberline {2.3.1}Redes Neuronales Profundas (Deep Feedforward Networks)}{6}{subsubsection.2.3.1}%
 \contentsline {subsubsection}{\numberline {2.3.2}Descenso por Gradiente Estocástico y Función de Pérdida}{7}{subsubsection.2.3.2}%
-\contentsline {subsubsection}{\numberline {2.3.3}LSTM (Long Short-Term Memory)}{9}{subsubsection.2.3.3}%
+\contentsline {subsubsection}{\numberline {2.3.3}LSTM (Long Short-Term Memory)}{8}{subsubsection.2.3.3}%
 \contentsline {subsubsection}{\numberline {2.3.4}GRU (Gated Recurrent Unit)}{9}{subsubsection.2.3.4}%
 \contentsline {subsection}{\numberline {2.4}Representación del Texto: Embeddings}{9}{subsection.2.4}%
 \contentsline {subsubsection}{\numberline {2.4.1}De la Representación Esparsa a los Embeddings Densos}{9}{subsubsection.2.4.1}%
-\contentsline {subsubsection}{\numberline {2.4.2}Word2Vec y FastText}{10}{subsubsection.2.4.2}%
+\contentsline {subsubsection}{\numberline {2.4.2}Word2Vec y FastText}{9}{subsubsection.2.4.2}%
 \contentsline {subsubsection}{\numberline {2.4.3}Embeddings Contextuales}{10}{subsubsection.2.4.3}%
 \contentsline {subsection}{\numberline {2.5}Arquitectura Transformer}{10}{subsection.2.5}%
 \contentsline {subsubsection}{\numberline {2.5.1}Tokenización}{11}{subsubsection.2.5.1}%
