@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.1.25)  16 MAY 2026 16:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.1.25)  20 MAY 2026 11:20
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -721,113 +721,109 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 161.
  [2] [3]
-
-LaTeX Warning: File `capacidad_error.png' not found on input line 193.
-
-[4]
-Overfull \hbox (17.92287pt too wide) in paragraph at lines 212--213
+<Bibliografia/Imagenes/Capacity_Error_Goodfellow.png, id=33, 495.8525pt x 257.4
+6187pt>
+ [4]
+Overfull \hbox (17.92287pt too wide) in paragraph at lines 228--229
 []\OT1/ptm/b/n/10.95 Variabilidad l[]exi-ca: \OT1/ptm/m/n/10.95 Un mis-mo con-c
 ep-to pue-de ex-pre-sar-se de m[]ulti-ples for-mas (``ce-lu-lar'', ``smartpho-|
 
  []
 
 
-Overfull \hbox (18.3663pt too wide) in paragraph at lines 225--226
+Overfull \hbox (18.3663pt too wide) in paragraph at lines 241--242
 \OT1/ptm/m/n/10.95 trans-for-ma-ron el cam-po. Co-mo se[]nalan De-vlin et al. (
 2019) en la in-tro-duc-ci[]on de BERT, el pre-entrenamiento|
  []
 
 [5] [6]
 
-LaTeX Warning: File `sgd_optimizacion.png' not found on input line 260.
+LaTeX Warning: File `sgd_optimizacion.png' not found on input line 276.
 
 [7] [8]
-Overfull \hbox (19.91885pt too wide) in paragraph at lines 291--292
+Overfull \hbox (19.91885pt too wide) in paragraph at lines 307--308
 []\OT1/ptm/m/n/10.95 La so-lu-ci[]on ga-na-do-ra del Me-li Cha-llen-ge 2019 em-
 ple[]o ca-pas \OT1/cmtt/m/n/10.95 CuDNNGRU \OT1/ptm/m/n/10.95 en com-bi-na-ci[]
 on con \OT1/cmtt/m/n/10.95 CuDNNLSTM\OT1/ptm/m/n/10.95 ,|
  []
 
-[9] [10] [11] [12]
-Overfull \hbox (60.17091pt too wide) in paragraph at lines 389--390
+[9]
+<Bibliografia/Imagenes/Transformer_Model_Architecture_Vaswani.png, id=59, 259.4
+6938pt x 355.3275pt>
+ [10] [11] [12] [13]
+Overfull \hbox (60.17091pt too wide) in paragraph at lines 412--413
 []\OT1/ptm/m/n/10.95 Para ta-reas de cla-si-fi-ca-ci[]on, Ope-nAI ofre-ce mo-de
 -los de em-bed-ding de-di-ca-dos (co-mo \OT1/cmtt/m/n/10.95 text-embedding-3-sm
 all\OT1/ptm/m/n/10.95 )|
  []
 
-[13] [14]
-Overfull \hbox (8.12616pt too wide) in paragraph at lines 437--438
-[]\OT1/ptm/m/n/10.95 Kozareva (2015) [[]] iden-ti-fic[]o el pro-ble-ma de ca-te
--go-ri-za-ci[]on au-tom[]ati-ca de pro-duc-tos en e-commerce|
- []
-
-[15] [16] [17] [18]
-Overfull \hbox (11.70143pt too wide) in paragraph at lines 545--546
+[14] [15] [16] [17] [18]
+Overfull \hbox (11.70143pt too wide) in paragraph at lines 558--559
 []\OT1/cmtt/m/n/10.95 `Butaca 6 Cuotas Sin Interes!! Para Auto Bebesit Hasta 25
 kg' $\OMS/ztmcm/m/n/10.95 !$ \OT1/cmtt/m/n/10.95 BABY[]CAR[]SEATS |
  []
 
-
-Overfull \hbox (14.95845pt too wide) in paragraph at lines 552--553
+[19]
+Overfull \hbox (14.95845pt too wide) in paragraph at lines 565--566
 []\OT1/ptm/m/n/10.95 Se tom[]o una mues-tra alea-to-ria re-pro-du-ci-ble de 1.0
 00 re-gis-tros del da-ta-set com-ple-to (\OT1/cmtt/m/n/10.95 random[]state=42\O
 T1/ptm/m/n/10.95 )|
  []
 
-[19]
+[20]
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 6
-05.
+18.
 
 (C:\Users\maribel.fraire\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1ptm.
 fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [20] [21] [22] [23] [24]
-Underfull \hbox (badness 10000) in paragraph at lines 807--807
+) [21] [22] [23] [24] [25]
+Underfull \hbox (badness 10000) in paragraph at lines 820--820
 []\OT1/ptm/m/n/10 Muestra 247 re-gis-tros,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 807--807
+Underfull \hbox (badness 10000) in paragraph at lines 820--820
 \OT1/ptm/m/n/10 73 ca-te-gor[]^^Pas, few-shot
  []
 
 
-Underfull \hbox (badness 5563) in paragraph at lines 807--807
+Underfull \hbox (badness 5563) in paragraph at lines 820--820
 \OT1/ptm/m/n/10 tros en es-pa[]nol, BE-TO
  []
 
 
-Underfull \hbox (badness 2042) in paragraph at lines 807--807
+Underfull \hbox (badness 2042) in paragraph at lines 820--820
 []\OT1/ptm/m/n/10 Dataset com-ple-to en es-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 807--807
+Underfull \hbox (badness 10000) in paragraph at lines 820--820
 \OT1/ptm/m/n/10 pa[]nol (~10M re-gis-tros),
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 807--807
+Underfull \hbox (badness 10000) in paragraph at lines 820--820
 \OT1/ptm/m/n/10 text-embedding-3-small,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 807--807
+Underfull \hbox (badness 10000) in paragraph at lines 820--820
 \OT1/ptm/m/n/10 text-embedding-3-small,
  []
 
 
-Underfull \hbox (badness 2042) in paragraph at lines 807--807
+Underfull \hbox (badness 2042) in paragraph at lines 820--820
 []\OT1/ptm/m/n/10 Dataset com-ple-to en es-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 807--807
+Underfull \hbox (badness 10000) in paragraph at lines 820--820
 \OT1/ptm/m/n/10 pa[]nol (~10M re-gis-tros),
  []
 
-[25] [26] [27]
-Underfull \hbox (badness 10000) in paragraph at lines 908--909
+[26] [27]
+Underfull \hbox (badness 10000) in paragraph at lines 921--922
 []\OT1/ptm/m/n/10.95 Groq. (2024). \OT1/ptm/m/it/10.95 The Groq LPU ex-plai-ned
  \OT1/ptm/m/n/10.95 [blog ofi-cial]. $\OT1/cmtt/m/n/10.95 https : / / groq . co
 m / blog /
@@ -843,10 +839,10 @@ L3 programming layer <2025-12-24>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 14303 strings out of 467871
- 232564 string characters out of 5414020
- 664655 words of memory out of 5000000
- 42971 multiletter control sequences out of 15000+600000
+ 14286 strings out of 467871
+ 232492 string characters out of 5414020
+ 665167 words of memory out of 5000000
+ 42954 multiletter control sequences out of 15000+600000
  671026 words of font info for 129 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,12n,79p,1760b,792s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -865,9 +861,9 @@ a/Local/Programs/MiKTeX/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/maribel.fra
 ire/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/ma
 ribel.fraire/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
 Output written on "C:\Users\maribel.fraire\ML classifier\tp_final\build\report.
-pdf" (34 pages, 245065 bytes).
+pdf" (34 pages, 246003 bytes).
 PDF statistics:
- 172 PDF objects out of 1000 (max. 8388607)
+ 175 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

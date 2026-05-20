@@ -164,15 +164,31 @@ Siguiendo el marco conceptual establecido por Mitchell (1997), se define el Mach
 
 La clasificación es un tipo de tarea de aprendizaje supervisado en la cual el objetivo es asignar una etiqueta o categoría a una instancia de entrada basándose en sus características. En este tipo de tarea, el algoritmo aprende a partir de ejemplos etiquetados (experiencia E) para construir un modelo que pueda predecir la categoría correcta para nuevas instancias no vistas durante el entrenamiento. En el contexto del Meli Challenge 2019, la tarea consiste en clasificar productos de e-commerce en categorías específicas basándose en sus títulos y descripciones, donde cada producto representa una instancia y cada categoría representa una clase posible.
 
-\subsubsection{Medida de Rendimiento}
+\subsubsection{Métricas de Evaluación}
+\label{sec:metricas}
 
-La medida de rendimiento permite cuantificar el éxito del algoritmo en la tarea de clasificación. En este trabajo se utiliza principalmente la \emph{accuracy} (precisión o exactitud), definida como la proporción de predicciones correctas sobre el total de predicciones realizadas. Matemáticamente, la accuracy se calcula como:
+Las métricas de evaluación cuantifican qué tan bien un modelo clasifica datos nuevos. En aprendizaje supervisado, estas métricas se calculan siempre sobre un \textbf{conjunto de test} ---instancias etiquetadas que el modelo no vio durante el entrenamiento--- para estimar el rendimiento real sobre datos no vistos \cite{goodfellow2016}.
+
+Para la tarea de clasificación multiclase del Meli Challenge 2019, se emplean las siguientes métricas estándar \cite{jurafsky2024}:
+
+\textbf{Accuracy} (exactitud): proporción de predicciones correctas sobre el total de predicciones realizadas en el conjunto de test:
 
 \begin{equation}
-\text{Accuracy} = \frac{\text{Número de predicciones correctas}}{\text{Número total de predicciones}} = \frac{TP + TN}{TP + TN + FP + FN}
+\text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}
+\end{equation}
+\noindent\textit{Fuente:} Jurafsky \& Martin (2024), Cap.~4 \cite{jurafsky2024}.
+
+donde TP (verdaderos positivos), TN (verdaderos negativos), FP (falsos positivos) y FN (falsos negativos) se computan por clase. La accuracy puede resultar engañosa en problemas con clases desbalanceadas, donde las categorías más frecuentes dominan el cómputo global.
+
+\textbf{Precision} y \textbf{Recall}: para una clase $c$, la Precision indica qué proporción de las instancias predichas como $c$ pertenecen efectivamente a esa clase; el Recall indica qué proporción de las instancias que realmente son $c$ fueron identificadas correctamente por el modelo.
+
+\textbf{F1-Score}: media armónica de Precision y Recall, especialmente útil cuando las clases están desbalanceadas:
+
+\begin{equation}
+F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}
 \end{equation}
 
-donde TP (True Positives) son los casos correctamente clasificados como positivos, TN (True Negatives) son los casos correctamente clasificados como negativos, FP (False Positives) son los casos incorrectamente clasificados como positivos, y FN (False Negatives) son los casos incorrectamente clasificados como negativos. La accuracy proporciona una medida general del rendimiento del modelo, aunque puede ser engañosa en problemas con clases desbalanceadas, donde algunas categorías tienen muchos más ejemplos que otras.
+En problemas multiclase, estas métricas se calculan por clase y luego se promedian ---\emph{macro-average} (igual peso a cada clase) o \emph{weighted-average} (peso proporcional al número de instancias)--- para obtener una métrica global comparable entre modelos.
 
 \subsubsection{Generalización}
 
@@ -190,8 +206,8 @@ La relación entre la capacidad del modelo y los errores de entrenamiento y gene
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{capacidad_error.png}
-\caption{Relación entre la capacidad del modelo y los errores de entrenamiento y generalización. La zona de underfitting se caracteriza por altos errores en ambos conjuntos, mientras que la zona de overfitting muestra un bajo error de entrenamiento pero un alto error de generalización, con una brecha creciente entre ambos.}
+\includegraphics[width=0.8\textwidth]{Bibliografia/Imagenes/Capacity_Error_Goodfellow.png}
+\caption{Relación entre la capacidad del modelo y los errores de entrenamiento y generalización. La zona de underfitting se caracteriza por altos errores en ambos conjuntos, mientras que la zona de overfitting muestra un bajo error de entrenamiento pero un alto error de generalización, con una brecha creciente entre ambos. Fuente: Goodfellow et al. (2016) \cite{goodfellow2016}.}
 \label{fig:capacidad-error}
 \end{figure}
 
@@ -324,6 +340,13 @@ Los \emph{embeddings contextuales} resuelven este problema produciendo represent
 
 Los embeddings de texto utilizados en clasificación, búsqueda y bases vectoriales suelen producirse con \emph{encoders} basados en la arquitectura Transformer. Esta subsección resume los conceptos y etapas típicas de ese pipeline siguiendo la arquitectura propuesta por Vaswani et al. (2017) \cite{vaswani2017}, que introdujo el mecanismo de autoatención como componente central. Estos conceptos sustentan, en mayor o menor medida, modelos como BERT y los embeddings de APIs como la de OpenAI utilizados en la etapa de laboratorio.
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.55\textwidth]{Bibliografia/Imagenes/Transformer_Model_Architecture_Vaswani.png}
+\caption{Arquitectura original del modelo Transformer \cite{vaswani2017}. El módulo \emph{encoder} (izquierda) procesa la secuencia de entrada y produce representaciones contextuales; el módulo \emph{decoder} (derecha) genera la secuencia de salida. Los modelos de clasificación como BERT utilizan únicamente el encoder; los modelos generativos como GPT utilizan únicamente el decoder.}
+\label{fig:transformer-vaswani}
+\end{figure}
+
 \subsubsection{Tokenización}
 
 La tokenización es el proceso de dividir el texto en unidades más pequeñas o \emph{tokens}. Los tokens pueden ser palabras, subpalabras o caracteres. En modelos clásicos como Word2Vec se usaba vocabulario a nivel de palabra, lo que limita el manejo de palabras fuera de vocabulario (OOV) y hace crecer el modelo con el tamaño del vocabulario.
@@ -412,17 +435,7 @@ En el contexto de este trabajo, esta distinción atraviesa los tres paradigmas e
 \subsection{Métricas de Evaluación}
 % ============================================================
 
-Las métricas de evaluación permiten cuantificar y comparar el rendimiento de los modelos. En este trabajo se utilizan las siguientes métricas estándar para clasificación multiclase \cite{goodfellow2016}:
-
-La \textbf{accuracy} ya fue definida en la Sección~2.1.3. En el contexto multiclase del Meli Challenge 2019 (más de 1,500 categorías), la accuracy global indica la proporción de productos correctamente clasificados, pero puede enmascarar diferencias de rendimiento entre categorías frecuentes y raras.
-
-La \textbf{Precision} para una clase $c$ indica qué proporción de los productos predichos como pertenecientes a $c$ efectivamente pertenecen a esa categoría. El \textbf{Recall} para una clase $c$ indica qué proporción de los productos que realmente pertenecen a $c$ fueron correctamente identificados. El \textbf{F1-Score} es la media armónica de Precision y Recall, y ofrece una medida balanceada especialmente útil cuando las clases están desbalanceadas:
-
-\begin{equation}
-F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}
-\end{equation}
-
-En problemas multiclase, estas métricas se calculan por clase y se promedian (macro-average, micro-average o weighted-average) para obtener una métrica global.
+Las métricas utilizadas en este trabajo ---accuracy, precision, recall y F1-score--- se definen en la Sección~\ref{sec:metricas} del Marco Teórico. En el contexto del Meli Challenge 2019, se reporta la \textbf{accuracy} como métrica principal de comparación con la solución ganadora del benchmark, complementada con el \textbf{F1-score macro} para evaluar el rendimiento equilibrado entre las más de 1.500 categorías del catálogo.
 
 % ============================================================
 \subsection{Trabajos Relacionados}
@@ -434,7 +447,7 @@ La propuesta de este trabajo contrasta con la solución ganadora del Meli Challe
 
 \subsubsection{Categorización automática de productos en e-commerce}
 
-Kozareva (2015) \cite{kozareva2015} identificó el problema de categorización automática de productos en e-commerce como un desafío de clasificación multiclase con características propias del dominio: la ausencia de recursos léxicos preexistentes que capturen marcas, modelos y abreviaturas técnicas obliga a construir representaciones directamente desde los datos, sin poder apoyarse en ontologías o diccionarios de propósito general. Este trabajo parte de ese diagnóstico e incorpora representaciones basadas en embeddings densos y modelos Transformer, que capturan relaciones semánticas que las representaciones léxicas tradicionales no pueden expresar, evaluando si esos avances resuelven las limitaciones identificadas por Kozareva en el mismo tipo de problema.
+La categorización automática de productos en e-commerce presenta un desafío de clasificación multiclase con características propias del dominio: la ausencia de recursos léxicos preexistentes que capturen marcas, modelos y abreviaturas técnicas obliga a construir representaciones directamente desde los datos, sin poder apoyarse en ontologías o diccionarios de propósito general \cite{kozareva2015}. Este trabajo parte de ese diagnóstico e incorpora representaciones basadas en embeddings densos y modelos Transformer, que capturan relaciones semánticas que las representaciones léxicas tradicionales no pueden expresar, evaluando si esos avances resuelven las limitaciones identificadas en el mismo tipo de problema.
 
 \subsubsection{Clasificación multiclase de texto a gran escala}
 

@@ -22,18 +22,24 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Contexto del Problema}{1}{subsection.1.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Objetivo General}{1}{subsection.1.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.3}Objetivos Específicos}{1}{subsection.1.3}\protected@file@percent }
+\citation{goodfellow2016}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Marco Teórico}{2}{section.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Conceptos Básicos de Machine Learning para Clasificación}{2}{subsection.2.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.1}Aprendizaje Automático}{2}{subsubsection.2.1.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.2}Tarea de Clasificación}{2}{subsubsection.2.1.2}\protected@file@percent }
+\citation{jurafsky2024}
+\citation{jurafsky2024}
 \citation{goodfellow2016}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.3}Medida de Rendimiento}{3}{subsubsection.2.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.3}Métricas de Evaluación}{3}{subsubsection.2.1.3}\protected@file@percent }
+\newlabel{sec:metricas}{{2.1.3}{3}{Métricas de Evaluación}{subsubsection.2.1.3}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.4}Generalización}{3}{subsubsection.2.1.4}\protected@file@percent }
+\citation{goodfellow2016}
+\citation{goodfellow2016}
 \citation{jurafsky2024}
 \citation{jurafsky2024}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Relación entre la capacidad del modelo y los errores de entrenamiento y generalización. La zona de underfitting se caracteriza por altos errores en ambos conjuntos, mientras que la zona de overfitting muestra un bajo error de entrenamiento pero un alto error de generalización, con una brecha creciente entre ambos.}}{4}{figure.caption.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Relación entre la capacidad del modelo y los errores de entrenamiento y generalización. La zona de underfitting se caracteriza por altos errores en ambos conjuntos, mientras que la zona de overfitting muestra un bajo error de entrenamiento pero un alto error de generalización, con una brecha creciente entre ambos. Fuente: Goodfellow et al. (2016) \cite  {goodfellow2016}.}}{4}{figure.caption.1}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:capacidad-error}{{1}{4}{Relación entre la capacidad del modelo y los errores de entrenamiento y generalización. La zona de underfitting se caracteriza por altos errores en ambos conjuntos, mientras que la zona de overfitting muestra un bajo error de entrenamiento pero un alto error de generalización, con una brecha creciente entre ambos}{figure.caption.1}{}}
+\newlabel{fig:capacidad-error}{{1}{4}{Relación entre la capacidad del modelo y los errores de entrenamiento y generalización. La zona de underfitting se caracteriza por altos errores en ambos conjuntos, mientras que la zona de overfitting muestra un bajo error de entrenamiento pero un alto error de generalización, con una brecha creciente entre ambos. Fuente: Goodfellow et al. (2016) \cite {goodfellow2016}}{figure.caption.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Procesamiento de Lenguaje Natural (NLP)}{4}{subsection.2.2}\protected@file@percent }
 \citation{vaswani2017}
 \citation{hochreiter1997}
@@ -71,111 +77,114 @@
 \citation{bojanowski2017}
 \citation{peters2018}
 \citation{vaswani2017}
+\citation{vaswani2017}
+\citation{vaswani2017}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.4.2}Word2Vec y FastText}{10}{subsubsection.2.4.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.4.3}Embeddings Contextuales}{10}{subsubsection.2.4.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Arquitectura Transformer}{10}{subsection.2.5}\protected@file@percent }
 \newlabel{sec:transformer}{{2.5}{10}{Arquitectura Transformer}{subsection.2.5}{}}
 \citation{huggingface-tokenizers}
 \citation{huggingface-tokenizers}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Arquitectura original del modelo Transformer \cite  {vaswani2017}. El módulo \emph  {encoder} (izquierda) procesa la secuencia de entrada y produce representaciones contextuales; el módulo \emph  {decoder} (derecha) genera la secuencia de salida. Los modelos de clasificación como BERT utilizan únicamente el encoder; los modelos generativos como GPT utilizan únicamente el decoder.}}{11}{figure.caption.3}\protected@file@percent }
+\newlabel{fig:transformer-vaswani}{{3}{11}{Arquitectura original del modelo Transformer \cite {vaswani2017}. El módulo \emph {encoder} (izquierda) procesa la secuencia de entrada y produce representaciones contextuales; el módulo \emph {decoder} (derecha) genera la secuencia de salida. Los modelos de clasificación como BERT utilizan únicamente el encoder; los modelos generativos como GPT utilizan únicamente el decoder}{figure.caption.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.5.1}Tokenización}{11}{subsubsection.2.5.1}\protected@file@percent }
 \citation{huggingface-tokenizers}
 \citation{vaswani2017}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.5.1}Tokenización}{11}{subsubsection.2.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.5.2}Embedding Lookup (Búsqueda de Embeddings)}{11}{subsubsection.2.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.5.3}Codificación Posicional (\textit  {Positional Encoding})}{11}{subsubsection.2.5.3}\protected@file@percent }
 \citation{vaswani2017}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.5.2}Embedding Lookup (Búsqueda de Embeddings)}{12}{subsubsection.2.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.5.3}Codificación Posicional (\textit  {Positional Encoding})}{12}{subsubsection.2.5.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.5.4}Mecanismo de Autoatención (\textit  {Self-Attention})}{12}{subsubsection.2.5.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.5.5}Agregación y Pooling}{12}{subsubsection.2.5.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.5.6}Red Neuronal Feed-Forward}{12}{subsubsection.2.5.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.6}Modelos Pre-entrenados para NLP}{12}{subsection.2.6}\protected@file@percent }
 \citation{devlin2019}
 \citation{canete2020}
-\citation{zhao2023}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.5.5}Agregación y Pooling}{13}{subsubsection.2.5.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.5.6}Red Neuronal Feed-Forward}{13}{subsubsection.2.5.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.6}Modelos Pre-entrenados para NLP}{13}{subsection.2.6}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.6.1}BERT}{13}{subsubsection.2.6.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.6.2}BETO: BERT para el Español}{13}{subsubsection.2.6.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.6.3}GPT y Embeddings de OpenAI}{13}{subsubsection.2.6.3}\protected@file@percent }
+\citation{zhao2023}
 \citation{devlin2019}
-\citation{goodfellow2016}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.6.2}BETO: BERT para el Español}{14}{subsubsection.2.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.6.3}GPT y Embeddings de OpenAI}{14}{subsubsection.2.6.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.7}Grandes Modelos de Lenguaje (LLM)}{14}{subsection.2.7}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.7.1}Definición y Escala}{14}{subsubsection.2.7.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.7.2}Pre-entrenamiento y Fine-tuning}{14}{subsubsection.2.7.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.7.3}Encoder vs. Decoder: Relevancia para Clasificación}{14}{subsubsection.2.7.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.8}Métricas de Evaluación}{14}{subsection.2.8}\protected@file@percent }
 \citation{devlin2019}
 \citation{kozareva2015}
-\citation{canete2020}
-\citation{nam2014}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.7.3}Encoder vs. Decoder: Relevancia para Clasificación}{15}{subsubsection.2.7.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.8}Métricas de Evaluación}{15}{subsection.2.8}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.9}Trabajos Relacionados}{15}{subsection.2.9}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.9.1}Clasificación de texto en e-commerce}{15}{subsubsection.2.9.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.9.2}Categorización automática de productos en e-commerce}{15}{subsubsection.2.9.2}\protected@file@percent }
+\citation{canete2020}
+\citation{nam2014}
 \citation{wang2018}
 \citation{zhao2023}
 \citation{groq2024}
 \citation{groq-lpu}
-\citation{meli2019}
-\citation{he2009}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.9.2}Categorización automática de productos en e-commerce}{16}{subsubsection.2.9.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.9.3}Clasificación multiclase de texto a gran escala}{16}{subsubsection.2.9.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {2.9.4}Benchmarks comparativos de modelos de NLP}{16}{subsubsection.2.9.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {3}Metodología e Implementación}{16}{section.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Entorno de Experimentación}{16}{subsection.3.1}\protected@file@percent }
+\citation{meli2019}
+\citation{he2009}
 \citation{kozareva2015}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Dataset}{17}{subsection.3.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Preprocesamiento}{17}{subsection.3.3}\protected@file@percent }
-\newlabel{eq:meanpooling}{{6}{17}{Preprocesamiento}{equation.6}{}}
 \citation{goodfellow2016}
 \citation{goodfellow2016}
 \citation{nam2014}
+\newlabel{eq:meanpooling}{{6}{18}{Preprocesamiento}{equation.6}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Descripción de los Modelos Evaluados}{18}{subsection.3.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.1}Criterios de Selección y Marco Común}{18}{subsubsection.3.4.1}\protected@file@percent }
 \newlabel{eq:softmax}{{7}{18}{Criterios de Selección y Marco Común}{equation.7}{}}
 \newlabel{eq:crossentropy}{{8}{18}{Criterios de Selección y Marco Común}{equation.8}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.2}Resumen Comparativo de Enfoques}{18}{subsubsection.3.4.2}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Resumen comparativo de los modelos evaluados}}{18}{table.caption.3}\protected@file@percent }
-\newlabel{tab:modelos}{{1}{18}{Resumen comparativo de los modelos evaluados}{table.caption.3}{}}
 \citation{zhao2023}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.2}Resumen Comparativo de Enfoques}{19}{subsubsection.3.4.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Resumen comparativo de los modelos evaluados}}{19}{table.caption.4}\protected@file@percent }
+\newlabel{tab:modelos}{{1}{19}{Resumen comparativo de los modelos evaluados}{table.caption.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Modelo 1 --- Clasificación por Prompting con GPT (OpenAI)}{19}{subsection.3.5}\protected@file@percent }
 \newlabel{sec:modelo1}{{3.5}{19}{Modelo 1 --- Clasificación por Prompting con GPT (OpenAI)}{subsection.3.5}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.1}Descripción del Enfoque}{19}{subsubsection.3.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.2}Preparación del Dataset}{19}{subsubsection.3.5.2}\protected@file@percent }
 \citation{groq2024}
 \citation{groq-gptoss2024}
-\citation{openai-pricing}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.2}Preparación del Dataset}{20}{subsubsection.3.5.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.3}Plataformas de Inferencia: OpenAI API y Groq}{20}{subsubsection.3.5.3}\protected@file@percent }
 \newlabel{sec:modelo1-plataformas}{{3.5.3}{20}{Plataformas de Inferencia: OpenAI API y Groq}{subsubsection.3.5.3}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.4}Modelos Evaluados}{20}{subsubsection.3.5.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.5}Resultados}{20}{subsubsection.3.5.5}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Resultados comparativos --- Modelo 1 (Clasificación por Prompting con GPT)}}{20}{table.caption.4}\protected@file@percent }
-\newlabel{tab:modelo1-resultados}{{2}{20}{Resultados comparativos --- Modelo 1 (Clasificación por Prompting con GPT)}{table.caption.4}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.6}Análisis de Viabilidad Económica}{20}{subsubsection.3.5.6}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Estimación de costo para clasificar el dataset completo (20M registros, $\sim $10.000 tokens/solicitud)}}{21}{table.caption.5}\protected@file@percent }
-\newlabel{tab:modelo1-costos}{{3}{21}{Estimación de costo para clasificar el dataset completo (20M registros, $\sim $10.000 tokens/solicitud)}{table.caption.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Resultados comparativos --- Modelo 1 (Clasificación por Prompting con GPT)}}{20}{table.caption.5}\protected@file@percent }
+\newlabel{tab:modelo1-resultados}{{2}{20}{Resultados comparativos --- Modelo 1 (Clasificación por Prompting con GPT)}{table.caption.5}{}}
+\citation{openai-pricing}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.6}Análisis de Viabilidad Económica}{21}{subsubsection.3.5.6}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Estimación de costo para clasificar el dataset completo (20M registros, $\sim $10.000 tokens/solicitud)}}{21}{table.caption.6}\protected@file@percent }
+\newlabel{tab:modelo1-costos}{{3}{21}{Estimación de costo para clasificar el dataset completo (20M registros, $\sim $10.000 tokens/solicitud)}{table.caption.6}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.6}Modelo 2 --- BETO}{21}{subsection.3.6}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.6.1}Configuración del Entrenamiento}{21}{subsubsection.3.6.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.6.2}Dependencia de Accelerate}{21}{subsubsection.3.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.6.2}Dependencia de Accelerate}{22}{subsubsection.3.6.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.6.3}Preparación del Dataset}{22}{subsubsection.3.6.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.6.4}Requisitos de Software}{22}{subsubsection.3.6.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.6.5}Validación de Extrapolabilidad de Resultados}{22}{subsubsection.3.6.5}\protected@file@percent }
 \citation{openai-embedding}
-\citation{openai-batch}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.7}Modelo 3 --- OpenAI Embeddings (text-embedding-3-small)}{23}{subsection.3.7}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.7.1}Metodología del Embedding}{23}{subsubsection.3.7.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.7.2}Descripción de la Solución}{23}{subsubsection.3.7.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.7.3}Ensayo 1 (03\_tp\_final\_embedding.ipynb)}{23}{subsubsection.3.7.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.7.4}Ensayo 2 (03\_tp\_final\_embedding\_2.ipynb)}{23}{subsubsection.3.7.4}\protected@file@percent }
+\citation{openai-batch}
 \citation{openai-batch}
 \citation{winner2019}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.7.4}Ensayo 2 (03\_tp\_final\_embedding\_2.ipynb)}{24}{subsubsection.3.7.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.7.5}Batch API}{24}{subsubsection.3.7.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.8}Modelo 4 --- FastText con Red Neuronal}{24}{subsection.3.8}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.9}Solución Original del Meli Challenge 2019}{24}{subsection.3.9}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.9.1}Limitaciones de Reproducibilidad}{24}{subsubsection.3.9.1}\protected@file@percent }
 \citation{pineau2021}
-\citation{kozareva2015}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.9.2}Workarounds Implementados}{25}{subsubsection.3.9.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.10}Limitaciones del Estudio}{25}{subsection.3.10}\protected@file@percent }
+\citation{kozareva2015}
 \bibcite{mitchell1997}{1}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.11}Resultados}{26}{subsection.3.11}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.11.1}Métricas de Evaluación}{26}{subsubsection.3.11.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Comparación de Métricas por Modelo}}{26}{table.caption.6}\protected@file@percent }
-\newlabel{tab:metricas}{{4}{26}{Comparación de Métricas por Modelo}{table.caption.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Comparación de Métricas por Modelo}}{26}{table.caption.7}\protected@file@percent }
+\newlabel{tab:metricas}{{4}{26}{Comparación de Métricas por Modelo}{table.caption.7}{}}
 \bibcite{goodfellow2016}{2}
 \bibcite{jurafsky2024}{3}
 \bibcite{vaswani2017}{4}
